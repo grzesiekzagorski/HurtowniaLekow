@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -28,6 +29,10 @@ public class Employee {
     public int getId() {
         return id;
     }
+
+    @OneToMany
+    @JoinColumn(name = "purchaser_id")
+    private List<PurchaseOrder> orders;
 
     public void setId(int id) {
         this.id = id;
@@ -71,5 +76,13 @@ public class Employee {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public List<PurchaseOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<PurchaseOrder> orders) {
+        this.orders = orders;
     }
 }

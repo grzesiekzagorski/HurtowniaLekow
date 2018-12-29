@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Medicine {
@@ -21,6 +22,10 @@ public class Medicine {
 
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String portion;
+
+    @OneToMany
+    @JoinColumn(name = "medicine_id")
+    private List<PurchaseOrder> orders;
 
     public int getId() {
         return id;
@@ -68,5 +73,13 @@ public class Medicine {
 
     public void setPortion(String portion) {
         this.portion = portion;
+    }
+
+    public List<PurchaseOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<PurchaseOrder> orders) {
+        this.orders = orders;
     }
 }

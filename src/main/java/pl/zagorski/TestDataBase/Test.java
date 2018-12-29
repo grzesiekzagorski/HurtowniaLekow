@@ -6,7 +6,10 @@ import pl.zagorski.domain.Character;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Test {
@@ -72,11 +75,24 @@ public class Test {
         action4.setPositions(stanMagazynowy);
         action5.setPositions(dostawy);
         action6.setPositions(sprzedaze);
-/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+//        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+//        Date parsed = null;
+//        try {
+//            parsed = format.parse("20110210");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+//        Zamowienie order = new Zamowienie();
+//        order.setAmount(180);
+//        order.setDate_of_order(sql);
 
+//////////////////////////////////////////////////////////////////////////////////////////
 
+        Status status = new Status();
+        status.setName("złożony");
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
         entityManager.getTransaction().begin();
         entityManager.persist(character);
         entityManager.persist(prescription);
@@ -92,6 +108,8 @@ public class Test {
         entityManager.persist(action4);
         entityManager.persist(action5);
         entityManager.persist(action6);
+
+        entityManager.persist(status);
 
 
         entityManager.getTransaction().commit();
