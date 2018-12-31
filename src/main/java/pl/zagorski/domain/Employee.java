@@ -34,6 +34,18 @@ public class Employee {
     @JoinColumn(name = "purchaser_id")
     private List<PurchaseOrder> orders;
 
+    @OneToMany
+    @JoinColumn(name = "accepting_delivery_id")
+    private List<Warehouse> warehouseList;
+
+    @OneToMany
+    @JoinColumn(name = "accepting_delivery_id")
+    private List<Delivery> deliveryList;
+
+    @OneToMany
+    @JoinColumn(name = "seller_id")
+    private List<Sale> sales;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -84,5 +96,29 @@ public class Employee {
 
     public void setOrders(List<PurchaseOrder> orders) {
         this.orders = orders;
+    }
+
+    public List<Warehouse> getWarehouseList() {
+        return warehouseList;
+    }
+
+    public void setWarehouseList(List<Warehouse> warehouseList) {
+        this.warehouseList = warehouseList;
+    }
+
+    public List<Delivery> getDeliveryList() {
+        return deliveryList;
+    }
+
+    public void setDeliveryList(List<Delivery> deliveryList) {
+        this.deliveryList = deliveryList;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
     }
 }

@@ -20,12 +20,12 @@ public class PurchaseOrderTest {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setAmount(180);
+        purchaseOrder.setAmount(90);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsed = null;
         try {
-            parsed = format.parse("20110210");
+            parsed = format.parse("2015-02-10");
         } catch (ParseException e) {
             e.printStackTrace();
         }
