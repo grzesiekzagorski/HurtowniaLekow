@@ -93,6 +93,12 @@ public class Test {
         Status status = new Status();
         status.setName("złożony");
 
+        //////////////////////////////////////////////////////////////////////////////////
+
+        Province province = new Province();
+        province.setName("Mazowieckie");
+
+
         entityManager.getTransaction().begin();
         entityManager.persist(character);
         entityManager.persist(prescription);
@@ -110,6 +116,7 @@ public class Test {
         entityManager.persist(action6);
 
         entityManager.persist(status);
+        entityManager.persist(province);
 
 
         entityManager.getTransaction().commit();

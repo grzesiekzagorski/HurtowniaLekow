@@ -19,10 +19,10 @@ public class Supplier {
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String street;
 
-    @Column(columnDefinition = "CHAR(10) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(10) NOT NULL")
     private String house_number;
 
-    @Column(columnDefinition = "CHAR(6) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(6) NOT NULL")
     private String postal_code;
 
     @OneToMany

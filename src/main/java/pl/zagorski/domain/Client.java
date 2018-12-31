@@ -13,7 +13,7 @@ public class Client {
     @Column(columnDefinition = "VARCHAR(50) NOT NULL")
     private String name;
 
-    @Column(columnDefinition = "CHAR(9) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(9) NOT NULL")
     private String phone;
 
     @Column(columnDefinition = "VARCHAR(50) NOT NULL")
@@ -22,10 +22,10 @@ public class Client {
     @Column(columnDefinition = "VARCHAR(50) NOT NULL")
     private String street;
 
-    @Column(columnDefinition = "CHAR(10) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(10) NOT NULL")
     private String house_number;
 
-    @Column(columnDefinition = "CHAR(6) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(6) NOT NULL")
     private String postal_code;
 
     @OneToMany
@@ -86,5 +86,13 @@ public class Client {
 
     public void setPostal_code(String postal_code) {
         this.postal_code = postal_code;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
     }
 }
