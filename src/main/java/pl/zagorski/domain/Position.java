@@ -5,9 +5,11 @@ import java.util.List;
 
 @Entity
 public class Position {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true)
+    @Column(unique = true)
     private int id;
 
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")

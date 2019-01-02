@@ -1,0 +1,22 @@
+ 
+--RELACJA ONE TO MANY--
+
+**Pobranie jednego parametru
+
+ public static void main(String[] args) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        //Wyswietlanie akcji jakie ma dany pracownik(podaje imie i nazwisko)
+
+        //   List<Object[]> results = entityManager.createQuery("SELECT m.name FROM Medicine m JOIN Producer p ON m.producer_id = p.id").getResultList();
+        String lek = "Davercin";
+        Object result = entityManager.createQuery("SELECT m.name FROM Character c JOIN c.medicines m where m.name=:lek").setParameter("lek", lek).getSingleResult();
+
+
+        entityManager.close();
+        entityManagerFactory.close();
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(result.toString());
+
+    }

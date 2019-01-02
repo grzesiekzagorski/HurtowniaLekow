@@ -1,0 +1,21 @@
+   public static void main(String[] args) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        //Wyswietlanie akcji jakie ma dany pracownik(podaje imie i nazwisko)
+
+
+//        String lek = "Davercin";
+//        Object result = entityManager.createQuery("SELECT m.name FROM Character c JOIN c.medicines m where m.name=:lek").setParameter("lek", lek).getSingleResult();
+
+           List<Object[]> results = entityManager.createQuery("SELECT m.name FROM Character c JOIN c.medicines m").getResultList();
+
+        for (Object[] result : results) {
+            System.out.println(result[0].toString());
+        }
+
+        entityManager.close();
+        entityManagerFactory.close();
+
+
+    }

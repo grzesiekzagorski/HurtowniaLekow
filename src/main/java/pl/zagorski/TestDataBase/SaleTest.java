@@ -32,7 +32,7 @@ public class SaleTest {
 
         Warehouse warehouse = entityManager.find(Warehouse.class,1);
         Employee employee = entityManager.find(Employee.class,1);
-        Client client = entityManager.find(Client.class,2);
+        Client client = entityManager.find(Client.class,1);
 
         List<Sale> saleWarehouse = warehouse.getSales();
         List<Sale> saleEmployee = employee.getSales();
