@@ -23,6 +23,18 @@ public class Medicine {
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String portion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "character_id")
+    private Character character;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prescription_id")
+    private Prescription prescription;
+
     @OneToMany
     @JoinColumn(name = "medicine_id")
     private List<PurchaseOrder> orders;
@@ -75,6 +87,30 @@ public class Medicine {
         this.portion = portion;
     }
 
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+
+    public Producer getProducer() {
+        return producer;
+    }
+
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
+    }
+
     public List<PurchaseOrder> getOrders() {
         return orders;
     }
@@ -82,4 +118,6 @@ public class Medicine {
     public void setOrders(List<PurchaseOrder> orders) {
         this.orders = orders;
     }
+
+
 }
