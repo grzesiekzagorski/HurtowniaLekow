@@ -2,6 +2,7 @@ package pl.zagorski.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,9 +16,21 @@ public class Warehouse {
     private Date delivery_date;
     private Date expiration_date;
 
-    @OneToMany
-    @JoinColumn(name = "warehouse_id")
-    private List<Sale> sales;
+    @OneToMany(mappedBy = "warehouse")
+    private List<Sale> sales = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchaseOrder_id")
+    private PurchaseOrder order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "accepting_delivery_id")
+    private Employee employee;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
     public int getId() {
         return id;
@@ -57,5 +70,29 @@ public class Warehouse {
 
     public void setSales(List<Sale> sales) {
         this.sales = sales;
+    }
+
+    public PurchaseOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(PurchaseOrder order) {
+        this.order = order;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

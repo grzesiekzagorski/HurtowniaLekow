@@ -8,7 +8,7 @@ import java.util.List;
 public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true)
+    @Column(unique = true)
     private int id;
 
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
@@ -40,4 +40,6 @@ public class Producer {
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
     }
+
+
 }

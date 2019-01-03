@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,9 +36,8 @@ public class Medicine {
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
 
-    @OneToMany
-    @JoinColumn(name = "medicine_id")
-    private List<PurchaseOrder> orders;
+    @OneToMany(mappedBy = "medicine")
+    private List<PurchaseOrder> orders = new ArrayList<>();
 
     public int getId() {
         return id;

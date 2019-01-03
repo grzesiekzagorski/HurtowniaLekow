@@ -1,13 +1,14 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true)
+    @Column(unique = true)
     private int id;
 
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
@@ -16,35 +17,32 @@ public class Employee {
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String surname;
 
-    @Column(columnDefinition = "VARCHAR(30) NOT NULL",unique = true)
+    @Column(columnDefinition = "VARCHAR(30) NOT NULL", unique = true)
     private String login;
 
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String password;
 
-    @OneToOne
-    @JoinColumn
-    private Position position;
 
     public int getId() {
         return id;
     }
 
-    @OneToMany
-    @JoinColumn(name = "purchaser_id")
-    private List<PurchaseOrder> orders;
+    @OneToMany(mappedBy = "employee")
+    private List<PurchaseOrder> orders = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "accepting_delivery_id")
-    private List<Warehouse> warehouseList;
+    @OneToMany(mappedBy = "employee")
+    private List<Warehouse> warehouses = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "accepting_delivery_id")
-    private List<Delivery> deliveryList;
+    @OneToMany(mappedBy = "employee")
+    private List<Delivery> deliveryList = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "seller_id")
-    private List<Sale> sales;
+    @OneToMany(mappedBy = "employee")
+    private List<Sale> sales = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     public void setId(int id) {
         this.id = id;
@@ -98,12 +96,12 @@ public class Employee {
         this.orders = orders;
     }
 
-    public List<Warehouse> getWarehouseList() {
-        return warehouseList;
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
     }
 
-    public void setWarehouseList(List<Warehouse> warehouseList) {
-        this.warehouseList = warehouseList;
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
     public List<Delivery> getDeliveryList() {
@@ -121,4 +119,6 @@ public class Employee {
     public void setSales(List<Sale> sales) {
         this.sales = sales;
     }
+
+
 }

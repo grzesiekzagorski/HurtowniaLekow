@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,9 +14,8 @@ public class Status {
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "status_id")
-    private List<PurchaseOrder> orders;
+    @OneToMany(mappedBy = "status")
+    private List<PurchaseOrder> orders = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -40,4 +40,6 @@ public class Status {
     public void setOrders(List<PurchaseOrder> orders) {
         this.orders = orders;
     }
+
+
 }

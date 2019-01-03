@@ -40,4 +40,6 @@ public class Prescription {
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
     }
+
+
 }

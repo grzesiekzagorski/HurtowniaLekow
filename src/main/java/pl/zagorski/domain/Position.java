@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,9 +19,8 @@ public class Position {
     @ManyToMany(mappedBy = "positions")
     private List<Action> actions;
 
-    @OneToMany
-    @JoinColumn(name = "position_id")
-    private List<Employee> employees;
+    @OneToMany(mappedBy = "position")
+    private List<Employee> employees = new ArrayList<>();
 
     public List<Employee> getEmployees() {
         return employees;
@@ -53,4 +53,6 @@ public class Position {
     public void setActions(List<Action> actions) {
         this.actions = actions;
     }
+
+
 }
