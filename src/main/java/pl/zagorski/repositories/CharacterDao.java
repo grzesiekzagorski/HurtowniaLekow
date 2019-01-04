@@ -2,7 +2,6 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.data.repository.query.Param;
-import pl.zagorski.domain.Action;
 import pl.zagorski.domain.Character;
 
 import java.util.List;

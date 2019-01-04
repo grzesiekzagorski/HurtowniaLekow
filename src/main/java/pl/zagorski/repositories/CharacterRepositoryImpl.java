@@ -3,7 +3,6 @@ package pl.zagorski.repositories;
 
 import org.springframework.stereotype.Repository;
 import pl.zagorski.domain.Character;
-import pl.zagorski.domain.Position;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,7 +30,7 @@ public class CharacterRepositoryImpl implements CharacterDao {
     @Override
     public List<Character> findAll() {
         TypedQuery<Character> q = em.createQuery("Select c from Character c", Character.class);
-        return (List<Character>)q.getResultList();
+        return q.getResultList();
     }
 
     @Override
@@ -42,8 +41,8 @@ public class CharacterRepositoryImpl implements CharacterDao {
 
     @Override
     public List<Character> orderByName() {
-        TypedQuery<Character> query = em.createNamedQuery("orderByName", Character.class);
-        return query.getResultList();
+        TypedQuery<Character> q = em.createQuery("Select c from Character c order by name", Character.class);
+        return q.getResultList();
     }
 
     @Override
