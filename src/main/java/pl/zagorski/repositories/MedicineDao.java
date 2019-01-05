@@ -14,7 +14,8 @@ public interface MedicineDao {
     Medicine findOne(int id);
     List<Medicine> orderByName();
     Medicine getMedicineByName(@Param("name") String name);
-    List<Object[]> showAllMedicines();
+    List<Object[]> showAllMedicinesOrderByName();
+    List<Object[]> showAllMedicinesOrderById();
 
 
 }
