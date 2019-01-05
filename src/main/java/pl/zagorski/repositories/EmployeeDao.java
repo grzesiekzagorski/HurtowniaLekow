@@ -3,12 +3,11 @@ package pl.zagorski.repositories;
 
 import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Employee;
-import pl.zagorski.domain.Medicine;
-import pl.zagorski.domain.PurchaseOrder;
 
 import java.util.List;
 
 public interface EmployeeDao {
+
     void save(Employee employee);
     void edit(Employee employee);
     List<Employee> findAll();
@@ -22,8 +21,6 @@ public interface EmployeeDao {
     List<Object[]> showEmployeesByName(@Param("name") String name);
     List<Object[]> showEmployeesBySurname(@Param("surname") String surname);
     List<Object[]> showEmployeesByNameAndSurname(@Param("name") String name,@Param("surname") String surname);
-    List<String> showActionsOfThisEmployee(String login);
-
-
+    List<String> showActionsOfThisEmployee(@Param("login")String login);
 
 }

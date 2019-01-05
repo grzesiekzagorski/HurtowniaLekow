@@ -13,6 +13,7 @@ public interface PurchaseOrderDao {
     PurchaseOrder findOne(int id);
     List<Object[]> orderByName();
     List<Object[]> showPurchaseOrdersByName(@Param("name") String name);
+    List<Object[]> showPurchaseOrderById(@Param("id") int id);
     List<Object[]> showAllPurchaseOrders();
 
 

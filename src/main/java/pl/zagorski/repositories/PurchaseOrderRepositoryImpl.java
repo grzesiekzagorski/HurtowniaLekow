@@ -57,6 +57,14 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderDao {
     }
 
     @Override
+    public List<Object[]> showPurchaseOrderById(int id) {
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m " +
+                "where p.id = :id", Object[].class);
+        return q.setParameter("id", id).getResultList();
+    }
+
+    @Override
     public List<Object[]> showAllPurchaseOrders() {
         TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
                 "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m", Object[].class);

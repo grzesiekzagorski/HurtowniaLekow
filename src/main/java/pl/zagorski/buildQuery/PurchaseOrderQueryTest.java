@@ -14,19 +14,22 @@ public class PurchaseOrderQueryTest {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-        TypedQuery<String[]> query = entityManager.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m order by m.name", String[].class);
+        TypedQuery<Object[]> query = entityManager.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m " +
+                "where p.id = :id", Object[].class);
 
         TypedQuery<Medicine> q22 = entityManager.createQuery("Select c from Medicine c where c.name = :name", Medicine.class);
 
-        List<String[]> results = query.getResultList();
+        List<Object[]> results = query.setParameter("id","1").getResultList();
 
         entityManager.close();
         entityManagerFactory.close();
 
         System.out.println("************************************************************");
 
-           for (String[] akcja: results){
-               System.out.println(akcja[0]);
+        for (Object[] result : results) {
+            System.out.println(result[0].toString() + "|" + result[1].toString() + "|"+result[2].toString()+ "|" + result[3].toString() + "|" + result[4].toString() + "|" + result[5].toString()+"|" + result[6].toString());
+
         }
 
     }
