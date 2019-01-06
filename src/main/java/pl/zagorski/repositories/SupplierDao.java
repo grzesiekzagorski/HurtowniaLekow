@@ -16,6 +16,7 @@ public interface SupplierDao {
     List<Supplier> getSuppliersByName(@Param("name") String name);
     List<Object[]> showAllSuppliers();
     List<Object[]> showSupplierByName(@Param("name") String name);
+    List<Object[]> showSupplierById(@Param("id") int id);
 
 
 }

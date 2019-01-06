@@ -19,6 +19,7 @@ public interface EmployeeDao {
     List<Object[]> showAllEmployees();
     List<Object[]> showAndOrderBySurname();
     List<Object[]> showEmployeesByName(@Param("name") String name);
+    List<Object[]> showEmployeeById(@Param("id") int id);
     List<Object[]> showEmployeesBySurname(@Param("surname") String surname);
     List<Object[]> showEmployeesByNameAndSurname(@Param("name") String name,@Param("surname") String surname);
     List<String> showActionsOfThisEmployee(@Param("login")String login);

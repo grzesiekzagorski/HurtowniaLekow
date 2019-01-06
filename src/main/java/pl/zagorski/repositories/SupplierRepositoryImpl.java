@@ -65,5 +65,12 @@ public class SupplierRepositoryImpl implements SupplierDao {
         return q.setParameter("name", name).getResultList();
     }
 
+    @Override
+    public List<Object[]> showSupplierById(int id) {
+        TypedQuery<Object[]> q = em.createQuery("Select c.id,c.name,c.street,c.house_number,c.city,c.postal_code,p.name " +
+                "from Supplier c JOIN c.province p where c.id = :id", Object[].class);
+        return q.setParameter("id", id).getResultList();
+    }
+
 
 }

@@ -84,6 +84,12 @@ public class EmployeeRepositoryImpl implements EmployeeDao {
     }
 
     @Override
+    public List<Object[]> showEmployeeById(int id) {
+        TypedQuery<Object[]> query = em.createQuery("SELECT e.id,e.name,e.surname,e.login,e.password,p.name FROM Employee e JOIN e.position p WHERE e.id = :id",Object[].class);
+        return query.setParameter("id",id).getResultList();
+    }
+
+    @Override
     public List<Object[]> showEmployeesBySurname(String surname) {
         TypedQuery<Object[]> query = em.createQuery("SELECT e.id,e.name,e.surname,e.login,e.password,p.name FROM Employee e JOIN e.position p WHERE e.surname = :surname",Object[].class);
         return query.setParameter("surname",surname).getResultList();
