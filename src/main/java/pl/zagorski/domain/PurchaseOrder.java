@@ -2,6 +2,7 @@ package pl.zagorski.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,13 +17,23 @@ public class PurchaseOrder {
 
     private Date date_of_order;
 
-    @OneToMany
-    @JoinColumn(name = "purchaseOrder_id")
-    private List<Warehouse> warehouseList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medicine_id")
+    private Medicine medicine;
 
-    @OneToMany
-    @JoinColumn(name = "purchaseOrder_id")
-    private List<Delivery> deliveryList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchaser_id")
+    private Employee employee;
+
+    @OneToMany(mappedBy = "order")
+    private List<Warehouse> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order")
+    private List<Delivery> ordersDelivery = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -48,19 +59,45 @@ public class PurchaseOrder {
         this.date_of_order = date_of_order;
     }
 
-    public List<Warehouse> getWarehouseList() {
-        return warehouseList;
+    public Medicine getMedicine() {
+        return medicine;
     }
 
-    public void setWarehouseList(List<Warehouse> warehouseList) {
-        this.warehouseList = warehouseList;
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
     }
 
-    public List<Delivery> getDeliveryList() {
-        return deliveryList;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setDeliveryList(List<Delivery> deliveryList) {
-        this.deliveryList = deliveryList;
+    public void setStatus(Status status) {
+        this.status = status;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public List<Warehouse> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Warehouse> orders) {
+        this.orders = orders;
+    }
+
+    public List<Delivery> getOrdersDelivery() {
+        return ordersDelivery;
+    }
+
+    public void setOrdersDelivery(List<Delivery> ordersDelivery) {
+        this.ordersDelivery = ordersDelivery;
+    }
+
+
 }

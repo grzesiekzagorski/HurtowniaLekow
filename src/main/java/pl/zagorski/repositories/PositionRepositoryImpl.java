@@ -2,7 +2,6 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.stereotype.Repository;
-import pl.zagorski.domain.Action;
 import pl.zagorski.domain.Position;
 
 import javax.persistence.EntityManager;
@@ -10,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository("positionDao")
+@Repository("PositionDao")
 public class PositionRepositoryImpl implements PositionDao {
 
     @PersistenceContext
@@ -30,8 +29,8 @@ public class PositionRepositoryImpl implements PositionDao {
 
     @Override
     public List<Position> findAll() {
-        TypedQuery<Position> q = em.createQuery("Select c from Position c", Position.class);
-        return (List<Position>)q.getResultList();
+        TypedQuery<Position> q = em.createQuery("Select c from Position c",Position.class);
+        return q.getResultList();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class PositionRepositoryImpl implements PositionDao {
 
     @Override
     public List<Position> orderByName() {
-        TypedQuery<Position> q = em.createQuery("Select c from Position c order by c.name asc", Position.class);
+        TypedQuery<Position> q = em.createQuery("Select c from Position c order by name", Position.class);
         return q.getResultList();
     }
 
@@ -50,5 +49,11 @@ public class PositionRepositoryImpl implements PositionDao {
     public Position getPositionByName(String name) {
         TypedQuery<Position> q = em.createQuery("Select c from Position c where c.name = :name", Position.class);
         return q.setParameter("name", name).getSingleResult();
+    }
+
+    @Override
+    public List<String> showActionsOfThisPosition(String name) {
+        TypedQuery<String> query = em.createQuery("SELECT a.name FROM Position p JOIN p.actions a WHERE p.name= :name",String.class);
+        return query.setParameter("name",name).getResultList();
     }
 }

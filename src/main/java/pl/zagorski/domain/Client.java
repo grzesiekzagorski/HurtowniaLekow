@@ -1,13 +1,14 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true)
+    @Column(unique = true)
     private int id;
 
     @Column(columnDefinition = "VARCHAR(50) NOT NULL")
@@ -28,9 +29,12 @@ public class Client {
     @Column(columnDefinition = "VARCHAR(6) NOT NULL")
     private String postal_code;
 
-    @OneToMany
-    @JoinColumn(name = "client_id")
-    private List<Sale> sales;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "province_id")
+    private Province province;
+
+    @OneToMany(mappedBy = "client")
+    private List<Sale> sales = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -94,5 +98,13 @@ public class Client {
 
     public void setSales(List<Sale> sales) {
         this.sales = sales;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }

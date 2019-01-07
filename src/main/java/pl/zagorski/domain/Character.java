@@ -10,7 +10,7 @@ import java.util.List;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true)
+    @Column(unique = true)
     private int id;
 
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
@@ -42,4 +42,6 @@ public class Character {
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
     }
+
+
 }

@@ -12,5 +12,8 @@ public interface ClientDao {
     List<Client> findAll();
     Client findOne(int id);
     List<Client> orderByName();
-    Client getClientByName(@Param("name")String name);
+    List<Client> getClientsByName(@Param("name") String name);
+    List<Object[]> showAllClients();
+    List<Object[]> showClientsByName(@Param("name") String name);
+    List<Object[]> showClientById(@Param("id") int id);
 }

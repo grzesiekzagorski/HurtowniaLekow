@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name=Action.ORDER_BY_NAME, query = "Select c from Action c order by name asc")
+        @NamedQuery(name = Action.ORDER_BY_NAME, query = "Select c from Action c order by name asc")
 })
 public class Action {
 
@@ -44,4 +44,6 @@ public class Action {
     public void setPositions(List<Position> positions) {
         this.positions = positions;
     }
+
+
 }

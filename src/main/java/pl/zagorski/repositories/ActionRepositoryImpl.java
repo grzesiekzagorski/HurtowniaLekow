@@ -3,20 +3,17 @@ package pl.zagorski.repositories;
 
 import org.springframework.stereotype.Repository;
 import pl.zagorski.domain.Action;
-import pl.zagorski.domain.Client;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository("actionDao")
+@Repository("ActionDao")
 public class ActionRepositoryImpl implements ActionDao {
 
     @PersistenceContext
     private EntityManager em;
-
 
     @Override
     public void save(Action action) {
@@ -32,8 +29,8 @@ public class ActionRepositoryImpl implements ActionDao {
 
     @Override
     public List<Action> findAll() {
-        TypedQuery<Action> q = em.createQuery("Select c from Action c", Action.class);
-        return (List<Action>) q.getResultList();
+        TypedQuery<Action> q = em.createQuery("Select c from Action c",Action.class);
+        return q.getResultList();
     }
 
     @Override
@@ -44,8 +41,8 @@ public class ActionRepositoryImpl implements ActionDao {
 
     @Override
     public List<Action> orderByName() {
-        TypedQuery<Action> query = em.createNamedQuery("orderByName", Action.class);
-        return query.getResultList();
+        TypedQuery<Action> q = em.createQuery("Select c from Action c order by name", Action.class);
+        return q.getResultList();
     }
 
     @Override
@@ -54,4 +51,9 @@ public class ActionRepositoryImpl implements ActionDao {
         return q.setParameter("name", name).getSingleResult();
     }
 
+    @Override
+    public List<String> showPositionsOfThisAction(String name) {
+        TypedQuery<String> query = em.createQuery("SELECT p.name FROM Position p JOIN p.actions a WHERE a.name= :name",String.class);
+        return query.setParameter("name",name).getResultList();
+    }
 }

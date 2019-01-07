@@ -1,6 +1,7 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,13 +26,15 @@ public class Supplier {
     @Column(columnDefinition = "VARCHAR(6) NOT NULL")
     private String postal_code;
 
-    @OneToMany
-    @JoinColumn(name = "supplier_id")
-    private List<Warehouse> warehouseList;
+    @OneToMany(mappedBy = "supplier")
+    private List<Warehouse> warehouses = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "supplier_id")
-    private List<Delivery> deliveryList;
+    @OneToMany(mappedBy = "supplier")
+    private List<Delivery> deliveries = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "province_id")
+    private Province province;
 
     public int getId() {
         return id;
@@ -81,19 +84,27 @@ public class Supplier {
         this.postal_code = postal_code;
     }
 
-    public List<Warehouse> getWarehouseList() {
-        return warehouseList;
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
     }
 
-    public void setWarehouseList(List<Warehouse> warehouseList) {
-        this.warehouseList = warehouseList;
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
-    public List<Delivery> getDeliveryList() {
-        return deliveryList;
+    public List<Delivery> getDeliveries() {
+        return deliveries;
     }
 
-    public void setDeliveryList(List<Delivery> deliveryList) {
-        this.deliveryList = deliveryList;
+    public void setDeliveries(List<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }
