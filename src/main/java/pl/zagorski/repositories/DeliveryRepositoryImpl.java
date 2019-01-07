@@ -3,7 +3,6 @@ package pl.zagorski.repositories;
 
 import org.springframework.stereotype.Repository;
 import pl.zagorski.domain.Delivery;
-import pl.zagorski.domain.Medicine;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
