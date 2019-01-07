@@ -1,12 +1,14 @@
 package pl.zagorski.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Delivery;
 import pl.zagorski.repositories.DeliveryDao;
 
 import java.util.List;
 
+@Service
 public class DeliveryServiceImpl implements DeliveryImpl {
 
     @Autowired
