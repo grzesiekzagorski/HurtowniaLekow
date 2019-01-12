@@ -16,7 +16,7 @@ public class Position {
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String name;
 
-    @ManyToMany(mappedBy = "positions")
+    @ManyToMany
     private List<Action> actions;
 
     @OneToMany(mappedBy = "position")

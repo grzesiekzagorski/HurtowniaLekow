@@ -18,7 +18,8 @@ public class Action {
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String name;
 
-    @ManyToMany
+
+    @ManyToMany(mappedBy = "actions")
     private List<Position> positions;
 
     public int getId() {
