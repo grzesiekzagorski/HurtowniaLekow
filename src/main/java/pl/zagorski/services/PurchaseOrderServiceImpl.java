@@ -10,8 +10,9 @@ import java.util.List;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderImpl{
+
     @Autowired
-    PurchaseOrderDao purchaseOrderDao;
+    private PurchaseOrderDao purchaseOrderDao;
 
 
     @Override

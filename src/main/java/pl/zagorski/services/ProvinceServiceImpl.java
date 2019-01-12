@@ -12,7 +12,7 @@ import java.util.List;
 public class ProvinceServiceImpl  implements ProvinceImpl{
 
     @Autowired
-    ProvinceDao provinceDao;
+    private ProvinceDao provinceDao;
 
 
     @Override

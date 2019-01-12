@@ -12,7 +12,7 @@ import java.util.List;
 public class PrescritpionServiceImpl implements PrescriptionImpl {
 
     @Autowired
-    PrescriptionDao prescriptionDao;
+    private PrescriptionDao prescriptionDao;
 
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
 public class ProducerServiceImpl implements ProducerImpl {
 
     @Autowired
-    ProducerDao producerDao;
+    private ProducerDao producerDao;
 
 
     @Override

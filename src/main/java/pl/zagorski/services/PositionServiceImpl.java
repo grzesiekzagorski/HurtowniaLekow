@@ -12,7 +12,7 @@ import java.util.List;
 public class PositionServiceImpl implements PositionImpl{
 
     @Autowired
-    PositionDao positionDao;
+    private PositionDao positionDao;
 
 
     @Override

@@ -14,5 +14,4 @@ public interface ProducerImpl {
     List<Producer> orderByName();
     Producer getProducerByName(@Param("name") String name);
 
-
 }

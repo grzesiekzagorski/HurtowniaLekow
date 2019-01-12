@@ -12,7 +12,7 @@ import java.util.List;
 public class SaleServiceImpl implements SaleImpl {
 
     @Autowired
-    SaleDao saleDao;
+    private SaleDao saleDao;
 
 
     @Override

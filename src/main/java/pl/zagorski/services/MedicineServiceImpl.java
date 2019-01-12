@@ -12,7 +12,7 @@ import java.util.List;
 public class MedicineServiceImpl implements MedicineImpl {
 
     @Autowired
-    MedicineDao medicineDao;
+    private MedicineDao medicineDao;
 
 
     @Override

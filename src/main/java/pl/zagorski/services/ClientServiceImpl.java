@@ -12,7 +12,7 @@ import java.util.List;
 public class ClientServiceImpl implements ClientImpl {
 
     @Autowired
-    ClientDao clientDao;
+    private ClientDao clientDao;
 
     @Override
     @Transactional

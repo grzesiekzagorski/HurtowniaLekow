@@ -12,7 +12,7 @@ import java.util.List;
 public class DeliveryServiceImpl implements DeliveryImpl {
 
     @Autowired
-    DeliveryDao deliveryDao;
+    private DeliveryDao deliveryDao;
 
     @Override
     @Transactional

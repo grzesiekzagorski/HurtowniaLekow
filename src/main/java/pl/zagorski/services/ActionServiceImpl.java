@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Action;
 import pl.zagorski.repositories.ActionDao;
 
-
 import java.util.List;
 
 @Service
