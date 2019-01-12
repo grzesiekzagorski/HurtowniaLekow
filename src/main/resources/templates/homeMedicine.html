@@ -109,8 +109,24 @@
 			<td th:text="${m.id}"></td>
 			<td th:text="${m.name}"></td>
 			<td th:text="${m.price}"></td>
+			<td th:text="${m.discount}"></td>
 			<td th:text="${m.portion}"></td>
+			<td>
+				<ul th:each="p : ${m.prescription}">
+					<li th:text="${p.name}"/>
+				</ul>
+			</td>
 			<td th:text="${m.wrapping}"></td>
+			<td>
+				<ul th:each="c : ${m.character}">
+					<li th:text="${c.name}"/>
+				</ul>
+			</td>
+			<td>
+				<ul th:each="pr : ${m.producer}">
+					<li th:text="${pr.name}"/>
+				</ul>
+			</td>
 
 			</tbody>
 		</table>

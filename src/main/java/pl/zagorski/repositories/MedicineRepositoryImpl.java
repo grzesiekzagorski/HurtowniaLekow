@@ -65,6 +65,13 @@ public class MedicineRepositoryImpl implements MedicineDao {
         return q.getResultList();
     }
 
+    @Override
+    public List<Object[]> showAllMedicines() {
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,m.price,m.discount,m.portion,p.name,c.name," +
+                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr order by m.id", Object[].class);
+        return q.getResultList();
+    }
+
 
 }
 
