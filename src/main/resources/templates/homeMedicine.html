@@ -29,22 +29,22 @@
 				<input type="text" name="discount" id="discount" required>
 			<label for="portioning"><b>Dawkowanie</b></label>
 				<input type="text" name="portioning" id="portioning" required>
-
-				<select name="prescriptionList" class="select_form" style="width:94%;background-color: #BBBBBB;
+			<label for="prescriptionList"><b>Recepta</b></label>
+				<select name="prescriptionList" id="prescriptionList" class="select_form" style="width:94%;background-color: #BBBBBB;
 				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
 					<option value="volvo">tak</option>
 					<option value="saab">nie</option>
 				</select>
 			<label for="wrapping"><b>Opakowanie</b></label>
 				<input type="text" name="Opakowanie" id="wrapping" required>
-
-				<select name="characterList" class="select_form" style="width:94%;background-color: #BBBBBB;
+			<label for="character"><b>Postać</b></label>
+				<select name="characterList" class="select_form" id="character" style="width:94%;background-color: #BBBBBB;
 				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
 					<option value="volvo">tabletki</option>
 					<option value="saab">syrop</option>
 				</select>
-
-				<select name="producerList" class="select_form" style="width:94%;background-color: #BBBBBB;
+			<label for="producerList"><b>Recepta</b></label>
+				<select name="producerList" id="producerList" class="select_form" style="width:94%;background-color: #BBBBBB;
 				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
 					<option value="volvo">Polfa Tarchomin</option>
 					<option value="saab">Farmed</option>
@@ -93,12 +93,26 @@
 		<table>
 			<thead class="thead-dark">
 			</thead>
+			<tr style="background-color: green;">
+				<th style="width:10px;">Id</th>
+				<th>Nazwa</th>
+				<th>Cena</th>
+				<th>Rabat</th>
+				<th>Dawkowanie</th>
+				<th>Recepta</th>
+				<th>Postać</th>
+				<th>Opakowanie</th>
+				<th>Producent</th>
+			</tr>
 			<tbody class="tbody-dark">
 			<tbody th:each="m : ${medicines}">
 			<td th:text="${m.id}"></td>
 			<td th:text="${m.name}"></td>
+			<td th:text="${m.price}"></td>
+			<td th:text="${m.portion}"></td>
+			<td th:text="${m.wrapping}"></td>
+
 			</tbody>
-			</tr>
 		</table>
 		<!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->	
 		<div class="container-button">

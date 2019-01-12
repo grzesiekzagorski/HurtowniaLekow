@@ -85,13 +85,13 @@ body{
 }
 table {
   color:white;
-  margin-left:57px;
+  margin-left:72px;
   margin-right:57px;
   margin-top:20px;
   border-collapse: collapse;
   border-spacing: 0;
   height:300px;
-  width: 845px;
+  width: 820px;
   overflow-y:scroll;
   display:block;
   border: 3px solid #444444;
@@ -110,7 +110,7 @@ th, td {
   border-right:2px dotted #cccccc;
 }
 
-tr:nth-child(even){background-color: #fe7f00	}
+tbody:nth-child(2n){background-color: #fe7f00	}
 
 /*Side Nav - menu pojawiające sie z lewej strony*/
 .sidenav {
