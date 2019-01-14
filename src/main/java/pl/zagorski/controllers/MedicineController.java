@@ -16,19 +16,10 @@ public class MedicineController {
 
     @Autowired
     private MedicineServiceImpl medicineService;
-    @Autowired
-    private CharacterServiceImpl characterService;
-    @Autowired
-    private PrescritpionServiceImpl prescriptionService;
-    @Autowired
-    private ProducerServiceImpl producerService;
 
     @GetMapping("/allMedicines")
     public String orderByName(Model model) {
-        model.addAttribute("medicines",medicineService.findAll());
-        model.addAttribute("characters",characterService.findAll());
-        model.addAttribute("prescriptions",prescriptionService.findAll());
-        model.addAttribute("producers",producerService.findAll());
+        model.addAttribute("medicines",medicineService.showAllMedicines());
         return "homeMedicine";
     }
 

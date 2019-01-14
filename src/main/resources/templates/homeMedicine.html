@@ -106,29 +106,16 @@
 			</tr>
 			<tbody class="tbody-dark">
 			<tbody th:each="m : ${medicines}">
-			<td th:text="${m.id}"></td>
-			<td th:text="${m.name}"></td>
-			<td th:text="${m.price}"></td>
-			<td th:text="${m.discount}"></td>
-			<td th:text="${m.portion}"></td>
-			<td>
-				<ul th:each="p : ${m.prescription}">
-					<li th:text="${p.name}"/>
-				</ul>
-			</td>
-			<td th:text="${m.wrapping}"></td>
-			<td>
-				<ul th:each="c : ${m.character}">
-					<li th:text="${c.name}"/>
-				</ul>
-			</td>
-			<td>
-				<ul th:each="pr : ${m.producer}">
-					<li th:text="${pr.name}"/>
-				</ul>
-			</td>
-
-			</tbody>
+			<td th:text="${m[0]}"></td>
+			<td th:text="${m[1]}"></td>
+			<td th:text="${m[2]}"></td>
+			<td th:text="${m[3]}"></td>
+			<td th:text="${m[4]}"></td>
+			<td th:text="${m[5]}"></td>
+			<td th:text="${m[6]}"></td>
+			<td th:text="${m[7]}"></td>
+			<td th:text="${m[8]}"></td>
+		</tbody>
 		</table>
 		<!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->	
 		<div class="container-button">
@@ -138,7 +125,7 @@
 			<button class="btn-d"><i class="fa fa-trash"></i> Usuń</button>
 		</div>
 	</div>
-	<!-- Funkcje w JavaScripts -->	
+	<!-- Funkcje w JavaScript -->
 	<script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "250px";

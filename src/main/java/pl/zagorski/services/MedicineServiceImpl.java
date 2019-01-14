@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.repositories.MedicineDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,7 +59,18 @@ public class MedicineServiceImpl implements MedicineImpl {
     }
 
     @Override
-    public List<Object[]> showAllMedicines() {
-        return medicineDao.showAllMedicines();
+    public List<String[]> showAllMedicines() {
+        List<Object[]> objects = medicineDao.showAllMedicines();
+        List<String[]> strings = new ArrayList<>();
+
+        for(int i=0;i<objects.size();i++){
+            Object[] tab = objects.get(i);
+            String[] tabString = new String[tab.length];
+            for(int j=0;j<tab.length;j++){
+                tabString[j] = tab[j].toString();
+            }
+            strings.add(tabString);
+        }
+        return strings;
     }
 }

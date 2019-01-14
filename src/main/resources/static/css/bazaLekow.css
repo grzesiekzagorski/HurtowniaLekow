@@ -109,6 +109,9 @@ th, td {
   white-space: nowrap;
   border-right:2px dotted #cccccc;
 }
+th{
+  height: 30px;
+}
 
 tbody:nth-child(2n){background-color: #fe7f00	}
 
