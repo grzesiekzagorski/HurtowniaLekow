@@ -7,13 +7,15 @@ import pl.zagorski.domain.Medicine;
 import java.util.List;
 
 public interface MedicineImpl {
-    void save(Medicine medicine);
+    void save(int idPrescription, int idCharacter, int idProducer, String name, double price, double discount,
+              String portion, String wrapping);
     void edit(Medicine medicine);
     List<Medicine> findAll();
     Medicine findOne(int id);
     List<Medicine> orderByName();
-    Medicine getMedicineByName(@Param("name") String name);
-    List<Object[]> showAllMedicinesOrderByName();
+    List<String[]> showMedicineByIdOrName(@Param("id")String id ,@Param("name")String name);
+    List<String[]> convertObjectListToStringList(List<Object[]> objects);
+    List<String[]> showAllMedicinesOrderByName();
     List<String[]> showAllMedicines();
 
 }

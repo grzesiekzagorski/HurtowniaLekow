@@ -3,8 +3,12 @@ package pl.zagorski.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Medicine;
+import pl.zagorski.repositories.CharacterDao;
 import pl.zagorski.repositories.MedicineDao;
+import pl.zagorski.repositories.PrescriptionDao;
+import pl.zagorski.repositories.ProducerDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +18,40 @@ public class MedicineServiceImpl implements MedicineImpl {
 
     @Autowired
     private MedicineDao medicineDao;
+    @Autowired
+    private PrescriptionDao prescriptionDao;
+    @Autowired
+    private CharacterDao characterDao;
+    @Autowired
+    private ProducerDao producerDao;
+
+    public List<String[]> convertObjectListToStringList(List<Object[]> objects) {
+        List<String[]> strings = new ArrayList<>();
+        for (int i = 0; i < objects.size(); i++) {
+            Object[] tab = objects.get(i);
+            String[] tabString = new String[tab.length];
+            for (int j = 0; j < tab.length; j++) {
+                tabString[j] = tab[j].toString();
+            }
+            strings.add(tabString);
+        }
+        return strings;
+    }
 
 
     @Override
     @Transactional
-    public void save(Medicine medicine) {
+    public void save(int idPrescription, int idCharacter, int idProducer, String name, double price, double discount,
+                     String portion, String wrapping) {
+        Medicine medicine = new Medicine();
+        medicine.setPrescription(prescriptionDao.findOne(idPrescription));
+        medicine.setCharacter(characterDao.findOne(idCharacter));
+        medicine.setProducer(producerDao.findOne(idProducer));
+        medicine.setName(name);
+        medicine.setPrice(price);
+        medicine.setDiscount(discount);
+        medicine.setPortion(portion);
+        medicine.setWrapping(wrapping);
         medicineDao.save(medicine);
     }
 
@@ -44,28 +77,29 @@ public class MedicineServiceImpl implements MedicineImpl {
     }
 
     @Override
-    public Medicine getMedicineByName(String name) {
-        return medicineDao.getMedicineByName(name);
+    public List<String[]> showMedicineByIdOrName(String id, String name) {
+        List<String[]> result = new ArrayList<>();
+        if (id.isEmpty() && name.isEmpty()) {
+            result = convertObjectListToStringList(medicineDao.showAllMedicines());
+        } else if (!id.isEmpty() && name.isEmpty()) {
+            result = convertObjectListToStringList(medicineDao.showMedicineById(Integer.parseInt(id)));
+        } else if (id.isEmpty() && !name.isEmpty()) {
+            result = convertObjectListToStringList(medicineDao.showMedicineByName(name));
+        } else {
+            result = convertObjectListToStringList(medicineDao.showMedicineByIdAndName(Integer.parseInt(id), name));
+        }
+        return result;
     }
 
     @Override
-    public List<Object[]> showAllMedicinesOrderByName() {
-        return medicineDao.showAllMedicinesOrderByName();
+    public List<String[]> showAllMedicinesOrderByName() {
+        List<String[]> result = convertObjectListToStringList(medicineDao.showAllMedicinesOrderByName());
+        return result;
     }
 
     @Override
     public List<String[]> showAllMedicines() {
-        List<Object[]> objects = medicineDao.showAllMedicines();
-        List<String[]> strings = new ArrayList<>();
-
-        for(int i=0;i<objects.size();i++){
-            Object[] tab = objects.get(i);
-            String[] tabString = new String[tab.length];
-            for(int j=0;j<tab.length;j++){
-                tabString[j] = tab[j].toString();
-            }
-            strings.add(tabString);
-        }
-        return strings;
+        List<String[]> result = convertObjectListToStringList(medicineDao.showAllMedicines());
+        return result;
     }
 }

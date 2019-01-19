@@ -10,10 +10,7 @@ import pl.zagorski.services.MedicineServiceImpl;
 import pl.zagorski.services.PrescriptionServiceImpl;
 import pl.zagorski.services.ProducerServiceImpl;
 
-import javax.validation.Valid;
-
 @Controller
-@RequestMapping("/medicine")
 public class MedicineController {
 
     @Autowired
@@ -25,7 +22,7 @@ public class MedicineController {
     @Autowired
     private ProducerServiceImpl producerService;
 
-    @GetMapping("/allMedicines")
+    @RequestMapping(value ="/medicine/allMedicines",method = RequestMethod.GET)
     public String findAllMedicines(Model model) {
         model.addAttribute("medicines", medicineService.showAllMedicines());
         model.addAttribute("characters", characterService.findAll());
@@ -34,24 +31,20 @@ public class MedicineController {
         return "allMedicines";
     }
 
-    @PostMapping("/allMedicines")
+    @RequestMapping(value ="/medicine/allMedicines",params = "idPrescription", method = RequestMethod.POST)
     public String addMedicine(Model model, @RequestParam int idPrescription, @RequestParam int idCharacter,
                             @RequestParam int idProducer, @RequestParam String name,
                             @RequestParam double price, @RequestParam double discount,
                             @RequestParam String portion, @RequestParam String wrapping) {
-        Medicine medicine = new Medicine();
-        medicine.setPrescription(prescriptionService.findOne(idPrescription));
-        medicine.setCharacter(characterService.findOne(idCharacter));
-        medicine.setProducer(producerService.findOne(idProducer));
-        medicine.setName(name);
-        medicine.setPrice(price);
-        medicine.setDiscount(discount);
-        medicine.setPortion(portion);
-        medicine.setWrapping(wrapping);
-        medicineService.save(medicine);
+        medicineService.save(idPrescription,idCharacter,idProducer,name,price,discount,portion,wrapping);
         findAllMedicines(model);
         return "allMedicines";
+    }
 
+    @RequestMapping(value ="/medicine/foundMedicines", method = RequestMethod.POST)
+    public String findMedicine(Model model, String idSearch, String nameSearch){
+        model.addAttribute("medicines",medicineService.showMedicineByIdOrName(idSearch,nameSearch));
+        return "foundMedicines";
     }
 
 
