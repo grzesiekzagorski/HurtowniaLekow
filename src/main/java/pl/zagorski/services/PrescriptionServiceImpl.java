@@ -9,7 +9,7 @@ import pl.zagorski.repositories.PrescriptionDao;
 import java.util.List;
 
 @Service
-public class PrescritpionServiceImpl implements PrescriptionImpl {
+public class PrescriptionServiceImpl implements PrescriptionImpl {
 
     @Autowired
     private PrescriptionDao prescriptionDao;

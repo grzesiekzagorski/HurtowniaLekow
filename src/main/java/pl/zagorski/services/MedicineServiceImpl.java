@@ -54,11 +54,6 @@ public class MedicineServiceImpl implements MedicineImpl {
     }
 
     @Override
-    public List<Object[]> showAllMedicinesOrderById() {
-        return medicineDao.showAllMedicinesOrderById();
-    }
-
-    @Override
     public List<String[]> showAllMedicines() {
         List<Object[]> objects = medicineDao.showAllMedicines();
         List<String[]> strings = new ArrayList<>();

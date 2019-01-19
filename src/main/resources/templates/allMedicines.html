@@ -4,6 +4,9 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bazaLekow.css}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<style>
 		.logout{
 			background-color: red;
@@ -17,42 +20,47 @@
 </head>
 
 <body>
+
+<datalist id="prescriptionList">
+	<option th:each="p : ${prescriptions}" th:value="${p.id}"
+			th:label="${p.name}"></option>
+</datalist>
+<datalist id="characterList">
+	<option th:each="c : ${characters}" th:value="${c.id}"
+			th:label="${c.name}"></option>
+</datalist>
+<datalist id="producerList">
+	<option th:each="pr : ${producers}" th:value="${pr.id}"
+			th:label="${pr.name}"></option>
+</datalist>
+
+
 <!--Formularz dodania leku do bazy-->
 	<div class="form-popup-addMedicine" id="myFormAddMedicine">
-		<form action="/action_page.php" class="form-container-addMedicine">
+		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+			<div class="col-xs-3">
+				<div class="thumbnail">
 			<h1>Dodaj lek</h1>
+			<label for="prescriptionList"><b>Recepta</b></label><br/>
+			<input list="prescriptionList" class="form-control"  name="idPrescription" ><br/>
+			<label for="characterList"><b>Postać</b></label><br/>
+			<input list="characterList"  class="form-control" name="idCharacter"><br/>
+			<label for="producerList"><b>Producent</b></label><br/>
+			<input list="producerList"  class="form-control" name="idProducer"><br/>
 			<label for="name"><b>Nazwa</b></label>
-				<input type="text" name="name" id="name" required>	
+				<input type="text" id="name" name="name" required>
 			<label for="price"><b>Cena</b></label>
-				<input type="number" name="price" id="price" required>
+				<input type="number" step="0.01" id="price" name="price" required>
 			<label for="discount"><b>Rabat</b></label>
-				<input type="text" name="discount" id="discount" required>
-			<label for="portioning"><b>Dawkowanie</b></label>
-				<input type="text" name="portioning" id="portioning" required>
-			<label for="prescriptionList"><b>Recepta</b></label>
-				<select name="prescriptionList" id="prescriptionList" class="select_form" style="width:94%;background-color: #BBBBBB;
-				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
-					<option value="volvo">tak</option>
-					<option value="saab">nie</option>
-				</select>
+				<input type="number" step="0.01" id="discount" name="discount" required>
+			<label for="portion"><b>Dawkowanie</b></label>
+				<input type="text" id="portion" name="portion" required>
 			<label for="wrapping"><b>Opakowanie</b></label>
-				<input type="text" name="Opakowanie" id="wrapping" required>
-			<label for="character"><b>Postać</b></label>
-				<select name="characterList" class="select_form" id="character" style="width:94%;background-color: #BBBBBB;
-				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
-					<option value="volvo">tabletki</option>
-					<option value="saab">syrop</option>
-				</select>
-			<label for="producerList"><b>Recepta</b></label>
-				<select name="producerList" id="producerList" class="select_form" style="width:94%;background-color: #BBBBBB;
-				outline: none;padding:4px; margin: 2px 0 3px 0;border: none;background: #f1f1f1">
-					<option value="volvo">Polfa Tarchomin</option>
-					<option value="saab">Farmed</option>
-				</select>
-			<br/>
+				<input type="text" id="wrapping" name="wrapping" required>
 			<button type="button" class="btn cancel" onclick="closeFormAddMedicine()"><i class="fa fa-close"></i> Anuluj</button>
 			<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
-		
+			</div>
+			</div>
 		</form>
 	</div>
 

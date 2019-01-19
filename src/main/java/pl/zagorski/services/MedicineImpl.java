@@ -14,7 +14,6 @@ public interface MedicineImpl {
     List<Medicine> orderByName();
     Medicine getMedicineByName(@Param("name") String name);
     List<Object[]> showAllMedicinesOrderByName();
-    List<Object[]> showAllMedicinesOrderById();
     List<String[]> showAllMedicines();
 
 }
