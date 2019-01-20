@@ -3,7 +3,6 @@ package pl.zagorski.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.repositories.CharacterDao;
 import pl.zagorski.repositories.MedicineDao;
@@ -81,9 +80,9 @@ public class MedicineServiceImpl implements MedicineImpl {
         List<String[]> result = new ArrayList<>();
         if (id.isEmpty() && name.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showAllMedicines());
-        } else if (!id.isEmpty() && name.isEmpty()) {
+        } else if (!id.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showMedicineById(Integer.parseInt(id)));
-        } else if (id.isEmpty() && !name.isEmpty()) {
+        } else if (!name.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showMedicineByName(name));
         } else {
             result = convertObjectListToStringList(medicineDao.showMedicineByIdAndName(Integer.parseInt(id), name));

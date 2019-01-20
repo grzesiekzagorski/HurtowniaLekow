@@ -33,6 +33,11 @@
 	<option th:each="pr : ${producers}" th:value="${pr.id}"
 			th:label="${pr.name}"></option>
 </datalist>
+<datalist id="medicineList">
+	<option th:each="m : ${medicines}" th:value="${m[0]}"
+			th:label="${m[1]}"></option>
+</datalist>
+
 
 
 <!--Formularz dodania leku do bazy-->
@@ -63,6 +68,36 @@
 			</div>
 		</form>
 	</div>
+<!--Formularz edycji leku z bazy-->
+<div class="form-popup-addMedicine" id="myFormEditMedicine">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+		<div class="col-xs-3">
+			<div class="thumbnail">
+				<h1>Edytuj lek</h1>
+				<label for="medicineList"><b>Lek</b></label><br/>
+				<input list="medicineList" class="form-control"  name="idMedicineEdit" ><br/>
+				<label for="prescriptionList"><b>Recepta</b></label><br/>
+				<input list="prescriptionList" class="form-control"  name="idPrescriptionEdit" ><br/>
+				<label for="characterList"><b>Postać</b></label><br/>
+				<input list="characterList"  class="form-control" name="idCharacterEdit"><br/>
+				<label for="producerList"><b>Producent</b></label><br/>
+				<input list="producerList"  class="form-control" name="idProducerEdit"><br/>
+				<label for="nameEdit"><b>Nazwa</b></label>
+				<input type="text" id="nameEdit" name="nameEdit" required>
+				<label for="priceEdit"><b>Cena</b></label>
+				<input type="number" step="0.01" id="priceEdit" name="priceEdit" required >
+				<label for="discountEdit"><b>Rabat</b></label>
+				<input type="number" step="0.01" id="discountEdit" name="discountEdit" required>
+				<label for="portionEdit"><b>Dawkowanie</b></label>
+				<input type="text" id="portionEdit" name="portionEdit" required>
+				<label for="wrappingEdit"><b>Opakowanie</b></label>
+				<input type="text" id="wrappingEdit" name="wrappingEdit" required>
+				<button type="button" class="btn cancel" onclick="closeFormEditMedicine()"><i class="fa fa-close"></i> Anuluj</button>
+				<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
+			</div>
+		</div>
+	</form>
+</div>
 
 <!--SideNav - Okno wyboru podstrony-->
 	<div id="mySidenav" class="sidenav">
@@ -88,9 +123,9 @@
 
 		<!-- Formularz wyszukiwania leku po produkcie lub identyfikatorze -->
 		<div class="container-search">
-			<form th:action="@{/medicine/foundMedicines}" method="post"  class="form-container-search">
+			<form th:action="@{/medicine/allMedicines}" method="post"  class="form-container-search">
 					<input type="text" name="idSearch" id="idSearch" placeholder="Id">
-					<input type="text" name="nameSearch" id="nameSearch" placeholder="Name">
+					<input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa">
 				<button type="submit" class="btn-f"><i class="fa fa-search"></i> Szukaj</button>
 			</form>
 		</div>
@@ -126,7 +161,7 @@
 		<!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->	
 		<div class="container-button">
 			<button class="btn-r"><i class="fa fa-refresh"></i> Odśwież</button>
-			<button class="btn-e"><i class="fa fa-edit"></i> Edytuj</button>
+			<button class="btn-e" onclick="openFormEditMedicine()"><i class="fa fa-edit"></i> Edytuj</button>
 			<button class="btn-s" onclick="openFormAddMedicine()"><i class="fa fa-plus"></i> Dodaj</button>
 			<button class="btn-d"><i class="fa fa-trash"></i> Usuń</button>
 		</div>
@@ -148,6 +183,13 @@
 		function closeFormAddMedicine() {
 		document.getElementById("myFormAddMedicine").style.display = "none";
 		}
+        function openFormEditMedicine() {
+            document.getElementById("myFormEditMedicine").style.display = "block";
+        }
+
+        function closeFormEditMedicine() {
+            document.getElementById("myFormEditMedicine").style.display = "none";
+        }
 	</script>
 </body>
 </html>
