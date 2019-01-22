@@ -10,6 +10,7 @@ import java.util.List;
 public interface MedicineDao {
     void save(Medicine medicine);
     void edit(Medicine medicine);
+    void delete(Medicine medicine);
     List<Medicine> findAll();
     Medicine findOne(int id);
     List<Medicine> orderByName();

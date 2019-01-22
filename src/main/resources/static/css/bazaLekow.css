@@ -362,5 +362,8 @@ tbody:nth-child(2n) {
 .form-container-addMedicine .btn:hover, .open-button-login:hover, .open-button-registration:hover {
     opacity: 1;
 }
+#medicineList{
+    overflow:scroll;
+}
 
 /*KONIEC STYLIZACJI FORMULARZA DODAJ LEK*/

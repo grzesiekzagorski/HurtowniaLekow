@@ -11,6 +11,7 @@ public interface MedicineImpl {
               String portion, String wrapping);
     void edit(int idMedicineEdit,int idPrescriptionEdit,int idCharacterEdit, int idProducerEdit,
               String nameEdit,double priceEdit,double discountEdit, String portionEdit,String wrappingEdit);
+    void delete(int idMedicineDelete);
     List<Medicine> findAll();
     Medicine findOne(int id);
     List<Medicine> orderByName();

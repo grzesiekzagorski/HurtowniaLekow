@@ -34,9 +34,10 @@
 			th:label="${pr.name}"></option>
 </datalist>
 <datalist id="medicineList">
-	<option th:each="m : ${medicines}" th:value="${m[0]}"
-			th:label="${m[1]}"></option>
+		<option th:each="m : ${medicines}" th:value="${m[0]}"
+				th:label="${m[1]}"></option>
 </datalist>
+
 
 
 
@@ -75,7 +76,7 @@
 			<div class="thumbnail">
 				<h1>Edytuj lek</h1>
 				<label for="medicineList"><b>Lek</b></label><br/>
-				<input list="medicineList" class="form-control"  name="idMedicineEdit" ><br/>
+				<input list="medicineList" class="form-control"  name="idMedicineEdit" autocomplete="off" ><br/>
 				<label for="prescriptionList"><b>Recepta</b></label><br/>
 				<input list="prescriptionList" class="form-control"  name="idPrescriptionEdit" ><br/>
 				<label for="characterList"><b>Postać</b></label><br/>
@@ -98,7 +99,20 @@
 		</div>
 	</form>
 </div>
-
+<!--Formularz usuniecia leku z bazy-->
+<div class="form-popup-addMedicine" id="myFormDeleteMedicine">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+		<div class="col-xs-3">
+			<div class="thumbnail">
+				<h1>Usuń lek</h1>
+				<label for="medicineList"><b>Lek</b></label><br/>
+				<input list="medicineList" class="form-control"  name="idMedicineDelete" autocomplete="off"><br/>
+				<button type="button" class="btn cancel" onclick="closeFormDeleteMedicine()"><i class="fa fa-close"></i> Anuluj</button>
+				<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
+			</div>
+		</div>
+	</form>
+</div>
 <!--SideNav - Okno wyboru podstrony-->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -163,7 +177,7 @@
 			<button class="btn-r"><i class="fa fa-refresh"></i> Odśwież</button>
 			<button class="btn-e" onclick="openFormEditMedicine()"><i class="fa fa-edit"></i> Edytuj</button>
 			<button class="btn-s" onclick="openFormAddMedicine()"><i class="fa fa-plus"></i> Dodaj</button>
-			<button class="btn-d"><i class="fa fa-trash"></i> Usuń</button>
+			<button class="btn-d" onclick="openFormDeleteMedicine()"><i class="fa fa-trash"></i> Usuń</button>
 		</div>
 	</div>
 	<!-- Funkcje w JavaScript -->
@@ -189,6 +203,13 @@
 
         function closeFormEditMedicine() {
             document.getElementById("myFormEditMedicine").style.display = "none";
+        }
+        function openFormDeleteMedicine() {
+            document.getElementById("myFormDeleteMedicine").style.display = "block";
+        }
+
+        function closeFormDeleteMedicine() {
+            document.getElementById("myFormDeleteMedicine").style.display = "none";
         }
 	</script>
 </body>

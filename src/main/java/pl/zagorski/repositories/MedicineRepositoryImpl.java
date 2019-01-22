@@ -28,6 +28,11 @@ public class MedicineRepositoryImpl implements MedicineDao {
     }
 
     @Override
+    public void delete(Medicine medicine) {
+        em.remove(medicine);
+    }
+
+    @Override
     public List<Medicine> findAll() {
         TypedQuery<Medicine> q = em.createQuery("Select c from Medicine c", Medicine.class);
         return q.getResultList();

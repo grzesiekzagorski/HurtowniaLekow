@@ -3,7 +3,6 @@ package pl.zagorski.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.repositories.CharacterDao;
 import pl.zagorski.repositories.MedicineDao;
@@ -69,6 +68,13 @@ public class MedicineServiceImpl implements MedicineImpl {
         medicine.setPortion(portionEdit);
         medicine.setWrapping(wrappingEdit);
         medicineDao.edit(medicine);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int idMedicineDelete) {
+        Medicine medicine = medicineDao.findOne(idMedicineDelete);
+        medicineDao.delete(medicine);
     }
 
     @Override
