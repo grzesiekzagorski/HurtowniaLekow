@@ -42,9 +42,22 @@ public class MedicineController {
         return "allMedicines";
     }
 
+    @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineEdit", method = RequestMethod.POST)
+    public String editMedicine(Model model,@RequestParam int idMedicineEdit,@RequestParam int idPrescriptionEdit, @RequestParam int idCharacterEdit,
+                              @RequestParam int idProducerEdit, @RequestParam String nameEdit,
+                              @RequestParam double priceEdit, @RequestParam double discountEdit,
+                              @RequestParam String portionEdit, @RequestParam String wrappingEdit) {
+        medicineService.edit(idMedicineEdit,idPrescriptionEdit,idCharacterEdit,idProducerEdit,nameEdit,priceEdit,discountEdit,portionEdit,wrappingEdit);
+        findAllMedicines(model);
+        return "allMedicines";
+    }
+
     @RequestMapping(value ="/medicine/allMedicines",params = "idSearch", method = RequestMethod.POST)
     public String findMedicine(Model model, String idSearch, String nameSearch){
         model.addAttribute("medicines",medicineService.showMedicineByIdOrName(idSearch,nameSearch));
+        model.addAttribute("characters", characterService.findAll());
+        model.addAttribute("producers", producerService.findAll());
+        model.addAttribute("prescriptions", prescriptionService.findAll());
         return "allMedicines";
     }
 

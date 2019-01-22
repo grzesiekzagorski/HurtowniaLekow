@@ -9,7 +9,8 @@ import java.util.List;
 public interface MedicineImpl {
     void save(int idPrescription, int idCharacter, int idProducer, String name, double price, double discount,
               String portion, String wrapping);
-    void edit(Medicine medicine);
+    void edit(int idMedicineEdit,int idPrescriptionEdit,int idCharacterEdit, int idProducerEdit,
+              String nameEdit,double priceEdit,double discountEdit, String portionEdit,String wrappingEdit);
     List<Medicine> findAll();
     Medicine findOne(int id);
     List<Medicine> orderByName();

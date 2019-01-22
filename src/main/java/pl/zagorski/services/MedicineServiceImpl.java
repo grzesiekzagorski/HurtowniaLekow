@@ -3,6 +3,7 @@ package pl.zagorski.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.repositories.CharacterDao;
 import pl.zagorski.repositories.MedicineDao;
@@ -56,7 +57,17 @@ public class MedicineServiceImpl implements MedicineImpl {
 
     @Override
     @Transactional
-    public void edit(Medicine medicine) {
+    public void edit(int idMedicineEdit,int idPrescriptionEdit,int idCharacterEdit, int idProducerEdit,
+                     String nameEdit,double priceEdit,double discountEdit, String portionEdit,String wrappingEdit) {
+        Medicine medicine = medicineDao.findOne(idMedicineEdit);
+        medicine.setPrescription(prescriptionDao.findOne(idPrescriptionEdit));
+        medicine.setCharacter(characterDao.findOne(idCharacterEdit));
+        medicine.setProducer(producerDao.findOne(idProducerEdit));
+        medicine.setName(nameEdit);
+        medicine.setPrice(priceEdit);
+        medicine.setDiscount(discountEdit);
+        medicine.setPortion(portionEdit);
+        medicine.setWrapping(wrappingEdit);
         medicineDao.edit(medicine);
     }
 
@@ -77,14 +88,14 @@ public class MedicineServiceImpl implements MedicineImpl {
 
     @Override
     public List<String[]> showMedicineByIdOrName(String id, String name) {
-        List<String[]> result = new ArrayList<>();
+        List<String[]> result;
         if (id.isEmpty() && name.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showAllMedicines());
-        } else if (!id.isEmpty()) {
+        } else if (!id.isEmpty() && name.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showMedicineById(Integer.parseInt(id)));
-        } else if (!name.isEmpty()) {
+        } else if (id.isEmpty() && !name.isEmpty()) {
             result = convertObjectListToStringList(medicineDao.showMedicineByName(name));
-        } else {
+        } else{
             result = convertObjectListToStringList(medicineDao.showMedicineByIdAndName(Integer.parseInt(id), name));
         }
         return result;

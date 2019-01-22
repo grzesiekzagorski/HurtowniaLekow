@@ -62,7 +62,7 @@ public class MedicineRepositoryImpl implements MedicineDao {
     @Override
     public List<Object[]> showMedicineByIdAndName(int id, String name) {
         TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
-                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr WHERE m.id = :id AND m.name = :name ", Object[].class);
+                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr WHERE (m.id = :id AND m.name = :name) ", Object[].class);
         return q.setParameter("id",id).setParameter("name",name).getResultList();
     }
 
