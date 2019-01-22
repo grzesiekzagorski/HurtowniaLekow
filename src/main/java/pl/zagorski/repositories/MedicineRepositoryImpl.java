@@ -28,6 +28,11 @@ public class MedicineRepositoryImpl implements MedicineDao {
     }
 
     @Override
+    public void delete(Medicine medicine) {
+        em.remove(medicine);
+    }
+
+    @Override
     public List<Medicine> findAll() {
         TypedQuery<Medicine> q = em.createQuery("Select c from Medicine c", Medicine.class);
         return q.getResultList();
@@ -46,21 +51,37 @@ public class MedicineRepositoryImpl implements MedicineDao {
     }
 
     @Override
-    public Medicine getMedicineByName(String name) {
-        TypedQuery<Medicine> q = em.createQuery("Select c from Medicine c where c.name = :name", Medicine.class);
-        return q.setParameter("name", name).getSingleResult();
+    public List<Object[]> showMedicineById(int id) {
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
+                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr WHERE m.id = :id ", Object[].class);
+        return q.setParameter("id",id).getResultList();
     }
 
     @Override
+    public List<Object[]> showMedicineByName(String name) {
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
+                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr WHERE m.name = :name ", Object[].class);
+        return q.setParameter("name",name).getResultList();
+    }
+
+    @Override
+    public List<Object[]> showMedicineByIdAndName(int id, String name) {
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
+                "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr WHERE (m.id = :id AND m.name = :name) ", Object[].class);
+        return q.setParameter("id",id).setParameter("name",name).getResultList();
+    }
+
+
+    @Override
     public List<Object[]> showAllMedicinesOrderByName() {
-        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,m.price,m.discount,m.portion,p.name,c.name," +
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
                 "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr order by m.name", Object[].class);
         return q.getResultList();
     }
 
     @Override
-    public List<Object[]> showAllMedicinesOrderById() {
-        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,m.price,m.discount,m.portion,p.name,c.name," +
+    public List<Object[]> showAllMedicines() {
+        TypedQuery<Object[]> q = em.createQuery("SELECT m.id,m.name,(concat(m.price,' zł')),concat((m.discount*100),'%'),m.portion,p.name,c.name,m.wrapping," +
                 "pr.name FROM Medicine m JOIN m.character c JOIN m.prescription p JOIN m.producer pr order by m.id", Object[].class);
         return q.getResultList();
     }
