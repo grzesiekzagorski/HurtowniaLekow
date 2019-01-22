@@ -42,7 +42,7 @@
 
 
 <!--Formularz dodania leku do bazy-->
-	<div class="form-popup-addMedicine" id="myFormAddMedicine">
+	<div class="form-popup-addMedicine" id="myFormAddMedicine" style="margin-top: 5%">
 		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
 			<div class="col-xs-3">
 				<div class="thumbnail">
@@ -100,13 +100,13 @@
 	</form>
 </div>
 <!--Formularz usuniecia leku z bazy-->
-<div class="form-popup-addMedicine" id="myFormDeleteMedicine">
+<div class="form-popup-addMedicine" id="myFormDeleteMedicine" style="margin-top: 120px;margin-left: 310px;">
 	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Usuń lek</h1>
-				<label for="medicineList"><b>Lek</b></label><br/>
-				<input list="medicineList" class="form-control"  name="idMedicineDelete" autocomplete="off"><br/>
+				<label for="medicineList"><b>Id</b></label><br/>
+				<input list="medicineList" class="form-control"  name="idMedicineDelete" autocomplete="off" style="padding-right: 10px;">
 				<button type="button" class="btn cancel" onclick="closeFormDeleteMedicine()"><i class="fa fa-close"></i> Anuluj</button>
 				<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
 			</div>

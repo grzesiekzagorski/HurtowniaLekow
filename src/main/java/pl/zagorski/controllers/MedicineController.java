@@ -63,9 +63,7 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineDelete", method = RequestMethod.POST)
     public String deleteMedicine(Model model,@RequestParam int idMedicineDelete) {
         medicineService.delete(idMedicineDelete);
-        model.addAttribute("characters", characterService.findAll());
-        model.addAttribute("producers", producerService.findAll());
-        model.addAttribute("prescriptions", prescriptionService.findAll());
+        findAllMedicines(model);
         return "allMedicines";
     }
 
