@@ -38,8 +38,7 @@ public class MedicineController {
                             @RequestParam double price, @RequestParam double discount,
                             @RequestParam String portion, @RequestParam String wrapping) {
         medicineService.save(idPrescription,idCharacter,idProducer,name,price,discount,portion,wrapping);
-        findAllMedicines(model);
-        return "allMedicines";
+        return findAllMedicines(model);
     }
 
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineEdit", method = RequestMethod.POST)
@@ -48,8 +47,7 @@ public class MedicineController {
                               @RequestParam double priceEdit, @RequestParam double discountEdit,
                               @RequestParam String portionEdit, @RequestParam String wrappingEdit) {
         medicineService.edit(idMedicineEdit,idPrescriptionEdit,idCharacterEdit,idProducerEdit,nameEdit,priceEdit,discountEdit,portionEdit,wrappingEdit);
-        findAllMedicines(model);
-        return "allMedicines";
+        return findAllMedicines(model);
     }
 
     @RequestMapping(value ="/medicine/allMedicines",params = "idSearch", method = RequestMethod.POST)
@@ -63,8 +61,7 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineDelete", method = RequestMethod.POST)
     public String deleteMedicine(Model model,@RequestParam int idMedicineDelete) {
         medicineService.delete(idMedicineDelete);
-        findAllMedicines(model);
-        return "allMedicines";
+        return findAllMedicines(model);
     }
 
 

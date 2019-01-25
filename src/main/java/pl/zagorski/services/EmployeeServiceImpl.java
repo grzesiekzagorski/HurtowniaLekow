@@ -7,6 +7,7 @@ import pl.zagorski.domain.Employee;
 import pl.zagorski.repositories.EmployeeDao;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeImpl {
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeImpl {
     }
 
     @Override
-    public Employee getEmployeeByLogin(String login) {
+    public Optional<Employee> getEmployeeByLogin(String login) {
         return employeeDao.getEmployeeByLogin(login);
     }
 

@@ -4,9 +4,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Action.ORDER_BY_NAME, query = "Select c from Action c order by name asc")
-})
 public class Action {
 
     public static final String ORDER_BY_NAME = "orderByName";

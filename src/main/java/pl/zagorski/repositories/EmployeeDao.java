@@ -5,6 +5,7 @@ import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeDao {
 
@@ -12,7 +13,7 @@ public interface EmployeeDao {
     void edit(Employee employee);
     List<Employee> findAll();
     Employee findOne(int id);
-    Employee getEmployeeByLogin(@Param("login") String login);
+    Optional<Employee> getEmployeeByLogin(@Param("login") String login);
     List<Employee> getEmployeesByName(@Param("name") String name);
     List<Employee> getEmployeesBySurname(@Param("surname") String surname);
     List<Employee> getEmployeesByNameAndSurname(@Param("name") String name,@Param("surname") String surname);

@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository("EmployeeDao")
 public class EmployeeRepositoryImpl implements EmployeeDao {
@@ -42,9 +43,9 @@ public class EmployeeRepositoryImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee getEmployeeByLogin(String login) {
+    public Optional<Employee> getEmployeeByLogin(String login) {
         TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e where e.login = :login",Employee.class);
-        return query.setParameter("login",login).getSingleResult();
+        return query.setParameter("login",login).setMaxResults(1).getResultList().stream().findFirst();
     }
 
     @Override
