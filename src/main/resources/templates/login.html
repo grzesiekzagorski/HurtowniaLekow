@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loginAndRegister.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medicine – zaloguj się lub zarejestruj</title>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo"/>
+    <div id="warning_alert">
+
+        <p style="color: red" th:if="${loginError}" class="error"> <i class="fa fa-warning" style="font-size:48px;color:red"></i>Wrong user or password</p>
+    </div>
+    <br/>
+    <button class="open-button-login" onclick="openFormLogin()">Zaloguj się</button>
+    <button class="open-button-registration" onclick="openFormRegister()">Zarejestruj się</button>
+
+    <div class="form-popup-login" id="myFormLogin" name="myFormLogin">
+        <form method="POST" action="/login" class="form-container">
+            <h1>Logowanie</h1>
+            <div class="form-group">
+                <input name="username" type="text" class="form-control" placeholder="Username" autofocus="true"/>
+                <input name="password" type="password" class="form-control" placeholder="Password"/>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Zaloguj się</button>
+                <button type="button" class="btn cancel" onclick="closeFormLogin()">Anuluj</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+</div>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+function openFormLogin() {
+document.getElementById("myFormLogin").style.display = "block";
+}
+
+function closeFormLogin() {
+document.getElementById("myFormLogin").style.display = "none";
+}
+</script>
+</body>
+</html>

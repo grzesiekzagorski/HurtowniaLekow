@@ -34,14 +34,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/getEmployees").hasAnyRole("USER", "ADMIN").antMatchers("/addNewEmployee")
+                .hasAnyRole("ADMIN").anyRequest().authenticated()
+                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/medicine/allMedicines")
+                .failureUrl("/login-error")
+                .and().logout().permitAll();
 
         http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("**/secured/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin().permitAll();
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -59,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
             @Override
             public boolean matches(CharSequence charSequence, String s) {
-                return true;
+                return charSequence.toString().equals(s);
             }
         };
     }
