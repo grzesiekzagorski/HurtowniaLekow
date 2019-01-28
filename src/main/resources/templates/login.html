@@ -10,30 +10,25 @@
 <body>
 
 <div class="container">
-    <div class="logo"/>
-    <div id="warning_alert">
-
-        <p style="color: red" th:if="${loginError}" class="error"> <i class="fa fa-warning" style="font-size:48px;color:red"></i>Wrong user or password</p>
+    <div class="inside">
+        <div class="warning">
+           <p style="color: red" th:if="${loginError}" class="error"> <i class="fa fa-warning" style="font-size:18px;color:red"></i> Błędny login lub hasło</p>
+        </div>
+        <div class="buttonBox">
+            <button class="open-button-login" onclick="openFormLogin()">Zaloguj się</button>
+        </div>
     </div>
-    <br/>
-    <button class="open-button-login" onclick="openFormLogin()">Zaloguj się</button>
-    <button class="open-button-registration" onclick="openFormRegister()">Zarejestruj się</button>
-
     <div class="form-popup-login" id="myFormLogin" name="myFormLogin">
         <form method="POST" action="/login" class="form-container">
             <h1>Logowanie</h1>
             <div class="form-group">
-                <input name="username" type="text" class="form-control" placeholder="Username" autofocus="true"/>
+                <input name="username" type="text" class="form-control" placeholder="Login" autofocus="true"/>
                 <input name="password" type="password" class="form-control" placeholder="Password"/>
                 <button type="submit" class="btn btn-lg btn-primary btn-block">Zaloguj się</button>
                 <button type="button" class="btn cancel" onclick="closeFormLogin()">Anuluj</button>
             </div>
         </form>
     </div>
-
-
-
-
 </div>
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

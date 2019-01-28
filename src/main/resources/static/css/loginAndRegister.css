@@ -1,195 +1,202 @@
-body{
-	margin-left:auto;
-	margin-right:auto;
-	width:1000px;
-	background-repeat: no-repeat;
-	background-image: url(../img/photo.jpg);
-	height:500px;
-	background-color:#e9e9e9;
+body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    background-repeat: no-repeat;
+    background-image: url(../img/photo.jpg);
+    height: 500px;
+    background-color: #e9e9e9;
 }
-	
-.container{
-	margin-top:20px;
-	background-color:white;
-	opacity:0.8;
-	width: 974px;
-	height:574px;
-	padding:10px;
-	border-top-right-radius: 40px;
-	border-top-left-radius: 40px;
-	border-bottom-right-radius: 40px;
-	border-bottom-left-radius: 40px;
-	border: 3px solid #CCCCCC;
-	
-}
-.logo{
-	margin-top:20px;
-	background-repeat: no-repeat;
-	background-image: url(../img/logo.png);
-	margin-left:346px;
-	margin-right:346px;
-	width:281px;
-	height:324px;
-}
-.open-button-login {
 
-  background-color: #555;
-  color: white;
-  padding: 20px 10px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  width: 25%;
-  margin-left: -2%;
-  margin-right: -2%;
-  margin-top:25%
+.container {
+    margin-top: 20px;
+    background-color: white;
+    opacity: 0.8;
+    width: 974px;
+    height: 574px;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border: 3px solid #CCCCCC;
+
 }
-  .open-button-registration {
-  background-color: #555;
-  color: white;
-  padding: 20px 10px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  width: 25%;
-  margin-left: -2%;
-  margin-right: -2%;
-  margin-top:30%
+
+.inside {
+    background-repeat: no-repeat;
+    background-image: url(../img/logo.png);
+    margin-top: 10px;
+    background-color: white;
+    margin-left: 10px;
+    opacity: 0.8;
+    margin-left: 346px;
+    margin-right: 346px;
+    height: 324px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+.warning {
+    vertical-align: top;
+    text-align: center;
+    margin-top: 340px;
+    margin-left: -50px;
+    margin-right: 500px;
+    width: 350px;
+    height: 30px;
+}
+
+.buttonBox {
+    text-align: center;
+    margin-top: 2px;
+    margin-left: -50px;
+    margin-right: 500px;
+    width: 350px;
+    height: 100px;
+}
+
+.open-button-login {
+    background-color: #555;
+    color: white;
+    padding: 20px 10px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    width: 25%;
+    margin-left: -12.5%;
+    margin-right: -2%;
+    margin-top:0%;
 }
 
 .form-popup-login {
-  display: none;
-  position: fixed;
-  padding-left:100px;
-  padding-right:100px;
-  margin-left:-155px;
-  margin-right:-150px;
-  margin-top:7%;
-  margin-bottom:40%;
-  z-index: 9;
+    display: none;
+    position: fixed;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-left: 190px;
+    margin-top: -18%;
+    margin-bottom: 40%;
+    z-index: 9;
 }
+
 .form-popup-register {
-  display: none;
-  position: fixed;
-  padding-left:100px;
-  padding-right:100px;
-  margin-left:-155px;
-  margin-right:-150px;
-  margin-top:0.5%;
-  margin-bottom:40%;
-  z-index: 9;
+    display: none;
+    position: fixed;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-left: -155px;
+    margin-right: -150px;
+    margin-top: 0.5%;
+    margin-bottom: 40%;
+    z-index: 9;
 }
 
 .form-container-register {
-  max-width: 350px;
-  padding-top: 10px;
-  padding-bottom:10px;
-  padding-left:20px;
-  padding-right:20px;
-  background-color: #DDDDDD;
-  border: 3px solid #AAAAAA;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;	
+    max-width: 350px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #DDDDDD;
+    border: 3px solid #AAAAAA;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
-
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 350px;
-  padding-top: 10px;
-  padding-bottom:10px;
-  padding-left:20px;
-  padding-right:20px;
-  background-color: #DDDDDD;
-  border: 3px solid #AAAAAA;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
+    max-width: 350px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #DDDDDD;
+    border: 3px solid #AAAAAA;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 /* Full-width input fields */
-.form-container-register input[type=text]{
-  width: 90%;
-  padding: 7px;
-  margin: 5px 0 7px 0;
-  border: none;
-  background: #f1f1f1;
+.form-container-register input[type=text] {
+    width: 90%;
+    padding: 7px;
+    margin: 5px 0 7px 0;
+    border: none;
+    background: #f1f1f1;
 }
 
 .form-container input[type=text], .form-container input[type=password] {
-  width: 90%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
 }
 
 /* When the inputs get focus, do something */
 .form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #BBBBBB;
-  outline: none;
+    background-color: #BBBBBB;
+    outline: none;
 }
-
 
 .form-container-register input[type=text]:focus {
-  background-color: #BBBBBB;
-  outline: none;
+    background-color: #BBBBBB;
+    outline: none;
 }
-
-
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #3daf42;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.9;
+    background-color: #3daf42;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.9;
 }
 
 .form-container-register .btn {
-  background-color: #3daf42;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 94%;
-  margin-bottom:10px;
-  opacity: 0.9;
+    background-color: #3daf42;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 94%;
+    margin-bottom: 10px;
+    opacity: 0.9;
 }
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
-  background-color: red;
+    background-color: red;
 }
 
 .form-container-register .cancel {
-  background-color: red;
+    background-color: red;
 }
 
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .form-container-register .btn:hover, .open-button:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .form-container .btn:hover, .open-button-login:hover, .open-button-registration:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .form-container-register .btn:hover, .open-button-login:hover, .open-button-registration:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 	
