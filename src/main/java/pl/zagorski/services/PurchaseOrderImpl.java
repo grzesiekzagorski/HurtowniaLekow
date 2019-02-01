@@ -7,14 +7,16 @@ import pl.zagorski.domain.PurchaseOrder;
 import java.util.List;
 
 public interface PurchaseOrderImpl {
-    void save(PurchaseOrder purchaseOrder);
-    void edit(PurchaseOrder purchaseOrder);
+    void save(int idMedicine,int idSupplier,int amount,String userLogin);
+    void edit(int idOrderEdit,int idMedicineEdit,int idSupplierEdit,int amountEdit,String userLogin);
+    void delete(int orderDelete);
     List<PurchaseOrder> findAll();
     PurchaseOrder findOne(int id);
-    List<Object[]> orderByName();
-    List<Object[]> showPurchaseOrdersByName(@Param("name") String name);
-    List<Object[]> showPurchaseOrderById(@Param("id") int id);
-    List<Object[]> showAllPurchaseOrders();
+    List<String[]> orderByName();
+    List<String[]> convertObjectListToStringList(List<Object[]> objects);
+    List<String[]> showAllPurchaseOrders();
+    List<String[]> showAllPurchaseOrdersThatAreNotDelivered();
+    List<String[]> showPurchaseOrderByIdOrName(@Param("id")String id,@Param("name")String name);
 
 
 }

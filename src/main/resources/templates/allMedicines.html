@@ -42,7 +42,7 @@
 
 
 <!--Formularz dodania leku do bazy-->
-	<div class="form-popup-addMedicine" id="myFormAddMedicine" style="margin-top: 5%">
+	<div class="form-popup-addMedicine" id="myFormAddMedicine" style="margin-top:3%">
 		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
 			<div class="col-xs-3">
 				<div class="thumbnail">
@@ -131,8 +131,8 @@
 <!--SideNav - Okno wyboru podstrony-->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#">About</a>
-		<a href="#">Services</a>
+		<a href="/medicine/allMedicines">Leki</a>
+		<a href="/orders/allOrders">Zamówienia</a>
 		<a href="#">Clients</a>
 		<a href="#">Contact</a>
 	</div>
@@ -165,14 +165,14 @@
 			</thead>
 			<tr style="background-color: green;">
 				<th style="width:10px;">Id</th>
-				<th>Nazwa</th>
+				<th style="padding-left: 20px; padding-right: 20px;">Nazwa</th>
 				<th>Cena</th>
 				<th>Rabat</th>
 				<th>Dawkowanie</th>
 				<th>Recepta</th>
 				<th>Postać</th>
 				<th>Opakowanie</th>
-				<th>Producent</th>
+				<th style="padding-left: 30px; padding-right: 30px;">Producent</th>
 			</tr>
 			<tbody class="tbody-dark">
 			<tbody th:each="m : ${medicines}">

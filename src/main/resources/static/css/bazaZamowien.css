@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    margin-top: 20px;
+    margin-top: -6.5px;
     background-color: white;
     opacity: 0.8;
     width: 974px;
@@ -297,7 +297,7 @@ tbody:nth-child(2n) {
 /*KONIEC STYLIZACJI FORMULARZA WYSZUKAJ*/
 
 /*STYLIZACJA FORMULARZA DODAJ LEK*/
-.form-popup-addMedicine {
+.form-popup-addOrder {
     display: none;
     position: fixed;
     padding-left: 100px;

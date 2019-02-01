@@ -19,13 +19,8 @@ public class Delivery {
     private PurchaseOrder order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accepting_delivery_id")
     private Employee employee;
-
 
     public int getId() {
         return id;
@@ -65,14 +60,6 @@ public class Delivery {
 
     public void setOrder(PurchaseOrder order) {
         this.order = order;
-    }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
     }
 
     public Employee getEmployee() {

@@ -30,6 +30,10 @@ public class PurchaseOrder {
     @JoinColumn(name = "purchaser_id")
     private Employee employee;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
     @OneToMany(mappedBy = "order")
     private List<Warehouse> orders = new ArrayList<>();
 
@@ -100,5 +104,11 @@ public class PurchaseOrder {
         this.ordersDelivery = ordersDelivery;
     }
 
+    public Supplier getSupplier() {
+        return supplier;
+    }
 
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 }
