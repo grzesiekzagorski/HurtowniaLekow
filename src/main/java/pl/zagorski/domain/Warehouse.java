@@ -16,6 +16,9 @@ public class Warehouse {
     private Date delivery_date;
     private Date expiration_date;
 
+    @Column(columnDefinition = "VARCHAR(30) NOT NULL")
+    private String status;
+
     @OneToMany(mappedBy = "warehouse")
     private List<Sale> sales = new ArrayList<>();
 
@@ -84,4 +87,11 @@ public class Warehouse {
         this.employee = employee;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

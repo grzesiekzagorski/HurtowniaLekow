@@ -11,7 +11,7 @@ public class Status {
     @Column(unique = true)
     private int id;
 
-    @Column(columnDefinition = "VARCHAR(100) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String name;
 
     @OneToMany(mappedBy = "status")

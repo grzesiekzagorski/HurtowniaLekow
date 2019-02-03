@@ -3,7 +3,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bazaLekow.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/userInterface.css}"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -38,12 +38,9 @@
 				th:label="${m[1]}"></option>
 </datalist>
 
-
-
-
 <!--Formularz dodania leku do bazy-->
-	<div class="form-popup-addMedicine" id="myFormAddMedicine" style="margin-top:3%">
-		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+	<div class="form-popup" id="myFormAddMedicine" style="margin-top:3%">
+		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 			<div class="col-xs-3">
 				<div class="thumbnail">
 			<h1>Dodaj lek</h1>
@@ -70,8 +67,8 @@
 		</form>
 	</div>
 <!--Formularz edycji leku z bazy-->
-<div class="form-popup-addMedicine" id="myFormEditMedicine">
-	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormEditMedicine">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Edytuj lek</h1>
@@ -100,8 +97,8 @@
 	</form>
 </div>
 <!--Formularz usuniecia leku z bazy-->
-<div class="form-popup-addMedicine" id="myFormDeleteMedicine" style="margin-top: 120px;margin-left: 310px;">
-	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormDeleteMedicine" style="margin-top: 120px;margin-left: 310px;">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Usuń lek</h1>
@@ -114,8 +111,8 @@
 	</form>
 </div>
 <!--Okno z informacjami o zalogowanym uzytkowniku-->
-<div class="form-popup-addMedicine" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
-	<form method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
+	<form method="post" class="form-container">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Użytkownik</h1>

@@ -10,7 +10,6 @@ public class Delivery {
     @Column(unique = true)
     private int id;
 
-    private int amount;
     private Date delivery_date;
     private Date expiration_date;
 
@@ -28,14 +27,6 @@ public class Delivery {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public Date getDelivery_date() {

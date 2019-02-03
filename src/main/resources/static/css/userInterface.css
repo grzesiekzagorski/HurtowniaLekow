@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    margin-top: -6.5px;
+    margin-top: 20px;
     background-color: white;
     opacity: 0.8;
     width: 974px;
@@ -297,7 +297,7 @@ tbody:nth-child(2n) {
 /*KONIEC STYLIZACJI FORMULARZA WYSZUKAJ*/
 
 /*STYLIZACJA FORMULARZA DODAJ LEK*/
-.form-popup-addOrder {
+.form-popup {
     display: none;
     position: fixed;
     padding-left: 100px;
@@ -321,7 +321,7 @@ tbody:nth-child(2n) {
     opacity: 0.97;
 }
 
-.form-container-addMedicine input[type=text], .form-container-addMedicine input[type=number] {
+.form-container input[type=text], .form-container input[type=number] {
     width: 90%;
     padding: 4px;
     margin: 2px 0 3px 0;
@@ -329,12 +329,12 @@ tbody:nth-child(2n) {
     background: #f1f1f1;
 }
 
-.form-container-addMedicine input[type=text]:focus, .form-container-addMedicine input[type=number]:focus {
+.form-container input[type=text]:focus, .form-container input[type=number]:focus {
     background-color: #BBBBBB;
     outline: none;
 }
 
-.form-container-addMedicine .btn {
+.form-container .btn {
     background-color: #3daf42;
     color: white;
     padding: 11px 30px;
@@ -352,15 +352,15 @@ tbody:nth-child(2n) {
 }
 
 
-.form-container-addMedicine .cancel {
+.form-container .cancel {
     background-color: red;
 }
 
-.form-container-addMedicine .btn:hover, .open-button:hover {
+.form-container .btn:hover, .open-button:hover {
     opacity: 1;
 }
 
-.form-container-addMedicine .btn:hover, .open-button-login:hover, .open-button-registration:hover {
+.form-container .btn:hover, .open-button-login:hover{
     opacity: 1;
 }
 #medicineList{

@@ -3,8 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bazaZamowien.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/userInterface.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -39,8 +38,8 @@
 
 
 <!--Formularz dodania zamowienia leku do bazy-->
-<div class="form-popup-addOrder" id="myFormAddOrder" style="margin-top: 100px">
-    <form th:action="@{/orders/allOrders}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormAddOrder" style="margin-top: 100px">
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
                 <h1>Dodaj zamówienie</h1>
@@ -60,8 +59,8 @@
 </div>
 <!--Formularz edycji zamowienia leku z bazy-->
 <!--Możliwa jest tylko edycja zamówień, ktore nie sa dostarczone-->
-<div class="form-popup-addOrder" id="myFormEditOrder" style="margin-top: 100px";>
-    <form th:action="@{/orders/allOrders}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormEditOrder" style="margin-top: 100px";>
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
                 <h1>Edytuj zamówienie</h1>
@@ -83,8 +82,8 @@
 </div>
 <!--Formularz usuniecia leku z bazy-->
 <!--Możliwa jest tylko usunięcie zamówień, ktore nie sa dostarczone-->
-<div class="form-popup-addOrder" id="myFormDeleteOrder" style="margin-top: 100px;margin-left: 310px;">
-    <form th:action="@{/orders/allOrders}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormDeleteOrder" style="margin-top: 100px;margin-left: 310px;">
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
                 <h1 style="padding-right:100px;">Usuń zamówienie</h1>
@@ -99,8 +98,8 @@
     </form>
 </div>
 <!--Okno z informacjami o zalogowanym uzytkowniku-->
-<div class="form-popup-addOrder" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
-    <form method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
+    <form method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
                 <h1>Użytkownik</h1>
@@ -127,7 +126,7 @@
 </div>
 
 
-<div class="container">
+<div class="container" style="margin-top: 20px;">
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- NAVBAR - górny pasek menu -->
