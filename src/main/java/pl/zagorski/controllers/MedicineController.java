@@ -29,20 +29,11 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",method = RequestMethod.GET)
     public String findAllMedicines(Model model) {
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-
-        } else {
-            username = principal.toString();
-        }
-
         model.addAttribute("medicines", medicineService.showAllMedicines());
         model.addAttribute("characters", characterService.findAll());
         model.addAttribute("producers", producerService.findAll());
         model.addAttribute("prescriptions", prescriptionService.findAll());
-        model.addAttribute("user",employeeService.getEmployeeByLogin(username).get());
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         return "allMedicines";
     }
 
@@ -70,15 +61,7 @@ public class MedicineController {
         model.addAttribute("characters", characterService.findAll());
         model.addAttribute("producers", producerService.findAll());
         model.addAttribute("prescriptions", prescriptionService.findAll());
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-
-        } else {
-            username = principal.toString();
-        }
-        model.addAttribute("user",employeeService.getEmployeeByLogin(username).get());
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         return "allMedicines";
     }
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineDelete", method = RequestMethod.POST)

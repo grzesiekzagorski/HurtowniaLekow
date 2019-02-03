@@ -23,7 +23,7 @@ public class PurchaseOrderController {
     SupplierServiceImpl supplierService;
 
 
-    public String findLoggedUser(){
+    public static String findLoggedUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
@@ -39,7 +39,7 @@ public class PurchaseOrderController {
     public String findAllOrders(Model model) {
         model.addAttribute("orders",purchaseOrderService.showAllPurchaseOrders());
         model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
-        model.addAttribute("user",employeeService.getEmployeeByLogin(findLoggedUser()).get());
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         model.addAttribute("medicines",medicineService.findAll());
         model.addAttribute("suppliers",supplierService.findAll());
         return "allOrders";
@@ -48,14 +48,14 @@ public class PurchaseOrderController {
     @RequestMapping(value ="/orders/allOrders",params = "idMedicine",method = RequestMethod.POST)
     public String addOrder(Model model, @RequestParam int idMedicine, @RequestParam int idSupplier,
                            @RequestParam int amount) {
-        purchaseOrderService.save(idMedicine,idSupplier,amount,findLoggedUser());
+        purchaseOrderService.save(idMedicine,idSupplier,amount,PurchaseOrderController.findLoggedUser());
         return findAllOrders(model);
     }
 
     @RequestMapping(value ="/orders/allOrders",params = "idOrderEdit",method = RequestMethod.POST)
     public String editOrder(Model model,@RequestParam int idOrderEdit, @RequestParam int idMedicineEdit, @RequestParam int idSupplierEdit,
                            @RequestParam int amountEdit) {
-        purchaseOrderService.edit(idOrderEdit,idMedicineEdit,idSupplierEdit,amountEdit,findLoggedUser());
+        purchaseOrderService.edit(idOrderEdit,idMedicineEdit,idSupplierEdit,amountEdit,PurchaseOrderController.findLoggedUser());
         return findAllOrders(model);
     }
 
@@ -69,7 +69,7 @@ public class PurchaseOrderController {
     public String findOrder(Model model, String idSearch, String nameSearch){
         model.addAttribute("orders",purchaseOrderService.showPurchaseOrderByIdOrName(idSearch,nameSearch));
         model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
-        model.addAttribute("user",employeeService.getEmployeeByLogin(findLoggedUser()).get());
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         model.addAttribute("medicines",medicineService.findAll());
         model.addAttribute("suppliers",supplierService.findAll());
         return "allOrders";

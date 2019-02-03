@@ -13,6 +13,8 @@ import java.util.List;
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderImpl{
 
+    private static final String COMPOSITE_STATUS = "złożony";
+
     @Autowired
     private PurchaseOrderDao purchaseOrderDao;
     @Autowired
@@ -43,7 +45,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderImpl{
     public void save(int idMedicine,int idSupplier,int amount,String userLogin) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         purchaseOrder.setAmount(amount);
-        purchaseOrder.setStatus(statusRepository.getStatusByName("złożony"));
+        purchaseOrder.setStatus(statusRepository.getStatusByName(COMPOSITE_STATUS));
         purchaseOrder.setMedicine(medicineRepository.findOne(idMedicine));
         purchaseOrder.setSupplier(supplierRepository.findOne(idSupplier));
         purchaseOrder.setEmployee(employeeRepository.getEmployeeByLogin(userLogin).get());
