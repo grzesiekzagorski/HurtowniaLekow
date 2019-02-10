@@ -16,8 +16,10 @@ public class Warehouse {
     private Date delivery_date;
     private Date expiration_date;
 
-    @Column(columnDefinition = "VARCHAR(30) NOT NULL")
-    private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status")
+    private StatusWarehouse status;
 
     @OneToMany(mappedBy = "warehouse")
     private List<Sale> sales = new ArrayList<>();
@@ -87,11 +89,11 @@ public class Warehouse {
         this.employee = employee;
     }
 
-    public String getStatus() {
+    public StatusWarehouse getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusWarehouse status) {
         this.status = status;
     }
 }

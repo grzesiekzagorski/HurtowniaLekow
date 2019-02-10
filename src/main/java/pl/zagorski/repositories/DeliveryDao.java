@@ -16,5 +16,6 @@ public interface DeliveryDao {
     List<Object[]> showAllDeliveriesOrderByDeliveryAmount();
     List<Object[]> showDeliveriesByMedicineName(@Param("name") String name);
     List<Object[]> showDeliveryById(@Param("id") int id);
-
+    List<Object[]> showDeliveryByIdAndMedicineName(@Param("id") int id,@Param("name") String name);
+    List<Object[]> showDeliveryWhereItIsNotForSale();
 }

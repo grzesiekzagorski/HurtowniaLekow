@@ -14,8 +14,8 @@ public interface DeliveryImpl {
     List<String[]> showAllDeliveries();
     List<String[]> showAllDeliveriesOrderByMedicineName();
     List<String[]> showAllDeliveriesOrderByDeliveryAmount();
-    List<String[]> showDeliveriesByMedicineName(@Param("name") String name);
-    List<String[]> showDeliveryById(@Param("id") int id);
     List<String[]> convertObjectListToStringList(List<Object[]> objects);
+    List<String[]> showDeliveryByIdOrName(@Param("id")String id,@Param("name")String name);
+    List<String[]> showDeliveryWhereItIsNotForSale();
 
 }

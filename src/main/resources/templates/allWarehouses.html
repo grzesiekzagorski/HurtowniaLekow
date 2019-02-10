@@ -16,56 +16,11 @@
             background-color: #000080;
         }
     </style>
-    <title>Deliveries – baza dostaw</title>
+    <title>Warehouse – magazyn</title>
 </head>
 
 <body>
 
-<datalist id="orderAddList">
-    <option th:each="e : ${ordersNotDelivered}" th:value="${e[0]}"
-            th:label="${e[1]}"></option>
-</datalist>
-
-<datalist id="deliveryOnWarehouse">
-    <option th:each="e : ${deliveryOnWarehouse}" th:value="${e[0]}"
-            th:label="${e[1]}"></option>
-</datalist>
-
-<!--Formularz dodania dostawy leku do bazy-->
-<div class="form-popup" id="myFormAddDelivery" style="margin-top: 100px">
-    <form th:action="@{/delivery/allDeliveries}" method="post" class="form-container">
-    <div class="col-xs-3">
-        <div class="thumbnail">
-            <h1>Dodaj dostawę</h1>
-            <label for="orderAddList"><b>Zamówienie</b></label><br/>
-            <input style="padding-right:10px;" list="orderAddList" class="form-control" name="idOrderAddDelivery" autocomplete="off"><br/>
-            <label for="expirationDate"><b>Data ważności</b></label><br/>
-            <input style="padding-right:40px;" type="date" id="expirationDate" autocomplete="off" name="expirationDate" required>
-            <button type="button" class="btn cancel" onclick="closeFormAddDelivery()"><i class="fa fa-close"></i>
-                Anuluj
-            </button>
-            <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
-        </div>
-    </div>
-    </form>
-</div>
-
-<!--Formularz usunięcia dostawy leku do bazy-->
-<div class="form-popup" id="myFormDeleteDelivery" style="margin-top: 100px">
-    <form th:action="@{/deliveries/allDeliveries}" method="post" class="form-container">
-        <div class="col-xs-3">
-            <div class="thumbnail">
-                <h1 style="padding-right:150px">Usuń dostawę</h1>
-                <label for="deliveryOnWarehouse"><b>Zamówienie</b></label><br/>
-                <input style="padding-right:10px;" list="deliveryOnWarehouse" class="form-control" name="idDeliveryToRemove" autocomplete="off"><br/>
-                <button type="button" class="btn cancel" onclick="closeFormDeleteDelivery()"><i class="fa fa-close"></i>
-                    Anuluj
-                </button>
-                <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
-            </div>
-        </div>
-    </form>
-</div>
 <!--Okno z informacjami o zalogowanym uzytkowniku-->
 <div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
     <form method="post" class="form-container">
@@ -92,7 +47,6 @@
     <a href="/orders/allOrders">Zamówienia</a>
     <a href="/delivery/allDeliveries">Dostawy</a>
     <a href="/warehouse/allWarehouses">Magazyn</a>
-
 </div>
 
 
@@ -124,25 +78,27 @@
         <thead class="thead-dark">
         </thead>
         <tr style="background-color: green;">
-            <th style="width:10px;">Id</th>
-            <th style="padding-right:20px;padding-left:20px;">Nazwa leku</th>
+            <th>Id</th>
+            <th>Nr dostawy</th>
+            <th>Nazwa leku</th>
             <th>Ilość</th>
-            <th style="padding-right:20px;padding-left:20px;">Data dostawy</th>
+            <th>Status</th>
             <th>Data ważności</th>
-            <th style="padding-right:35px;padding-left:35px;">Dostawca</th>
+            <th>Dostawca</th>
             <th>Imię</th>
             <th>Nazwisko</th>
         </tr>
         <tbody class="tbody-dark">
-        <tbody th:each="d : ${deliveries}">
-        <td th:text="${d[0]}"></td>
-        <td th:text="${d[1]}"></td>
-        <td th:text="${d[2]}"></td>
-        <td th:text="${d[3]}"></td>
-        <td th:text="${d[4]}"></td>
-        <td th:text="${d[5]}"></td>
-        <td th:text="${d[6]}"></td>
-        <td th:text="${d[7]}"></td>
+        <tbody th:each="w : ${warehouses}">
+        <td th:text="${w[0]}"></td>
+        <td th:text="${w[1]}"></td>
+        <td th:text="${w[2]}"></td>
+        <td th:text="${w[3]}"></td>
+        <td th:text="${w[4]}"></td>
+        <td th:text="${w[6]}"></td>
+        <td th:text="${w[7]}"></td>
+        <td th:text="${w[8]}"></td>
+        <td th:text="${w[9]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
@@ -185,21 +141,6 @@
     function closeFormDeleteDelivery() {
         document.getElementById("myFormDeleteDelivery").style.display = "none";
     }
-	
-	
-	
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
-		if(dd<10){
-        dd='0'+dd
-		} 
-		if(mm<10){
-        mm='0'+mm
-		} 
-		today = yyyy+'-'+mm+'-'+dd;
-		document.getElementById("expirationDate").setAttribute("min", today);
 </script>
 </body>
 </html>

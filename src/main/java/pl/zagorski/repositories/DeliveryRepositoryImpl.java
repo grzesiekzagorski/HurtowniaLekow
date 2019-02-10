@@ -62,16 +62,30 @@ public class DeliveryRepositoryImpl implements DeliveryDao{
 
     @Override
     public List<Object[]> showDeliveriesByMedicineName(String name) {
-        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.id,e.name,e.surname FROM Delivery d " +
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Delivery d " +
                 "JOIN d.employee e JOIN d.order o JOIN o.medicine m JOIN o.supplier s WHERE m.name = :name",Object[].class);
         return query.setParameter("name",name).getResultList();
     }
 
     @Override
     public List<Object[]> showDeliveryById(int id) {
-        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.id,e.name,e.surname FROM Delivery d " +
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Delivery d " +
                 "JOIN d.employee e JOIN d.order o JOIN o.medicine m JOIN o.supplier s WHERE d.id = :id",Object[].class);
         return query.setParameter("id",id).getResultList();
+    }
+
+    @Override
+    public List<Object[]> showDeliveryByIdAndMedicineName(int id, String name) {
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Delivery d " +
+                "JOIN d.employee e JOIN d.order o JOIN o.medicine m JOIN o.supplier s WHERE d.id = :id AND m.name = :name",Object[].class);
+        return query.setParameter("id",id).setParameter("name",name).getResultList();
+    }
+
+    @Override
+    public List<Object[]> showDeliveryWhereItIsNotForSale() {
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,o.amount,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Delivery d " +
+                "JOIN d.employee e JOIN d.order o JOIN o.medicine m JOIN o.supplier s JOIN o.orders w JOIN w.status sw WHERE sw.name = :name",Object[].class);
+        return query.setParameter("name","na magazynie").getResultList();
     }
 
 

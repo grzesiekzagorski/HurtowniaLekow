@@ -23,6 +23,7 @@ public class DeliveryController {
     @RequestMapping(value ="/delivery/allDeliveries",method = RequestMethod.GET)
     public String findAllDeliveries(Model model) {
         model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("deliveryOnWarehouse",deliveryService.showDeliveryWhereItIsNotForSale());
         model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
         model.addAttribute("deliveries",deliveryService.showAllDeliveries());
         return "allDeliveries";
@@ -32,7 +33,14 @@ public class DeliveryController {
     public String addMedicine(Model model,@RequestParam int idOrderAddDelivery, @RequestParam String expirationDate){
         deliveryService.save(expirationDate,idOrderAddDelivery,PurchaseOrderController.findLoggedUser());
         return findAllDeliveries(model);
-
+    }
+    @RequestMapping(value ="/delivery/allDeliveries",params = "idSearch", method = RequestMethod.POST)
+    public String findDelivery(Model model, String idSearch, String nameSearch){
+        model.addAttribute("deliveries",deliveryService.showDeliveryByIdOrName(idSearch,nameSearch));
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("deliveryOnWarehouse",deliveryService.showDeliveryWhereItIsNotForSale());
+        model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
+        return "allDeliveries";
     }
 
 
