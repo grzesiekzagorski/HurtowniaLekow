@@ -2,6 +2,7 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Delivery;
 
 import javax.persistence.EntityManager;
@@ -16,15 +17,23 @@ public class DeliveryRepositoryImpl implements DeliveryDao{
     private EntityManager em;
 
     @Override
+    @Transactional
     public void save(Delivery delivery) {
         em.persist(delivery);
         em.flush();
     }
 
     @Override
+    @Transactional
     public void edit(Delivery delivery) {
         em.merge(delivery);
         em.flush();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Delivery delivery) {
+        em.remove(delivery);
     }
 
     @Override

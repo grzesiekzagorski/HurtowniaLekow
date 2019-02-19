@@ -43,6 +43,12 @@ public class DeliveryController {
         return "allDeliveries";
     }
 
+    @RequestMapping(value ="/delivery/allDeliveries",params = "idDeliveryDelete", method = RequestMethod.POST)
+    public String deleteDelivery(Model model,@RequestParam int idDeliveryDelete) {
+        deliveryService.delete(idDeliveryDelete);
+        return findAllDeliveries(model);
+    }
+
 
 
 

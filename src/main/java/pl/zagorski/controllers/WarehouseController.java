@@ -20,9 +20,16 @@ public class WarehouseController {
     WarehouseServiceImpl warehouseService;
 
     @RequestMapping(value ="/warehouse/allWarehouses",method = RequestMethod.GET)
-    public String findAllDeliveries(Model model) {
+    public String findAllDeliveriesInWarehouse(Model model) {
         model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         model.addAttribute("warehouses",warehouseService.showWarehouseWhereStatusEqualsInStockOrOnSold());
+        return "allWarehouses";
+    }
+
+    @RequestMapping(value ="/warehouse/allWarehouses",params = "idSearch", method = RequestMethod.POST)
+    public String findDeliveryInWarehouse(Model model, String idSearch, String nameSearch){
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("warehouses",warehouseService.showAllWarehousesOrderByIdOrMedicineName(idSearch,nameSearch));
         return "allWarehouses";
     }
 }

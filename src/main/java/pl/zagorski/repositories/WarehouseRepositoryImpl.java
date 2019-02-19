@@ -2,7 +2,9 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Delivery;
+import pl.zagorski.domain.Status;
 import pl.zagorski.domain.Warehouse;
 
 import javax.persistence.EntityManager;
@@ -17,15 +19,23 @@ public class WarehouseRepositoryImpl implements WarehouseDao{
     private EntityManager em;
 
     @Override
+    @Transactional
     public void save(Warehouse warehouse) {
         em.persist(warehouse);
         em.flush();
     }
 
     @Override
+    @Transactional
     public void edit(Warehouse warehouse) {
         em.merge(warehouse);
         em.flush();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Warehouse warehouse) {
+        em.remove(warehouse);
     }
 
     @Override
@@ -38,6 +48,12 @@ public class WarehouseRepositoryImpl implements WarehouseDao{
     public Warehouse findOne(int id) {
         Warehouse warehouse = em.find(Warehouse.class, id);
         return warehouse;
+    }
+
+    @Override
+    public Warehouse findOneByPurchaseOrderId(int id) {
+        TypedQuery<Warehouse> q = em.createQuery("Select c from Warehouse c JOIN c.order o where o.id= :id", Warehouse.class);
+        return q.setParameter("id",id).getSingleResult();
     }
 
     @Override
@@ -63,16 +79,23 @@ public class WarehouseRepositoryImpl implements WarehouseDao{
 
     @Override
     public List<Object[]> showWarehousesByMedicineName(String name) {
-        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,d.amount,b.name,d.delivery_date,d.expiration_date,s.name FROM Warehouse d " +
-                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN o.medicine m WHERE m.name = :name ",Object[].class);
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,k.id,m.name,d.amount,b.name,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Warehouse d " +
+                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN o.ordersDelivery k JOIN o.employee e JOIN o.medicine m WHERE m.name = :name ",Object[].class);
         return query.setParameter("name",name).getResultList();
     }
 
     @Override
     public List<Object[]> showWarehouseById(int id) {
-        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,m.name,d.amount,b.name,d.delivery_date,d.expiration_date,s.name FROM Warehouse d " +
-                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN o.medicine m WHERE d.id = :id ",Object[].class);
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,k.id,m.name,d.amount,b.name,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Warehouse d " +
+                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN o.ordersDelivery k JOIN o.employee e JOIN o.medicine m WHERE d.id = :id ",Object[].class);
         return query.setParameter("id",id).getResultList();
+    }
+
+    @Override
+    public List<Object[]> showWarehouseByIdAndMedicineName(int id, String name) {
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,k.id,m.name,d.amount,b.name,d.delivery_date,d.expiration_date,s.name,e.name,e.surname FROM Warehouse d " +
+                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN o.ordersDelivery k JOIN o.employee e JOIN o.medicine m WHERE d.id = :id AND m.name = :name",Object[].class);
+        return query.setParameter("id",id).setParameter("name",name).getResultList();
     }
 
     @Override

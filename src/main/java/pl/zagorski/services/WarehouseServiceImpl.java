@@ -42,6 +42,13 @@ public class WarehouseServiceImpl implements WarehouseImpl {
     }
 
     @Override
+    @Transactional
+    public void delete(int idPurchaseOrder) {
+        Warehouse warehouse = warehouseDao.findOneByPurchaseOrderId(idPurchaseOrder);
+        warehouseDao.delete(warehouse);
+    }
+
+    @Override
     public List<Warehouse> findAll() {
         return warehouseDao.findAll();
     }
@@ -57,8 +64,18 @@ public class WarehouseServiceImpl implements WarehouseImpl {
     }
 
     @Override
-    public List<Object[]> showAllWarehousesOrderByMedicineName() {
-        return warehouseDao.showAllWarehousesOrderByMedicineName();
+    public List<String[]> showAllWarehousesOrderByIdOrMedicineName(String id, String name) {
+        List<String[]> result;
+        if (id.isEmpty() && name.isEmpty()) {
+            result = convertObjectListToStringList(warehouseDao.showWarehouseWhereStatusEqualsInStockOrOnSold());
+        } else if (!id.isEmpty() && name.isEmpty()) {
+            result = convertObjectListToStringList(warehouseDao.showWarehouseById(Integer.parseInt(id)));
+        } else if (id.isEmpty() && !name.isEmpty()) {
+            result = convertObjectListToStringList(warehouseDao.showWarehousesByMedicineName(name));
+        } else{
+            result = convertObjectListToStringList(warehouseDao.showWarehouseByIdAndMedicineName(Integer.parseInt(id), name));
+        }
+        return result;
     }
 
     @Override

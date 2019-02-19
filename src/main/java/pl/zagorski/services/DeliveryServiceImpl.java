@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Delivery;
 import pl.zagorski.domain.Employee;
 import pl.zagorski.domain.PurchaseOrder;
+import pl.zagorski.domain.Warehouse;
 import pl.zagorski.repositories.DeliveryDao;
 import pl.zagorski.repositories.EmployeeRepositoryImpl;
 import pl.zagorski.repositories.PurchaseOrderRepositoryImpl;
@@ -32,7 +33,8 @@ public class DeliveryServiceImpl implements DeliveryImpl {
     private StatusRepositoryImpl statusRepository;
     @Autowired
     private WarehouseServiceImpl warehouseService;
-
+    @Autowired
+    private PurchaseOrderServiceImpl purchaseOrderService;
 
 
     public List<String[]> convertObjectListToStringList(List<Object[]> objects) {
@@ -99,14 +101,22 @@ public class DeliveryServiceImpl implements DeliveryImpl {
 
         warehouseService.save(purchaseOrder.getAmount(),new Date(time),sql,employee,purchaseOrder);
 
-
-
     }
 
     @Override
     @Transactional
     public void edit(Delivery delivery) {
         deliveryDao.edit(delivery);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int deliveryDelete) {
+        Delivery delivery = findOne(deliveryDelete);
+        int purchaseOrderId = delivery.getOrder().getId();
+        warehouseService.delete(purchaseOrderId);
+        deliveryDao.delete(delivery);
+        purchaseOrderService.delete(purchaseOrderId);
     }
 
     @Override

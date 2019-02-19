@@ -9,6 +9,7 @@ import java.util.List;
 public interface DeliveryImpl {
     void save(String expirationDate,int idOrderAddDelivery,String username);
     void edit(Delivery delivery);
+    void delete(int deliveryDelete);
     List<Delivery> findAll();
     Delivery findOne(int id);
     List<String[]> showAllDeliveries();

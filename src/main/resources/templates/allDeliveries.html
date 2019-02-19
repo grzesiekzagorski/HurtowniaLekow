@@ -52,12 +52,12 @@
 
 <!--Formularz usunięcia dostawy leku do bazy-->
 <div class="form-popup" id="myFormDeleteDelivery" style="margin-top: 100px">
-    <form th:action="@{/deliveries/allDeliveries}" method="post" class="form-container">
+    <form th:action="@{/delivery/allDeliveries}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
                 <h1 style="padding-right:150px">Usuń dostawę</h1>
                 <label for="deliveryOnWarehouse"><b>Zamówienie</b></label><br/>
-                <input style="padding-right:10px;" list="deliveryOnWarehouse" class="form-control" name="idDeliveryToRemove" autocomplete="off"><br/>
+                <input style="padding-right:10px;" list="deliveryOnWarehouse" class="form-control" name="idDeliveryDelete" autocomplete="off"><br/>
                 <button type="button" class="btn cancel" onclick="closeFormDeleteDelivery()"><i class="fa fa-close"></i>
                     Anuluj
                 </button>
