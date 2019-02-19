@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/userInterface.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .logout {
+            background-color: red;
+        }
+
+        .info {
+            background-color: #000080;
+        }
+    </style>
+    <title>Orders – baza zamówień</title>
+</head>
+
+<body>
+
+<datalist id="medicineList">
+    <option th:each="m : ${medicines}" th:value="${m.id}"
+            th:label="${m.name}"></option>
+</datalist>
+
+<datalist id="supplierList">
+    <option th:each="s : ${suppliers}" th:value="${s.id}"
+            th:label="${s.name}"></option>
+</datalist>
+
+<datalist id="orderEditMedicineList">
+    <option th:each="e : ${ordersNotDelivered}" th:value="${e[0]}"
+            th:label="${e[1]}"></option>
+</datalist>
+
+
+<!--Formularz dodania zamowienia leku do bazy-->
+<div class="form-popup" id="myFormAddOrder" style="margin-top: 100px">
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1>Dodaj zamówienie</h1>
+                <label for="medicineList"><b>Lek</b></label><br/>
+                <input list="medicineList" class="form-control" name="idMedicine" autocomplete="off"><br/>
+                <label for="supplierList"><b>Dostawca</b></label><br/>
+                <input list="supplierList"  class="form-control" name="idSupplier" autocomplete="off"><br/>
+                <label for="amount"><b>Ilość</b>(max:400)</label><br/>
+                <input type="number" max="400" id="amount" autocomplete="off" name="amount" required>
+                <button type="button" class="btn cancel" onclick="closeFormAddOrder()"><i class="fa fa-close"></i>
+                    Anuluj
+                </button>
+                <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Formularz edycji zamowienia leku z bazy-->
+<!--Możliwa jest tylko edycja zamówień, ktore nie sa dostarczone-->
+<div class="form-popup" id="myFormEditOrder" style="margin-top: 100px";>
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1>Edytuj zamówienie</h1>
+                <label for="orderEditMedicineList"><b>Zamówienie</b></label><br/>
+                <input list="orderEditMedicineList" class="form-control" name="idOrderEdit" autocomplete="off"><br/>
+                <label for="medicineList"><b>Lek</b></label><br/>
+                <input list="medicineList" class="form-control" name="idMedicineEdit" autocomplete="off"><br/>
+                <label for="supplierList"><b>Dostawca</b></label><br/>
+                <input list="supplierList"  class="form-control" name="idSupplierEdit" autocomplete="off"><br/>
+                <label for="amount"><b>Ilość</b>(max:400)</label><br/>
+                <input type="number" max="400" id="amountEdit" autocomplete="off" name="amountEdit" required>
+                <button type="button" class="btn cancel" onclick="closeFormEditOrder()"><i class="fa fa-close"></i>
+                    Anuluj
+                </button>
+                <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Formularz usuniecia leku z bazy-->
+<!--Możliwa jest tylko usunięcie zamówień, ktore nie sa dostarczone-->
+<div class="form-popup" id="myFormDeleteOrder" style="margin-top: 100px;margin-left: 310px;">
+    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1 style="padding-right:100px;">Usuń zamówienie</h1>
+                <label for="orderEditMedicineList"><b>Zamówienie</b></label><br/>
+                <input list="orderEditMedicineList" class="form-control" name="idOrderDelete" autocomplete="off" required><br/>
+                <button type="button" class="btn cancel" onclick="closeFormDeleteOrder()"><i class="fa fa-close"></i>
+                    Anuluj
+                </button>
+                <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Okno z informacjami o zalogowanym uzytkowniku-->
+<div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
+    <form method="post" class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1>Użytkownik</h1>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Login: </b><span
+                        th:text="${user.login}"></span></label><br/>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Imię: </b><span th:text="${user.name}"></span></label><br/>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Nazwisko: </b><span
+                        th:text="${user.surname}"></span></label>
+                <button type="button" style=" background-color: red;" class="btn cancel"
+                        onclick="closeWindowInformationUser()"><i class="fa fa-close"></i> Zamknij
+                </button>
+                <br/>
+            </div>
+        </div>
+    </form>
+</div>
+<!--SideNav - Okno wyboru podstrony-->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/medicine/allMedicines">Leki</a>
+    <a href="/orders/allOrders">Zamówienia</a>
+    <a href="/delivery/allDeliveries">Dostawy</a>
+    <a href="/warehouse/allWarehouses">Magazyn</a>
+</div>
+
+
+<div class="container" style="margin-top: 20px;">
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- NAVBAR - górny pasek menu -->
+    <div class="navbar">
+        <a class="logout" href="login.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+        <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;"><i
+                class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
+        <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
+        <a onclick="openNav()"
+           style="float:left;text-align:center;padding:15px;color:white;text-decoration:none;font-size:19px;cursor:pointer">
+            <b>&#9776; Menu</b></a>
+    </div>
+
+    <!-- Formularz wyszukiwania zamowienia po nazwie leku lub identyfikatorze zamowienia-->
+    <div class="container-search">
+        <form th:action="@{/orders/allOrders}" method="post" class="form-container-search">
+            <input type="number" name="idSearch" id="idSearch" placeholder="Id" autocomplete="off">
+            <input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa leku" autocomplete="off">
+            <button type="submit" class="btn-f"><i class="fa fa-search"></i> Szukaj</button>
+        </form>
+    </div>
+
+    <!-- Tabela z zawartością bazy danych -->
+    <table>
+        <thead class="thead-dark">
+        </thead>
+        <tr style="background-color: green;">
+            <th style="width:10px;">Id</th>
+            <th style="padding-right:20px;padding-left:20px;">Nazwa leku</th>
+            <th>Ilość</th>
+            <th>Data zamówienia</th>
+            <th>Status</th>
+            <th style="padding-right:52px;padding-left:52px;">Dostawca</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+        </tr>
+        <tbody class="tbody-dark">
+        <tbody th:each="o : ${orders}">
+        <td th:text="${o[0]}"></td>
+        <td th:text="${o[1]}"></td>
+        <td th:text="${o[2]}"></td>
+        <td th:text="${o[3]}"></td>
+        <td th:text="${o[4]}"></td>
+        <td th:text="${o[5]}"></td>
+        <td th:text="${o[6]}"></td>
+        <td th:text="${o[7]}"></td>
+        </tbody>
+    </table>
+    <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
+    <div class="container-button">
+        <button class="btn-r"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-e" onclick="openFormEditOrder()"><i class="fa fa-edit"></i> Edytuj</button>
+        <button class="btn-s" onclick="openFormAddOrder()"><i class="fa fa-plus"></i> Dodaj</button>
+        <button class="btn-d" onclick="openFormDeleteOrder()"><i class="fa fa-trash"></i> Usuń</button>
+    </div>
+</div>
+<!-- Funkcje w JavaScript -->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+    function openWindowInformationUser() {
+        document.getElementById("myInformationPopupWindow").style.display = "block";
+    }
+
+    function closeWindowInformationUser() {
+        document.getElementById("myInformationPopupWindow").style.display = "none";
+    }
+
+    function openFormAddOrder() {
+        document.getElementById("myFormAddOrder").style.display = "block";
+    }
+
+    function closeFormAddOrder() {
+        document.getElementById("myFormAddOrder").style.display = "none";
+    }
+
+    function openFormEditOrder() {
+        document.getElementById("myFormEditOrder").style.display = "block";
+    }
+
+    function closeFormEditOrder() {
+        document.getElementById("myFormEditOrder").style.display = "none";
+    }
+
+    function openFormDeleteOrder() {
+        document.getElementById("myFormDeleteOrder").style.display = "block";
+    }
+
+    function closeFormDeleteOrder() {
+        document.getElementById("myFormDeleteOrder").style.display = "none";
+    }
+</script>
+</body>
+</html>

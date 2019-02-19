@@ -10,7 +10,6 @@ public class Delivery {
     @Column(unique = true)
     private int id;
 
-    private int amount;
     private Date delivery_date;
     private Date expiration_date;
 
@@ -19,13 +18,8 @@ public class Delivery {
     private PurchaseOrder order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accepting_delivery_id")
     private Employee employee;
-
 
     public int getId() {
         return id;
@@ -33,14 +27,6 @@ public class Delivery {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public Date getDelivery_date() {
@@ -65,14 +51,6 @@ public class Delivery {
 
     public void setOrder(PurchaseOrder order) {
         this.order = order;
-    }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
     }
 
     public Employee getEmployee() {

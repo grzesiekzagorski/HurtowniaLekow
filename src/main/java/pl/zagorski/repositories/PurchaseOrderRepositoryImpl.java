@@ -2,6 +2,7 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.domain.PurchaseOrder;
 
@@ -17,15 +18,23 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderDao {
     private EntityManager em;
 
     @Override
+    @Transactional
     public void save(PurchaseOrder purchaseOrder) {
         em.persist(purchaseOrder);
         em.flush();
     }
 
     @Override
+    @Transactional
     public void edit(PurchaseOrder purchaseOrder) {
         em.merge(purchaseOrder);
         em.flush();
+    }
+
+    @Override
+    @Transactional
+    public void delete(PurchaseOrder purchaseOrder) {
+        em.remove(purchaseOrder);
     }
 
     @Override
@@ -42,33 +51,48 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderDao {
 
     @Override
     public List<Object[]> orderByName() {
-        TypedQuery<Object[]> query = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
-                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m " +
+        TypedQuery<Object[]> query = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name," +
+                "e.surname,d.name FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m JOIN p.supplier d " +
                 "order by m.name", Object[].class);
         return query.getResultList();
     }
 
     @Override
     public List<Object[]> showPurchaseOrdersByName(String name) {
-        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
-                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m " +
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,d.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m JOIN p.supplier d " +
                 "where m.name = :name", Object[].class);
         return q.setParameter("name", name).getResultList();
     }
 
     @Override
     public List<Object[]> showPurchaseOrderById(int id) {
-        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
-                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m " +
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,d.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m JOIN p.supplier d " +
                 "where p.id = :id", Object[].class);
         return q.setParameter("id", id).getResultList();
     }
 
     @Override
+    public List<Object[]> showPurchaseOrderByIdAndName(int id,String name) {
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,d.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m JOIN p.supplier d " +
+                "where p.id = :id AND m.name= :name", Object[].class);
+        return q.setParameter("id", id).setParameter("name",name).getResultList();
+    }
+
+    @Override
     public List<Object[]> showAllPurchaseOrders() {
-        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,e.name,e.surname " +
-                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m", Object[].class);
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name,p.amount,p.date_of_order,s.name,d.name,e.name,e.surname " +
+                "FROM PurchaseOrder p JOIN p.employee e JOIN p.status s JOIN p.medicine m JOIN p.supplier d ORDER BY p.id", Object[].class);
         return q.getResultList();
+    }
+
+    @Override
+    public List<Object[]> showAllPurchaseOrdersThatAreNotDelivered() {
+        TypedQuery<Object[]> q = em.createQuery("SELECT p.id,m.name FROM PurchaseOrder p JOIN p.status s JOIN p.medicine m " +
+                "where s.name = :notDelivered ORDER BY p.id", Object[].class);
+        return q.setParameter("notDelivered","złożony").getResultList();
     }
 
 

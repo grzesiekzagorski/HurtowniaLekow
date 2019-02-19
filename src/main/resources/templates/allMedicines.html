@@ -3,7 +3,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bazaLekow.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/userInterface.css}"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -38,12 +38,9 @@
 				th:label="${m[1]}"></option>
 </datalist>
 
-
-
-
 <!--Formularz dodania leku do bazy-->
-	<div class="form-popup-addMedicine" id="myFormAddMedicine" style="margin-top: 5%">
-		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+	<div class="form-popup" id="myFormAddMedicine" style="margin-top:3%">
+		<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 			<div class="col-xs-3">
 				<div class="thumbnail">
 			<h1>Dodaj lek</h1>
@@ -54,15 +51,15 @@
 			<label for="producerList"><b>Producent</b></label><br/>
 			<input list="producerList"  class="form-control" name="idProducer"><br/>
 			<label for="name"><b>Nazwa</b></label>
-				<input type="text" id="name" name="name" required>
+				<input type="text" id="name" name="name" autocomplete="off" required>
 			<label for="price"><b>Cena</b></label>
-				<input type="number" step="0.01" id="price" name="price" required >
+				<input type="number" step="0.01" id="price" autocomplete="off" name="price" required >
 			<label for="discount"><b>Rabat</b></label>
-				<input type="number" step="0.01" id="discount" name="discount" required>
+				<input type="number" step="0.01" id="discount" autocomplete="off" name="discount" required>
 			<label for="portion"><b>Dawkowanie</b></label>
-				<input type="text" id="portion" name="portion" required>
+				<input type="text" id="portion" name="portion" autocomplete="off" required>
 			<label for="wrapping"><b>Opakowanie</b></label>
-				<input type="text" id="wrapping" name="wrapping" required>
+				<input type="text" id="wrapping" name="wrapping" autocomplete="off" required>
 			<button type="button" class="btn cancel" onclick="closeFormAddMedicine()"><i class="fa fa-close"></i> Anuluj</button>
 			<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
 			</div>
@@ -70,8 +67,8 @@
 		</form>
 	</div>
 <!--Formularz edycji leku z bazy-->
-<div class="form-popup-addMedicine" id="myFormEditMedicine">
-	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormEditMedicine">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Edytuj lek</h1>
@@ -84,15 +81,15 @@
 				<label for="producerList"><b>Producent</b></label><br/>
 				<input list="producerList"  class="form-control" name="idProducerEdit"><br/>
 				<label for="nameEdit"><b>Nazwa</b></label>
-				<input type="text" id="nameEdit" name="nameEdit" required>
+				<input type="text" id="nameEdit" name="nameEdit" autocomplete="off" required>
 				<label for="priceEdit"><b>Cena</b></label>
-				<input type="number" step="0.01" id="priceEdit" name="priceEdit" required >
+				<input type="number" step="0.01" id="priceEdit" name="priceEdit" autocomplete="off" required >
 				<label for="discountEdit"><b>Rabat</b></label>
-				<input type="number" step="0.01" id="discountEdit" name="discountEdit" required>
+				<input type="number" step="0.01" id="discountEdit" name="discountEdit" autocomplete="off" required>
 				<label for="portionEdit"><b>Dawkowanie</b></label>
-				<input type="text" id="portionEdit" name="portionEdit" required>
+				<input type="text" id="portionEdit" name="portionEdit" autocomplete="off" required>
 				<label for="wrappingEdit"><b>Opakowanie</b></label>
-				<input type="text" id="wrappingEdit" name="wrappingEdit" required>
+				<input type="text" id="wrappingEdit" name="wrappingEdit" autocomplete="off" required>
 				<button type="button" class="btn cancel" onclick="closeFormEditMedicine()"><i class="fa fa-close"></i> Anuluj</button>
 				<button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
 			</div>
@@ -100,8 +97,8 @@
 	</form>
 </div>
 <!--Formularz usuniecia leku z bazy-->
-<div class="form-popup-addMedicine" id="myFormDeleteMedicine" style="margin-top: 120px;margin-left: 310px;">
-	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container-addMedicine">
+<div class="form-popup" id="myFormDeleteMedicine" style="margin-top: 120px;margin-left: 310px;">
+	<form th:action="@{/medicine/allMedicines}" method="post" class="form-container">
 		<div class="col-xs-3">
 			<div class="thumbnail">
 				<h1>Usuń lek</h1>
@@ -113,13 +110,28 @@
 		</div>
 	</form>
 </div>
+<!--Okno z informacjami o zalogowanym uzytkowniku-->
+<div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
+	<form method="post" class="form-container">
+		<div class="col-xs-3">
+			<div class="thumbnail">
+				<h1>Użytkownik</h1>
+				<label style="padding-right: 100px;padding-bottom:5px"><b>Login: </b><span th:text="${user.login}"></span></label><br/>
+				<label style="padding-right: 100px;padding-bottom:5px"><b>Imię: </b><span th:text="${user.name}"></span></label><br/>
+				<label style="padding-right: 100px;padding-bottom:5px"><b>Nazwisko: </b><span th:text="${user.surname}"></span></label>
+				<button type="button" style=" background-color: red;" class="btn cancel" onclick="closeWindowInformationUser()"><i class="fa fa-close"></i> Zamknij</button>
+				<br/>
+			</div>
+		</div>
+	</form>
+</div>
 <!--SideNav - Okno wyboru podstrony-->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#">About</a>
-		<a href="#">Services</a>
-		<a href="#">Clients</a>
-		<a href="#">Contact</a>
+		<a href="/medicine/allMedicines">Leki</a>
+		<a href="/orders/allOrders">Zamówienia</a>
+		<a href="/delivery/allDeliveries">Dostawy</a>
+		<a href="/warehouse/allWarehouses">Magazyn</a>
 	</div>
 
 
@@ -128,8 +140,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!-- NAVBAR - górny pasek menu -->
 		<div class="navbar">
-			<a class="logout" href="loginAndRegister.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
-			<a class="info" href="#"><i class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
+			<a class="logout" href="login.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+			<a class="info"onclick="openWindowInformationUser()" style="cursor: pointer;"><i class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
 			<a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a> 
 			<a onclick="openNav()" style="float:left;text-align:center;padding:15px;color:white;text-decoration:none;font-size:19px;cursor:pointer">
 			<b>&#9776; Menu</b></a>
@@ -138,8 +150,8 @@
 		<!-- Formularz wyszukiwania leku po produkcie lub identyfikatorze -->
 		<div class="container-search">
 			<form th:action="@{/medicine/allMedicines}" method="post"  class="form-container-search">
-					<input type="text" name="idSearch" id="idSearch" placeholder="Id">
-					<input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa">
+					<input type="text" name="idSearch" id="idSearch" placeholder="Id" autocomplete="off">
+					<input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa" autocomplete="off">
 				<button type="submit" class="btn-f"><i class="fa fa-search"></i> Szukaj</button>
 			</form>
 		</div>
@@ -150,14 +162,14 @@
 			</thead>
 			<tr style="background-color: green;">
 				<th style="width:10px;">Id</th>
-				<th>Nazwa</th>
+				<th style="padding-left: 20px; padding-right: 20px;">Nazwa</th>
 				<th>Cena</th>
 				<th>Rabat</th>
 				<th>Dawkowanie</th>
 				<th>Recepta</th>
 				<th>Postać</th>
 				<th>Opakowanie</th>
-				<th>Producent</th>
+				<th style="padding-left: 30px; padding-right: 30px;">Producent</th>
 			</tr>
 			<tbody class="tbody-dark">
 			<tbody th:each="m : ${medicines}">
@@ -189,6 +201,13 @@
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
 		}
+
+        function openWindowInformationUser() {
+            document.getElementById("myInformationPopupWindow").style.display = "block";
+        }
+        function closeWindowInformationUser() {
+            document.getElementById("myInformationPopupWindow").style.display = "none";
+        }
 
 		function openFormAddMedicine() {
 			document.getElementById("myFormAddMedicine").style.display = "block";

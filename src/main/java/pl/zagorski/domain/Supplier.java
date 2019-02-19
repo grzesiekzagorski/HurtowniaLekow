@@ -27,10 +27,7 @@ public class Supplier {
     private String postal_code;
 
     @OneToMany(mappedBy = "supplier")
-    private List<Warehouse> warehouses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "supplier")
-    private List<Delivery> deliveries = new ArrayList<>();
+    private List<PurchaseOrder> purchaseOrders = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "province_id")
@@ -84,20 +81,12 @@ public class Supplier {
         this.postal_code = postal_code;
     }
 
-    public List<Warehouse> getWarehouses() {
-        return warehouses;
+    public List<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
     }
 
-    public void setWarehouses(List<Warehouse> warehouses) {
-        this.warehouses = warehouses;
-    }
-
-    public List<Delivery> getDeliveries() {
-        return deliveries;
-    }
-
-    public void setDeliveries(List<Delivery> deliveries) {
-        this.deliveries = deliveries;
+    public void setPurchaseOrders(List<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 
     public Province getProvince() {

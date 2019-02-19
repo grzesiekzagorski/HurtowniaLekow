@@ -3,8 +3,10 @@ package pl.zagorski.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +42,25 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Sale> sales = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "position_id")
-    private Position position;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "employee_position", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "position_id"))
+    private Set<Position> positions;
+
+    public Employee() {
+
+    }
+
+    public Employee(Employee employee) {
+        this.name = employee.getName();
+        this.surname = employee.getSurname();
+        this.login = employee.getLogin();
+        this.password = employee.getPassword();
+        this.orders = employee.getOrders();
+        this.warehouses = employee.getWarehouses();
+        this.deliveryList = employee.getDeliveryList();
+        this.sales = employee.getSales();
+        this.positions = employee.getPositions();
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -80,12 +98,12 @@ public class Employee {
         this.password = password;
     }
 
-    public Position getPosition() {
-        return position;
+    public Set<Position> getPositions() {
+        return positions;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setPositions(Set<Position> positions) {
+        this.positions = positions;
     }
 
     public List<PurchaseOrder> getOrders() {

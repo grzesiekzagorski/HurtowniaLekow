@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "position")
 public class Position {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true)
-    private int id;
+    @Column(name = "position_id",unique = true)
+    private int positionId;
 
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String name;
@@ -19,23 +20,12 @@ public class Position {
     @ManyToMany
     private List<Action> actions;
 
-    @OneToMany(mappedBy = "position")
-    private List<Employee> employees = new ArrayList<>();
-
-    public List<Employee> getEmployees() {
-        return employees;
+    public int getPositionId() {
+        return positionId;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
     }
 
     public String getName() {
