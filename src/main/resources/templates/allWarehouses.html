@@ -55,9 +55,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- NAVBAR - górny pasek menu -->
     <div class="navbar">
-        <a class="logout" href="login.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
-        <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;"><i
-                class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
+        <a class="logout" th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+        <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;">
+            <i class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
         <a onclick="openNav()"
            style="float:left;text-align:center;padding:15px;color:white;text-decoration:none;font-size:19px;cursor:pointer">
@@ -103,9 +103,8 @@
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
     <div class="container-button">
-        <button class="btn-r" style="margin-left:120px;"><i class="fa fa-refresh"></i> Odśwież</button>
-        <button class="btn-s" onclick="openFormAddDelivery()"><i class="fa fa-plus"></i> Dodaj</button>
-		<button class="btn-d" onclick="openFormDeleteDelivery()"><i class="fa fa-trash"></i> Usuń</button>
+        <button class="btn-r" style="margin-left:205px;"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-d" onclick="openFormAddDelivery()"><i class="fa fa-cart-arrow-down"></i> Sprzedaj</button>
     </div>
 </div>
 <!-- Funkcje w JavaScript -->

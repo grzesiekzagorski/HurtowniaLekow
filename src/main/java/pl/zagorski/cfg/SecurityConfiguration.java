@@ -39,7 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .hasAnyRole("ADMIN").anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/medicine/allMedicines")
                 .failureUrl("/login-error")
-                .and().logout().permitAll();
+                .and().logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
 
         http.csrf().disable();
     }

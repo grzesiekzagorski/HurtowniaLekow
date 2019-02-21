@@ -2,7 +2,6 @@ package pl.zagorski.repositories;
 
 
 import org.springframework.data.repository.query.Param;
-import pl.zagorski.domain.Medicine;
 import pl.zagorski.domain.PurchaseOrder;
 
 import java.util.List;

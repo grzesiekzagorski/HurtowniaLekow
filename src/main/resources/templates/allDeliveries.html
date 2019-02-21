@@ -38,7 +38,7 @@
         <div class="thumbnail">
             <h1>Dodaj dostawę</h1>
             <label for="orderAddList"><b>Zamówienie</b></label><br/>
-            <input style="padding-right:10px;" list="orderAddList" class="form-control" name="idOrderAddDelivery" autocomplete="off"><br/>
+            <input style="padding-right:10px;" list="orderAddList" class="form-control" name="idOrderAddDelivery" autocomplete="off" required><br/>
             <label for="expirationDate"><b>Data ważności</b></label><br/>
             <input style="padding-right:40px;" type="date" id="expirationDate" autocomplete="off" name="expirationDate" required>
             <button type="button" class="btn cancel" onclick="closeFormAddDelivery()"><i class="fa fa-close"></i>
@@ -101,7 +101,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- NAVBAR - górny pasek menu -->
     <div class="navbar">
-        <a class="logout" href="login.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+        <a class="logout" th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
         <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;"><i
                 class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
