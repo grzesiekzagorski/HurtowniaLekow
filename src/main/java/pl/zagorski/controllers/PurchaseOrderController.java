@@ -23,11 +23,11 @@ public class PurchaseOrderController {
     SupplierServiceImpl supplierService;
 
 
-    public static String findLoggedUser(){
+    public static String findLoggedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
 
         } else {
             username = principal.toString();
@@ -35,46 +35,47 @@ public class PurchaseOrderController {
         return username;
     }
 
-    @RequestMapping(value ="/orders/allOrders",method = RequestMethod.GET)
+    @RequestMapping(value = "/orders/allOrders", method = RequestMethod.GET)
     public String findAllOrders(Model model) {
-        model.addAttribute("orders",purchaseOrderService.showAllPurchaseOrders());
-        model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
-        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
-        model.addAttribute("medicines",medicineService.findAll());
-        model.addAttribute("suppliers",supplierService.findAll());
+        model.addAttribute("orders", purchaseOrderService.showAllPurchaseOrders());
+        model.addAttribute("ordersNotDelivered", purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
+        model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("medicines", medicineService.findAll());
+        model.addAttribute("suppliers", supplierService.findAll());
         return "allOrders";
     }
 
-    @RequestMapping(value ="/orders/allOrders",params = "idMedicine",method = RequestMethod.POST)
+    @RequestMapping(value = "/orders/allOrders", params = "idMedicine", method = RequestMethod.POST)
     public String addOrder(Model model, @RequestParam int idMedicine, @RequestParam int idSupplier,
                            @RequestParam int amount) {
-        purchaseOrderService.save(idMedicine,idSupplier,amount,PurchaseOrderController.findLoggedUser());
+        purchaseOrderService.save(idMedicine, idSupplier, amount, PurchaseOrderController.findLoggedUser());
         return findAllOrders(model);
     }
 
-    @RequestMapping(value ="/orders/allOrders",params = "idOrderEdit",method = RequestMethod.POST)
-    public String editOrder(Model model,@RequestParam int idOrderEdit, @RequestParam int idMedicineEdit, @RequestParam int idSupplierEdit,
-                           @RequestParam int amountEdit) {
-        purchaseOrderService.edit(idOrderEdit,idMedicineEdit,idSupplierEdit,amountEdit,PurchaseOrderController.findLoggedUser());
+    @RequestMapping(value = "/orders/allOrders", params = "idOrderEdit", method = RequestMethod.POST)
+    public String editOrder(Model model, @RequestParam int idOrderEdit, @RequestParam int idMedicineEdit, @RequestParam int idSupplierEdit,
+                            @RequestParam int amountEdit) {
+        purchaseOrderService.edit(idOrderEdit, idMedicineEdit, idSupplierEdit, amountEdit, PurchaseOrderController.findLoggedUser());
         return findAllOrders(model);
     }
 
-    @RequestMapping(value ="/orders/allOrders",params = "idOrderDelete",method = RequestMethod.POST)
-    public String editOrder(Model model,@RequestParam int idOrderDelete) {
+    @RequestMapping(value = "/orders/allOrders", params = "idOrderDelete", method = RequestMethod.POST)
+    public String editOrder(Model model, @RequestParam int idOrderDelete) {
         purchaseOrderService.delete(idOrderDelete);
         return findAllOrders(model);
     }
 
-    @RequestMapping(value ="/orders/allOrders",params = "idSearch", method = RequestMethod.POST)
-    public String findOrder(Model model, String idSearch, String nameSearch){
-        model.addAttribute("orders",purchaseOrderService.showPurchaseOrderByIdOrName(idSearch,nameSearch));
-        model.addAttribute("ordersNotDelivered",purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
-        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
-        model.addAttribute("medicines",medicineService.findAll());
-        model.addAttribute("suppliers",supplierService.findAll());
+    @RequestMapping(value = "/orders/allOrders", params = "idSearch", method = RequestMethod.POST)
+    public String findOrder(Model model, String idSearch, String nameSearch) {
+        model.addAttribute("orders", purchaseOrderService.showPurchaseOrderByIdOrName(idSearch, nameSearch));
+        if (purchaseOrderService.showPurchaseOrderByIdOrName(idSearch, nameSearch).size() != 0) {
+            model.addAttribute("ordersNotDelivered", purchaseOrderService.showAllPurchaseOrdersThatAreNotDelivered());
+        }
+        model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("medicines", medicineService.findAll());
+        model.addAttribute("suppliers", supplierService.findAll());
         return "allOrders";
     }
-
 
 
 }
