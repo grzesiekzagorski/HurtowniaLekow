@@ -55,12 +55,18 @@ public class WarehouseServiceImpl implements WarehouseImpl {
     public void sell(int amount, int idClient, String userLogin, int idWarehouse) {
         final String statusInStock = "na magazynie";
         Warehouse warehouse = warehouseDao.findOne(idWarehouse);
-        warehouse.setAmount(warehouse.getAmount() - amount);
-        if(warehouse.getStatus().getName().equals(statusInStock)){
-            warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+
+        if(warehouse.getAmount() >= amount  && amount > 0) {
+            warehouse.setAmount(warehouse.getAmount() - amount);
+            if (warehouse.getStatus().getName().equals(statusInStock)) {
+                warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+            }
+            if (warehouse.getAmount() == 0) {
+                warehouse.setStatus(statusWarehouseDao.getSoldStatus());
+            }
+            warehouseDao.edit(warehouse);
+            saleService.save(amount,idClient,userLogin,warehouse);
         }
-        warehouseDao.edit(warehouse);
-        saleService.save(amount,idClient,userLogin,warehouse);
     }
 
     @Override
@@ -112,9 +118,12 @@ public class WarehouseServiceImpl implements WarehouseImpl {
         List<String[]> strings = new ArrayList<>();
         for (int i = 0; i < objects.size(); i++) {
             Object[] tab = objects.get(i);
-            String[] tabString = new String[tab.length];
-            for (int j = 0; j < tab.length; j++) {
+            String[] tabString = new String[tab.length -1];
+            for (int j = 0; j < tab.length - 1; j++) {
                 tabString[j] = tab[j].toString();
+                if(j == tab.length - 2){
+                    tabString[j] = tab[j].toString()+" "+tab[j+1].toString();
+                }
             }
             strings.add(tabString);
         }

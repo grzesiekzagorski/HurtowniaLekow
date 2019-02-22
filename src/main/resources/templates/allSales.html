@@ -90,11 +90,12 @@
         <tr style="background-color: green;">
             <th>Id</th>
             <th>Nr magazyn</th>
-            <th style="padding-right: 30px;padding-left: 30px;">Nazwa leku</th>
+            <th>Nr dostawy</th>
+            <th style="padding-right: 20px;padding-left:20px;">Nazwa leku</th>
             <th>Ilość</th>
             <th style="padding-right: 10px;padding-left: 10px;">Data sprzedaży</th>
-            <th style="padding-right: 30px;padding-left: 30px;">Klient</th>
-            <th style="padding-right: 30px;padding-left: 30px;">Sprzedający</th>
+            <th style="padding-right: 30px;padding-left:30px;">Klient</th>
+            <th style="padding-right: 35px;padding-left:35px;">Sprzedał</th>
         </tr>
         <tbody class="tbody-dark">
         <tbody th:each="s : ${sales}">
@@ -105,11 +106,12 @@
         <td th:text="${s[4]}"></td>
         <td th:text="${s[5]}"></td>
         <td th:text="${s[6]}"></td>
+        <td th:text="${s[7]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
     <div class="container-button">
-        <button class="btn-r" style="margin-left:240px;"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-r" style="margin-left:236px;"><i class="fa fa-refresh"></i> Odśwież</button>
 		<button class="btn-d" onclick="openFormCancelOfSale()"><i class="fa fa-times"></i> Anuluj</button>
     </div>
 </div>

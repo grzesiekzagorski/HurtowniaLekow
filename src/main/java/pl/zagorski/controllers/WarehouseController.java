@@ -38,6 +38,7 @@ public class WarehouseController {
     @RequestMapping(value = "/warehouse/allWarehouses", params ="idClient", method = RequestMethod.POST)
     public String addSale(Model model,@RequestParam int idWarehouse,@RequestParam int idClient,@RequestParam int amount) {
         Employee employee =  employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get();
+        model.addAttribute("warehouses",warehouseService.showWarehouseWhereStatusEqualsInStockOrOnSold());
         model.addAttribute("user",employee);
         warehouseService.sell(amount,idClient,employee.getLogin(),idWarehouse);
         return "allWarehouses";

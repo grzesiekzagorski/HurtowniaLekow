@@ -119,10 +119,12 @@
 <!--SideNav - Okno wyboru podstrony-->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="/medicine/allMedicines">Leki</a>
     <a href="/orders/allOrders">Zamówienia</a>
     <a href="/delivery/allDeliveries">Dostawy</a>
     <a href="/warehouse/allWarehouses">Magazyn</a>
+    <a href="/sale/allSales">Sprzedaże</a>
 </div>
 
 
@@ -154,14 +156,13 @@
         <thead class="thead-dark">
         </thead>
         <tr style="background-color: green;">
-            <th style="width:10px;">Id</th>
+            <th>Id</th>
             <th style="padding-right:20px;padding-left:20px;">Nazwa leku</th>
             <th>Ilość</th>
-            <th>Data zamówienia</th>
-            <th>Status</th>
-            <th style="padding-right:52px;padding-left:52px;">Dostawca</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
+            <th style="padding-right:10px;padding-left:10px;">Data zamówienia</th>
+            <th style="padding-right:25px;padding-left:25px;">Status</th>
+            <th style="padding-right:35px;padding-left:35px;">Dostawca</th>
+            <th style="padding-right:35px;padding-left:35px;">Zamówił</th>
         </tr>
         <tbody class="tbody-dark">
         <tbody th:each="o : ${orders}">
@@ -172,7 +173,6 @@
         <td th:text="${o[4]}"></td>
         <td th:text="${o[5]}"></td>
         <td th:text="${o[6]}"></td>
-        <td th:text="${o[7]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->

@@ -41,9 +41,12 @@ public class DeliveryServiceImpl implements DeliveryImpl {
         List<String[]> strings = new ArrayList<>();
         for (int i = 0; i < objects.size(); i++) {
             Object[] tab = objects.get(i);
-            String[] tabString = new String[tab.length];
-            for (int j = 0; j < tab.length; j++) {
+            String[] tabString = new String[tab.length -1];
+            for (int j = 0; j < tab.length - 1; j++) {
                 tabString[j] = tab[j].toString();
+                if(j == tab.length - 2){
+                    tabString[j] = tab[j].toString()+" "+tab[j+1].toString();
+                }
             }
             strings.add(tabString);
         }

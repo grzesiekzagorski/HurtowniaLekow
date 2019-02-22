@@ -112,13 +112,12 @@
         <tr style="background-color: green;">
             <th>Id</th>
             <th>Nr dostawy</th>
-            <th>Nazwa leku</th>
+            <th style="padding-left: 15px; padding-right: 15px;">Nazwa leku</th>
             <th>Ilość</th>
             <th>Status</th>
             <th>Data ważności</th>
-            <th>Dostawca</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
+            <th style="padding-left: 30px; padding-right: 30px;">Dostawca</th>
+            <th style="padding-left: 35px; padding-right: 35px;">Przyjął</th>
         </tr>
         <tbody class="tbody-dark">
         <tbody th:each="w : ${warehouses}">
@@ -130,12 +129,11 @@
         <td th:text="${w[6]}"></td>
         <td th:text="${w[7]}"></td>
         <td th:text="${w[8]}"></td>
-        <td th:text="${w[9]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
     <div class="container-button">
-        <button class="btn-r" style="margin-left:205px;"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-r" style="margin-left:212px;"><i class="fa fa-refresh"></i> Odśwież</button>
         <button class="btn-d" onclick="openFormAddSale()"><i class="fa fa-cart-arrow-down"></i> Sprzedaj</button>
     </div>
 </div>

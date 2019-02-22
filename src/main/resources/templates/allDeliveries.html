@@ -124,14 +124,14 @@
         <thead class="thead-dark">
         </thead>
         <tr style="background-color: green;">
-            <th style="width:10px;">Id</th>
-            <th style="padding-right:20px;padding-left:20px;">Nazwa leku</th>
+            <th>Id</th>
+            <th>Nr zamówienia</th>
+            <th>Nazwa leku</th>
             <th>Ilość</th>
-            <th style="padding-right:20px;padding-left:20px;">Data dostawy</th>
+            <th>Data dostawy</th>
             <th>Data ważności</th>
-            <th style="padding-right:35px;padding-left:35px;">Dostawca</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
+            <th style="padding-right:20px;padding-left:20px;">Dostawca</th>
+            <th style="padding-right:20px;padding-left:20px;">Odebrał</th>
         </tr>
         <tbody class="tbody-dark">
         <tbody th:each="d : ${deliveries}">
@@ -147,7 +147,7 @@
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
     <div class="container-button">
-        <button class="btn-r" style="margin-left:120px;"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-r" style="margin-left:125px;"><i class="fa fa-refresh"></i> Odśwież</button>
         <button class="btn-s" onclick="openFormAddDelivery()"><i class="fa fa-plus"></i> Dodaj</button>
 		<button class="btn-d" onclick="openFormDeleteDelivery()"><i class="fa fa-trash"></i> Usuń</button>
     </div>

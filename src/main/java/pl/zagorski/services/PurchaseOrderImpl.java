@@ -14,6 +14,7 @@ public interface PurchaseOrderImpl {
     PurchaseOrder findOne(int id);
     List<String[]> orderByName();
     List<String[]> convertObjectListToStringList(List<Object[]> objects);
+    List<String[]> convertObjectListToStringListFirstVersion(List<Object[]> objects);
     List<String[]> showAllPurchaseOrders();
     List<String[]> showAllPurchaseOrdersThatAreNotDelivered();
     List<String[]> showPurchaseOrderByIdOrName(@Param("id")String id,@Param("name")String name);
