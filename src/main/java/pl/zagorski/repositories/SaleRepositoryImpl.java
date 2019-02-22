@@ -31,6 +31,12 @@ public class SaleRepositoryImpl implements SaleDao {
     }
 
     @Override
+    @Transactional
+    public void delete(Sale sale) {
+        em.remove(sale);
+    }
+
+    @Override
     public List<Sale> findAll() {
         TypedQuery<Sale> q = em.createQuery("Select c from Sale c", Sale.class);
         return q.getResultList();

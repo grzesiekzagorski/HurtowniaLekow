@@ -20,12 +20,23 @@
 </head>
 
 <body>
+
+<datalist id="salesList">
+    <option th:each="x : ${sales}" th:value="${x[0]}"
+            th:label="${x[3]}"></option>
+</datalist>
+
 <!--Formularz anulowania sprzedaży leku-->
 <div class="form-popup" id="myFormCancelOfSale" style="margin-top: 100px">
-    <form th:action="@{/orders/allOrders}" method="post" class="form-container">
+    <form th:action="@{/sale/allSales}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
-
+                <h1 style="padding-right:120px">Anuluj sprzedaż</h1>
+                <label for="salesList"><b>Lek</b></label><br/>
+                <input style="padding-right:10px;" list="salesList" class="form-control" name="idDeleteTransactionSale" autocomplete="off" required><br/>
+                <button type="button" class="btn cancel" onclick="closeFormCancelOfSale()"><i class="fa fa-close"></i>
+                    Anuluj
+                </button>
                 <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
             </div>
         </div>

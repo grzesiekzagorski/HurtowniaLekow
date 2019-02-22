@@ -10,6 +10,7 @@ import java.util.List;
 public interface SaleDao {
     void save(Sale sale);
     void edit(Sale sale);
+    void delete(Sale sale);
     List<Sale> findAll();
     Sale findOne(int id);
     List<Object[]> showAllSales();

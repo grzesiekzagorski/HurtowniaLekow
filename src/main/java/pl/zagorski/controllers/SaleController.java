@@ -17,16 +17,25 @@ public class SaleController {
     SaleServiceImpl saleService;
 
     @RequestMapping(value = "/sale/allSales", method = RequestMethod.GET)
-    public String findAllSales(Model model) {
+    public String findAllSalesTransactions(Model model) {
         model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         model.addAttribute("sales",saleService.showAllSales());
         return "allSales";
     }
 
     @RequestMapping(value ="/sale/allSales",params = "idSearch", method = RequestMethod.POST)
-    public String findDeliveryInWarehouse(Model model, String idSearch, String nameSearch){
+    public String findSaleTransaction(Model model, String idSearch, String nameSearch){
         model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
         model.addAttribute("sales",saleService.showSaleByIdOrMedicineName(idSearch,nameSearch));
         return "allSales";
     }
+
+
+    @RequestMapping(value ="/sale/allSales",params = "idDeleteTransactionSale", method = RequestMethod.POST)
+    public String deleteSaleTransaction(Model model, int idDeleteTransactionSale){
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        saleService.delete(idDeleteTransactionSale);
+        return findAllSalesTransactions(model);
+    }
+
 }

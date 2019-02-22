@@ -3,11 +3,11 @@ package pl.zagorski.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zagorski.domain.Delivery;
 import pl.zagorski.domain.Sale;
+import pl.zagorski.domain.StatusWarehouse;
 import pl.zagorski.domain.Warehouse;
-import pl.zagorski.repositories.ClientDao;
-import pl.zagorski.repositories.EmployeeDao;
-import pl.zagorski.repositories.SaleDao;
+import pl.zagorski.repositories.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,6 +22,10 @@ public class SaleServiceImpl implements SaleImpl {
     private ClientDao clientDao;
     @Autowired
     private EmployeeDao employeeDao;
+    @Autowired
+    private WarehouseDao warehouseDao;
+    @Autowired
+    private StatusWarehouseDao statusWarehouseDao;
 
     @Override
     @Transactional
@@ -72,6 +76,25 @@ public class SaleServiceImpl implements SaleImpl {
     @Transactional
     public void edit(Sale sale) {
         saleDao.edit(sale);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int idSale) {
+        Sale sale = saleDao.findOne(idSale);
+        Warehouse warehouse = sale.getWarehouse();
+        warehouse.setAmount(warehouse.getAmount() + sale.getAmount());
+        warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+        for (Delivery delivery : warehouse.getOrder().getOrdersDelivery()) {
+            if(delivery.getOrder().getId() == warehouse.getOrder().getId()){
+                if(delivery.getOrder().getAmount() == warehouse.getAmount()){
+                    warehouse.setStatus(statusWarehouseDao.getInStockStatus());
+                    break;
+                }
+            }
+        }
+        warehouseDao.edit(warehouse);
+        saleDao.delete(sale);
     }
 
     @Override

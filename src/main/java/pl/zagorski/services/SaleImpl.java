@@ -10,6 +10,7 @@ import java.util.List;
 public interface SaleImpl {
     void save(int amount,int idClient,String userLogin,Warehouse warehouse);
     void edit(Sale sale);
+    void delete(int idSale);
     List<Sale> findAll();
     Sale findOne(int id);
     List<String[]> showAllSales();
