@@ -20,6 +20,8 @@ public class WarehouseServiceImpl implements WarehouseImpl {
     private WarehouseDao warehouseDao;
     @Autowired
     private StatusWarehouseDao statusWarehouseDao;
+    @Autowired
+    private SaleServiceImpl saleService;
 
 
     @Override
@@ -46,6 +48,19 @@ public class WarehouseServiceImpl implements WarehouseImpl {
     public void delete(int idPurchaseOrder) {
         Warehouse warehouse = warehouseDao.findOneByPurchaseOrderId(idPurchaseOrder);
         warehouseDao.delete(warehouse);
+    }
+
+    @Override
+    @Transactional
+    public void sell(int amount, int idClient, String userLogin, int idWarehouse) {
+        final String statusInStock = "na magazynie";
+        Warehouse warehouse = warehouseDao.findOne(idWarehouse);
+        warehouse.setAmount(warehouse.getAmount() - amount);
+        if(warehouse.getStatus().getName().equals(statusInStock)){
+            warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+        }
+        warehouseDao.edit(warehouse);
+        saleService.save(amount,idClient,userLogin,warehouse);
     }
 
     @Override

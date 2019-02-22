@@ -13,6 +13,7 @@ public interface WarehouseImpl {
     void save(int amount, Date delivery_date, Date expiration_date, Employee employee, PurchaseOrder purchase_order);
     void edit(Warehouse warehouse);
     void delete(int deleteWarehouse);
+    void sell(int amount,int idClient,String userLogin,int idWarehouse);
     List<Warehouse> findAll();
     Warehouse findOne(int id);
     List<Object[]> showAllWarehouses();

@@ -17,6 +17,7 @@ public interface SaleDao {
     List<Object[]> showAllSalesOrderBySaleAmount();
     List<Object[]> showSalesByMedicineName(@Param("name") String name);
     List<Object[]> showSaleById(@Param("id") int id);
+    List<Object[]> showSaleByIdAndMedicineName(@Param("id") int id,@Param("name") String name);
 
 
 }

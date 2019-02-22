@@ -15,6 +15,8 @@ public interface StatusWarehouseDao {
     List<StatusWarehouse> orderByName();
     StatusWarehouse getStatusByName(@Param("name") String name);
     StatusWarehouse getInStockStatus();
+    StatusWarehouse getOnSaleStatus();
+    StatusWarehouse getSoldStatus();
 
 
 }
