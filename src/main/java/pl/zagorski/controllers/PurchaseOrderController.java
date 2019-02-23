@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.zagorski.services.*;
+import pl.zagorski.exceptions.ExceptionSample;
+import pl.zagorski.services.EmployeeServiceImpl;
+import pl.zagorski.services.MedicineServiceImpl;
+import pl.zagorski.services.PurchaseOrderServiceImpl;
+import pl.zagorski.services.SupplierServiceImpl;
 
 @Controller
 public class PurchaseOrderController {
@@ -21,6 +25,8 @@ public class PurchaseOrderController {
     MedicineServiceImpl medicineService;
     @Autowired
     SupplierServiceImpl supplierService;
+    @Autowired
+    ErrorController errorController;
 
 
     public static String findLoggedUser() {
@@ -46,22 +52,37 @@ public class PurchaseOrderController {
     }
 
     @RequestMapping(value = "/orders/allOrders", params = "idMedicine", method = RequestMethod.POST)
-    public String addOrder(Model model, @RequestParam int idMedicine, @RequestParam int idSupplier,
+    public String addOrder(Model model, @RequestParam String idMedicine, @RequestParam String idSupplier,
                            @RequestParam int amount) {
-        purchaseOrderService.save(idMedicine, idSupplier, amount, PurchaseOrderController.findLoggedUser());
+        model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            purchaseOrderService.save(Integer.parseInt(idMedicine),Integer.parseInt(idSupplier),amount,PurchaseOrderController.findLoggedUser());
+        } catch (ExceptionSample | NumberFormatException e) {
+           return errorController.redirectToErrorPage(model);
+        }
         return findAllOrders(model);
     }
 
     @RequestMapping(value = "/orders/allOrders", params = "idOrderEdit", method = RequestMethod.POST)
-    public String editOrder(Model model, @RequestParam int idOrderEdit, @RequestParam int idMedicineEdit, @RequestParam int idSupplierEdit,
+    public String editOrder(Model model, @RequestParam String idOrderEdit, @RequestParam String idMedicineEdit, @RequestParam String idSupplierEdit,
                             @RequestParam int amountEdit) {
-        purchaseOrderService.edit(idOrderEdit, idMedicineEdit, idSupplierEdit, amountEdit, PurchaseOrderController.findLoggedUser());
+        model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            purchaseOrderService.edit(Integer.parseInt(idOrderEdit),Integer.parseInt(idMedicineEdit),Integer.parseInt(idSupplierEdit),amountEdit, PurchaseOrderController.findLoggedUser());
+        } catch (ExceptionSample | NumberFormatException e) {
+            return errorController.redirectToErrorPage(model);
+        }
         return findAllOrders(model);
     }
 
     @RequestMapping(value = "/orders/allOrders", params = "idOrderDelete", method = RequestMethod.POST)
-    public String editOrder(Model model, @RequestParam int idOrderDelete) {
-        purchaseOrderService.delete(idOrderDelete);
+    public String deleteOrder(Model model, @RequestParam String idOrderDelete) {
+        model.addAttribute("user", employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            purchaseOrderService.delete(Integer.parseInt(idOrderDelete));
+        } catch (ExceptionSample | NumberFormatException e) {
+            return errorController.redirectToErrorPage(model);
+        }
         return findAllOrders(model);
     }
 

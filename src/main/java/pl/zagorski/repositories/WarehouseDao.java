@@ -3,13 +3,14 @@ package pl.zagorski.repositories;
 
 import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.exceptions.ExceptionSample;
 
 import java.util.List;
 
 public interface WarehouseDao {
     void save(Warehouse warehouse);
     void edit(Warehouse warehouse);
-    void delete(Warehouse warehouse);
+    void delete(Warehouse warehouse)throws ExceptionSample;
     List<Warehouse> findAll();
     Warehouse findOne(@Param("id") int id);
     Warehouse findOneByPurchaseOrderId(@Param("id")int id);

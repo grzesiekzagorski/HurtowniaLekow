@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Employee;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.services.*;
 
 @Controller
@@ -18,6 +19,8 @@ public class WarehouseController {
     WarehouseServiceImpl warehouseService;
     @Autowired
     ClientServiceImpl clientService;
+    @Autowired
+    ErrorController errorController;
 
     @RequestMapping(value ="/warehouse/allWarehouses",method = RequestMethod.GET)
     public String findAllDeliveriesInWarehouse(Model model) {
@@ -36,11 +39,14 @@ public class WarehouseController {
     }
 
     @RequestMapping(value = "/warehouse/allWarehouses", params ="idClient", method = RequestMethod.POST)
-    public String addSale(Model model,@RequestParam int idWarehouse,@RequestParam int idClient,@RequestParam int amount) {
+    public String addSale(Model model,@RequestParam String idWarehouse,@RequestParam String idClient,@RequestParam int amount) {
         Employee employee =  employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get();
-        model.addAttribute("warehouses",warehouseService.showWarehouseWhereStatusEqualsInStockOrOnSold());
         model.addAttribute("user",employee);
-        warehouseService.sell(amount,idClient,employee.getLogin(),idWarehouse);
-        return "allWarehouses";
+        try {
+            warehouseService.sell(amount,Integer.parseInt(idClient),employee.getLogin(),Integer.parseInt(idWarehouse));
+        } catch (ExceptionSample | NumberFormatException e) {
+            return errorController.redirectToErrorPage(model);
+        }
+        return findAllDeliveriesInWarehouse(model);
     }
 }

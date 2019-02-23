@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Employee;
 import pl.zagorski.domain.PurchaseOrder;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.repositories.StatusWarehouseDao;
 import pl.zagorski.repositories.WarehouseDao;
 
@@ -45,27 +46,33 @@ public class WarehouseServiceImpl implements WarehouseImpl {
 
     @Override
     @Transactional
-    public void delete(int idPurchaseOrder) {
+    public void delete(int idPurchaseOrder) throws ExceptionSample {
         Warehouse warehouse = warehouseDao.findOneByPurchaseOrderId(idPurchaseOrder);
         warehouseDao.delete(warehouse);
     }
 
     @Override
     @Transactional
-    public void sell(int amount, int idClient, String userLogin, int idWarehouse) {
+    public void sell(int amount, int idClient, String userLogin, int idWarehouse) throws ExceptionSample {
         final String statusInStock = "na magazynie";
-        Warehouse warehouse = warehouseDao.findOne(idWarehouse);
 
-        if(warehouse.getAmount() >= amount  && amount > 0) {
-            warehouse.setAmount(warehouse.getAmount() - amount);
-            if (warehouse.getStatus().getName().equals(statusInStock)) {
-                warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+        if(warehouseDao.findOne(idWarehouse) == null){
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }else{
+            Warehouse warehouse = warehouseDao.findOne(idWarehouse);
+            if(warehouse.getAmount() >= amount  && amount > 0) {
+                warehouse.setAmount(warehouse.getAmount() - amount);
+                if (warehouse.getStatus().getName().equals(statusInStock)) {
+                    warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+                }
+                if (warehouse.getAmount() == 0) {
+                    warehouse.setStatus(statusWarehouseDao.getSoldStatus());
+                }
+                warehouseDao.edit(warehouse);
+                saleService.save(amount,idClient,userLogin,warehouse);
+            }else{
+                throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
             }
-            if (warehouse.getAmount() == 0) {
-                warehouse.setStatus(statusWarehouseDao.getSoldStatus());
-            }
-            warehouseDao.edit(warehouse);
-            saleService.save(amount,idClient,userLogin,warehouse);
         }
     }
 

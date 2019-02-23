@@ -1,11 +1,14 @@
 package pl.zagorski.repositories;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Delivery;
+import pl.zagorski.domain.Sale;
 import pl.zagorski.domain.Status;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.exceptions.ExceptionSample;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +20,9 @@ public class WarehouseRepositoryImpl implements WarehouseDao{
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    SaleRepositoryImpl saleRepository;
 
     @Override
     @Transactional
@@ -34,7 +40,12 @@ public class WarehouseRepositoryImpl implements WarehouseDao{
 
     @Override
     @Transactional
-    public void delete(Warehouse warehouse) {
+    public void delete(Warehouse warehouse)throws ExceptionSample {
+        for (Sale sale : saleRepository.findAll()) {
+            if(sale.getWarehouse().getId() == warehouse.getId()){
+                throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+            }
+        }
         em.remove(warehouse);
     }
 

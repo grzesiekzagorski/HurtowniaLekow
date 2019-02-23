@@ -7,6 +7,7 @@ import pl.zagorski.domain.Delivery;
 import pl.zagorski.domain.Sale;
 import pl.zagorski.domain.StatusWarehouse;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.repositories.*;
 
 import java.sql.Date;
@@ -29,15 +30,20 @@ public class SaleServiceImpl implements SaleImpl {
 
     @Override
     @Transactional
-    public void save(int amount, int idClient, String userLogin, Warehouse warehouse) {
-        Sale sale = new Sale();
-        sale.setAmount(amount);
-        sale.setClient(clientDao.findOne(idClient));
-        sale.setEmployee(employeeDao.getEmployeeByLogin(userLogin).get());
-        long time = System.currentTimeMillis();
-        sale.setSale_date(new Date(time));
-        sale.setWarehouse(warehouse);
-        saleDao.save(sale);
+    public void save(int amount, int idClient, String userLogin, Warehouse warehouse) throws ExceptionSample {
+        if(clientDao.findOne(idClient) != null){
+            Sale sale = new Sale();
+            sale.setAmount(amount);
+            sale.setClient(clientDao.findOne(idClient));
+            sale.setEmployee(employeeDao.getEmployeeByLogin(userLogin).get());
+            long time = System.currentTimeMillis();
+            sale.setSale_date(new Date(time));
+            sale.setWarehouse(warehouse);
+            saleDao.save(sale);
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }
+
     }
 
     public List<String[]> convertObjectListToStringList(List<Object[]> objects) {
@@ -80,21 +86,25 @@ public class SaleServiceImpl implements SaleImpl {
 
     @Override
     @Transactional
-    public void delete(int idSale) {
+    public void delete(int idSale) throws ExceptionSample {
         Sale sale = saleDao.findOne(idSale);
-        Warehouse warehouse = sale.getWarehouse();
-        warehouse.setAmount(warehouse.getAmount() + sale.getAmount());
-        warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
-        for (Delivery delivery : warehouse.getOrder().getOrdersDelivery()) {
-            if(delivery.getOrder().getId() == warehouse.getOrder().getId()){
-                if(delivery.getOrder().getAmount() == warehouse.getAmount()){
-                    warehouse.setStatus(statusWarehouseDao.getInStockStatus());
-                    break;
+        if(sale != null){
+            Warehouse warehouse = sale.getWarehouse();
+            warehouse.setAmount(warehouse.getAmount() + sale.getAmount());
+            warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
+            for (Delivery delivery : warehouse.getOrder().getOrdersDelivery()) {
+                if(delivery.getOrder().getId() == warehouse.getOrder().getId()){
+                    if(delivery.getOrder().getAmount() == warehouse.getAmount()){
+                        warehouse.setStatus(statusWarehouseDao.getInStockStatus());
+                        break;
+                    }
                 }
             }
+            warehouseDao.edit(warehouse);
+            saleDao.delete(sale);
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
         }
-        warehouseDao.edit(warehouse);
-        saleDao.delete(sale);
     }
 
     @Override

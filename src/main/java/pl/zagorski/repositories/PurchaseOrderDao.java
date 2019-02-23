@@ -3,13 +3,14 @@ package pl.zagorski.repositories;
 
 import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.PurchaseOrder;
+import pl.zagorski.exceptions.ExceptionSample;
 
 import java.util.List;
 
 public interface PurchaseOrderDao {
     void save(PurchaseOrder purchaseOrder);
-    void edit(PurchaseOrder purchaseOrder);
-    void delete(PurchaseOrder purchaseOrder);
+    void edit(PurchaseOrder purchaseOrder) throws ExceptionSample;
+    void delete(PurchaseOrder purchaseOrder)throws ExceptionSample;
     List<PurchaseOrder> findAll();
     PurchaseOrder findOne(int id);
     List<Object[]> orderByName();

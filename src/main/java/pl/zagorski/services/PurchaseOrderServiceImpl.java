@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.PurchaseOrder;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.repositories.*;
 
 import java.sql.Date;
@@ -57,35 +58,67 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderImpl{
 
     @Override
     @Transactional
-    public void save(int idMedicine,int idSupplier,int amount,String userLogin) {
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setAmount(amount);
-        purchaseOrder.setStatus(statusRepository.getStatusByName(COMPOSITE_STATUS));
-        purchaseOrder.setMedicine(medicineRepository.findOne(idMedicine));
-        purchaseOrder.setSupplier(supplierRepository.findOne(idSupplier));
-        purchaseOrder.setEmployee(employeeRepository.getEmployeeByLogin(userLogin).get());
-        long time = System.currentTimeMillis();
-        purchaseOrder.setDate_of_order(new Date(time));
-        purchaseOrderDao.save(purchaseOrder);
+    public void save(int idMedicine,int idSupplier,int amount,String userLogin)throws ExceptionSample {
+        if(medicineRepository.findOne(idMedicine) != null && supplierRepository.findOne(idSupplier) != null &&
+                amount > 0){
+            PurchaseOrder purchaseOrder = new PurchaseOrder();
+            purchaseOrder.setAmount(amount);
+            purchaseOrder.setStatus(statusRepository.getStatusByName(COMPOSITE_STATUS));
+            purchaseOrder.setMedicine(medicineRepository.findOne(idMedicine));
+            purchaseOrder.setSupplier(supplierRepository.findOne(idSupplier));
+            purchaseOrder.setEmployee(employeeRepository.getEmployeeByLogin(userLogin).get());
+            long time = System.currentTimeMillis();
+            purchaseOrder.setDate_of_order(new Date(time));
+            purchaseOrderDao.save(purchaseOrder);
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }
+
     }
 
     @Override
     @Transactional
-    public void edit(int idOrderEdit,int idMedicineEdit,int idSupplierEdit,int amountEdit,String userLogin) {
-        PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(idOrderEdit);
-        long time = System.currentTimeMillis();
-        purchaseOrder.setDate_of_order(new Date(time));
-        purchaseOrder.setMedicine(medicineRepository.findOne(idMedicineEdit));
-        purchaseOrder.setSupplier(supplierRepository.findOne(idSupplierEdit));
-        purchaseOrder.setEmployee(employeeRepository.getEmployeeByLogin(userLogin).get());
-        purchaseOrder.setAmount(amountEdit);
-        purchaseOrderDao.edit(purchaseOrder);
+    public void edit(int idOrderEdit,int idMedicineEdit,int idSupplierEdit,int amountEdit,String userLogin)throws ExceptionSample {
+        if(ifTheObjectIsCorrect(idOrderEdit,idMedicineEdit,idSupplierEdit,amountEdit)){
+            PurchaseOrder purchaseOrder = purchaseOrderDao.findOne(idOrderEdit);
+            long time = System.currentTimeMillis();
+            purchaseOrder.setDate_of_order(new Date(time));
+            purchaseOrder.setMedicine(medicineRepository.findOne(idMedicineEdit));
+            purchaseOrder.setSupplier(supplierRepository.findOne(idSupplierEdit));
+            purchaseOrder.setEmployee(employeeRepository.getEmployeeByLogin(userLogin).get());
+            purchaseOrder.setAmount(amountEdit);
+            purchaseOrderDao.edit(purchaseOrder);
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }
+
     }
+
+    public boolean ifTheObjectIsCorrect(int idOrderEdit,int idMedicineEdit,int idSupplierEdit,int amountEdit){
+        boolean result = false;
+        if(purchaseOrderDao.findOne(idOrderEdit) != null){
+            if(medicineRepository.findOne(idMedicineEdit) != null){
+                if(supplierRepository.findOne(idSupplierEdit) != null){
+                    if(amountEdit > 0){
+                        if(purchaseOrderDao.findOne(idOrderEdit).getStatus().equals(statusRepository.getStatusByName("złożony"))){
+                            result = true;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
     @Override
     @Transactional
-    public void delete(int orderDelete) {
-        purchaseOrderDao.delete(purchaseOrderDao.findOne(orderDelete));
+    public void delete(int orderDelete) throws ExceptionSample {
+        if(purchaseOrderDao.findOne(orderDelete) != null){
+            purchaseOrderDao.delete(purchaseOrderDao.findOne(orderDelete));
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }
     }
 
     @Override

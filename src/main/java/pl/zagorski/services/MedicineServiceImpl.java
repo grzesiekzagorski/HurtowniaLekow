@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Medicine;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.repositories.CharacterDao;
 import pl.zagorski.repositories.MedicineDao;
 import pl.zagorski.repositories.PrescriptionDao;
@@ -72,9 +73,14 @@ public class MedicineServiceImpl implements MedicineImpl {
 
     @Override
     @Transactional
-    public void delete(int idMedicineDelete) {
+    public void delete(int idMedicineDelete)throws ExceptionSample {
         Medicine medicine = medicineDao.findOne(idMedicineDelete);
-        medicineDao.delete(medicine);
+        if(medicine != null){
+            medicineDao.delete(medicine);
+        }else{
+            throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+        }
+
     }
 
     @Override
@@ -116,6 +122,12 @@ public class MedicineServiceImpl implements MedicineImpl {
     @Override
     public List<String[]> showAllMedicines() {
         List<String[]> result = convertObjectListToStringList(medicineDao.showAllMedicines());
+        return result;
+    }
+
+    @Override
+    public List<String[]> showMedicinesThatAreNotOrdered() {
+        List<String[]> result = convertObjectListToStringList(medicineDao.showMedicinesThatAreNotOrdered());
         return result;
     }
 }

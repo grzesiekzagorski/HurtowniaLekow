@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.zagorski.domain.Employee;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.services.*;
 
 @Controller
@@ -24,12 +25,14 @@ public class MedicineController {
     private ProducerServiceImpl producerService;
     @Autowired
     private EmployeeServiceImpl employeeService;
+    @Autowired
+    private ErrorController errorController;
 
 
     @RequestMapping(value ="/medicine/allMedicines",method = RequestMethod.GET)
     public String findAllMedicines(Model model) {
-
         model.addAttribute("medicines", medicineService.showAllMedicines());
+        model.addAttribute("medicinesNotOrdered",medicineService.showMedicinesThatAreNotOrdered());
         model.addAttribute("characters", characterService.findAll());
         model.addAttribute("producers", producerService.findAll());
         model.addAttribute("prescriptions", prescriptionService.findAll());
@@ -58,6 +61,7 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",params = "idSearch", method = RequestMethod.POST)
     public String findMedicine(Model model, String idSearch, String nameSearch){
         model.addAttribute("medicines",medicineService.showMedicineByIdOrName(idSearch,nameSearch));
+        model.addAttribute("medicinesNotOrdered",medicineService.showMedicinesThatAreNotOrdered());
         model.addAttribute("characters", characterService.findAll());
         model.addAttribute("producers", producerService.findAll());
         model.addAttribute("prescriptions", prescriptionService.findAll());
@@ -65,8 +69,13 @@ public class MedicineController {
         return "allMedicines";
     }
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineDelete", method = RequestMethod.POST)
-    public String deleteMedicine(Model model,@RequestParam int idMedicineDelete) {
-        medicineService.delete(idMedicineDelete);
+    public String deleteMedicine(Model model,@RequestParam String idMedicineDelete) {
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            medicineService.delete(Integer.parseInt(idMedicineDelete));
+        } catch (ExceptionSample  | NumberFormatException e) {
+            return errorController.redirectToErrorPage(model);
+        }
         return findAllMedicines(model);
     }
 

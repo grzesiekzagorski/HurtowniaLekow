@@ -1,10 +1,14 @@
 package pl.zagorski.repositories;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Medicine;
 import pl.zagorski.domain.PurchaseOrder;
+import pl.zagorski.domain.Warehouse;
+import pl.zagorski.exceptions.ExceptionSample;
+import pl.zagorski.services.WarehouseImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +21,9 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired
+    WarehouseImpl warehouseDao;
+
     @Override
     @Transactional
     public void save(PurchaseOrder purchaseOrder) {
@@ -26,14 +33,24 @@ public class PurchaseOrderRepositoryImpl implements PurchaseOrderDao {
 
     @Override
     @Transactional
-    public void edit(PurchaseOrder purchaseOrder) {
+    public void edit(PurchaseOrder purchaseOrder)throws ExceptionSample {
+        for (Warehouse warehouse : warehouseDao.findAll()) {
+            if(warehouse.getOrder().getId() == purchaseOrder.getId()){
+                throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+            }
+        }
         em.merge(purchaseOrder);
         em.flush();
     }
 
     @Override
     @Transactional
-    public void delete(PurchaseOrder purchaseOrder) {
+    public void delete(PurchaseOrder purchaseOrder)throws ExceptionSample {
+        for (Warehouse warehouse : warehouseDao.findAll()) {
+            if(warehouse.getOrder().getId() == purchaseOrder.getId()){
+                throw new ExceptionSample("Dostarczone dane nie mogą zostać uznane za prawidłowe.");
+            }
+        }
         em.remove(purchaseOrder);
     }
 

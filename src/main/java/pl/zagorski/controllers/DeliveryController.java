@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.services.DeliveryServiceImpl;
 import pl.zagorski.services.EmployeeServiceImpl;
 import pl.zagorski.services.PurchaseOrderServiceImpl;
@@ -19,6 +20,8 @@ public class DeliveryController {
     DeliveryServiceImpl deliveryService;
     @Autowired
     PurchaseOrderServiceImpl purchaseOrderService;
+    @Autowired
+    ErrorController errorController;
 
     @RequestMapping(value ="/delivery/allDeliveries",method = RequestMethod.GET)
     public String findAllDeliveries(Model model) {
@@ -30,8 +33,13 @@ public class DeliveryController {
     }
 
     @RequestMapping(value ="/delivery/allDeliveries",params = "idOrderAddDelivery", method = RequestMethod.POST)
-    public String addMedicine(Model model,@RequestParam int idOrderAddDelivery, @RequestParam String expirationDate){
-        deliveryService.save(expirationDate,idOrderAddDelivery,PurchaseOrderController.findLoggedUser());
+    public String addMedicine(Model model,@RequestParam String idOrderAddDelivery, @RequestParam String expirationDate){
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            deliveryService.save(expirationDate,Integer.parseInt(idOrderAddDelivery),PurchaseOrderController.findLoggedUser());
+        } catch (ExceptionSample | NumberFormatException e) {
+            return errorController.redirectToErrorPage(model);
+        }
         return findAllDeliveries(model);
     }
     @RequestMapping(value ="/delivery/allDeliveries",params = "idSearch", method = RequestMethod.POST)
@@ -44,8 +52,13 @@ public class DeliveryController {
     }
 
     @RequestMapping(value ="/delivery/allDeliveries",params = "idDeliveryDelete", method = RequestMethod.POST)
-    public String deleteDelivery(Model model,@RequestParam int idDeliveryDelete) {
-        deliveryService.delete(idDeliveryDelete);
+    public String deleteDelivery(Model model,@RequestParam String idDeliveryDelete) {
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        try {
+            deliveryService.delete(Integer.parseInt(idDeliveryDelete));
+        } catch (ExceptionSample | NumberFormatException e) {
+             return errorController.redirectToErrorPage(model);
+        }
         return findAllDeliveries(model);
     }
 
