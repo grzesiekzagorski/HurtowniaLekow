@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.zagorski.services.EmployeeServiceImpl;
 
 @Controller
-public class ErrorController {
+public class AccessController {
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    public String redirectToErrorPage(Model model) {
-        model.addAttribute("incorrectData", true);
+    @Autowired
+    EmployeeServiceImpl employeeService;
+
+    @RequestMapping(value = "/delivery/error", method = RequestMethod.GET)
+    public String accessToDeliveryDenied(Model model) {
+        model.addAttribute("user",employeeService.getEmployeeByLogin(PurchaseOrderController.findLoggedUser()).get());
+        model.addAttribute("accessDenied", true);
         return "/error";
     }
 }

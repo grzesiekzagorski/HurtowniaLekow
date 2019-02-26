@@ -13,7 +13,4 @@ public interface PositionDao {
     Position findOne(int id);
     List<Position> orderByName();
     Position getPositionByName(@Param("name") String name);
-    List<String> showActionsOfThisPosition(@Param("name")String name);
-
-
 }

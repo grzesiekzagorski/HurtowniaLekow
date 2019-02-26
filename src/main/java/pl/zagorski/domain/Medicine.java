@@ -1,6 +1,8 @@
 package pl.zagorski.domain;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,9 @@ public class Medicine {
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String name;
 
-    private double price;
+    private BigDecimal price;
 
-    private double discount;
+    private int discount;
 
     @Column(columnDefinition = "VARCHAR(100) NOT NULL")
     private String wrapping;
@@ -55,19 +57,19 @@ public class Medicine {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.price = new BigDecimal(price);
     }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 

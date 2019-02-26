@@ -43,7 +43,7 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",params = "idPrescription", method = RequestMethod.POST)
     public String addMedicine(Model model, @RequestParam int idPrescription, @RequestParam int idCharacter,
                             @RequestParam int idProducer, @RequestParam String name,
-                            @RequestParam double price, @RequestParam double discount,
+                            @RequestParam double price, @RequestParam int discount,
                             @RequestParam String portion, @RequestParam String wrapping) {
         medicineService.save(idPrescription,idCharacter,idProducer,name,price,discount,portion,wrapping);
         return findAllMedicines(model);
@@ -52,7 +52,7 @@ public class MedicineController {
     @RequestMapping(value ="/medicine/allMedicines",params = "idMedicineEdit", method = RequestMethod.POST)
     public String editMedicine(Model model,@RequestParam int idMedicineEdit,@RequestParam int idPrescriptionEdit, @RequestParam int idCharacterEdit,
                               @RequestParam int idProducerEdit, @RequestParam String nameEdit,
-                              @RequestParam double priceEdit, @RequestParam double discountEdit,
+                              @RequestParam double priceEdit, @RequestParam int discountEdit,
                               @RequestParam String portionEdit, @RequestParam String wrappingEdit) {
         medicineService.edit(idMedicineEdit,idPrescriptionEdit,idCharacterEdit,idProducerEdit,nameEdit,priceEdit,discountEdit,portionEdit,wrappingEdit);
         return findAllMedicines(model);

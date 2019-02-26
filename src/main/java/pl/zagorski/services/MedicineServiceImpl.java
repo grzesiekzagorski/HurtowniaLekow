@@ -41,7 +41,7 @@ public class MedicineServiceImpl implements MedicineImpl {
 
     @Override
     @Transactional
-    public void save(int idPrescription, int idCharacter, int idProducer, String name, double price, double discount,
+    public void save(int idPrescription, int idCharacter, int idProducer, String name, double price, int discount,
                      String portion, String wrapping) {
         Medicine medicine = new Medicine();
         medicine.setPrescription(prescriptionDao.findOne(idPrescription));
@@ -58,7 +58,7 @@ public class MedicineServiceImpl implements MedicineImpl {
     @Override
     @Transactional
     public void edit(int idMedicineEdit,int idPrescriptionEdit,int idCharacterEdit, int idProducerEdit,
-                     String nameEdit,double priceEdit,double discountEdit, String portionEdit,String wrappingEdit) {
+                     String nameEdit,double priceEdit,int discountEdit, String portionEdit,String wrappingEdit) {
         Medicine medicine = medicineDao.findOne(idMedicineEdit);
         medicine.setPrescription(prescriptionDao.findOne(idPrescriptionEdit));
         medicine.setCharacter(characterDao.findOne(idCharacterEdit));
