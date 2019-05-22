@@ -22,5 +22,6 @@ public interface WarehouseDao {
     List<Object[]> showWarehouseByIdAndMedicineName(@Param("id") int id,@Param("name") String name);
     List<Object[]> showWarehouseWhereStatusEqualsInStock();
     List<Object[]> showWarehouseWhereStatusEqualsInStockOrOnSold();
+    List<Object[]> showWarehouseWhereStatusEqualsInStockOrOnSoldRest();
 
 }

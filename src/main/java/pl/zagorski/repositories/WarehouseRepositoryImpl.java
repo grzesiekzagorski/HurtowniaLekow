@@ -123,6 +123,13 @@ public class WarehouseRepositoryImpl implements WarehouseDao {
         return query.setParameter("status", "na magazynie").setParameter("status2", "w sprzedaży").getResultList();
     }
 
+    @Override
+    public List<Object[]> showWarehouseWhereStatusEqualsInStockOrOnSoldRest() {
+        TypedQuery<Object[]> query = em.createQuery("SELECT d.id,k.id,m.name,d.amount FROM Warehouse d " +
+                "JOIN d.order o JOIN o.supplier s JOIN d.status b JOIN d.employee e JOIN o.ordersDelivery k JOIN o.medicine m WHERE b.name= :status OR b.name = :status2 ", Object[].class);
+        return query.setParameter("status", "na magazynie").setParameter("status2", "w sprzedaży").getResultList();
+    }
+
 
 }
 

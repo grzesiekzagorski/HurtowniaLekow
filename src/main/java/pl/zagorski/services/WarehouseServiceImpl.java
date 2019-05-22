@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zagorski.domain.Employee;
 import pl.zagorski.domain.PurchaseOrder;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.domain.WarehouseRest;
 import pl.zagorski.exceptions.ExceptionSample;
 import pl.zagorski.repositories.StatusWarehouseDao;
 import pl.zagorski.repositories.WarehouseDao;
@@ -61,7 +62,8 @@ public class WarehouseServiceImpl implements WarehouseImpl {
         }else{
             Warehouse warehouse = warehouseDao.findOne(idWarehouse);
             if(warehouse.getAmount() >= amount  && amount > 0) {
-                warehouse.setAmount(warehouse.getAmount() - amount);
+                int amountTmp = warehouse.getAmount() - amount;
+                warehouse.setAmount(amountTmp);
                 if (warehouse.getStatus().getName().equals(statusInStock)) {
                     warehouse.setStatus(statusWarehouseDao.getOnSaleStatus());
                 }
@@ -135,6 +137,35 @@ public class WarehouseServiceImpl implements WarehouseImpl {
             strings.add(tabString);
         }
         return strings;
+    }
+
+    public List<String[]> convertObjectListToStringListFirstVersion(List<Object[]> objects) {
+        List<String[]> strings = new ArrayList<>();
+        for (int i = 0; i < objects.size(); i++) {
+            Object[] tab = objects.get(i);
+            String[] tabString = new String[tab.length];
+            for (int j = 0; j < tab.length; j++) {
+                tabString[j] = tab[j].toString();
+            }
+            strings.add(tabString);
+        }
+        return strings;
+    }
+
+    @Override
+    public List<WarehouseRest> showWarehouseRestObjects() {
+        List<WarehouseRest> warehouseRestList = new ArrayList<>();
+        if(convertObjectListToStringListFirstVersion(warehouseDao.showWarehouseWhereStatusEqualsInStockOrOnSoldRest()).size() > 0) {
+            for (String[] strings : convertObjectListToStringListFirstVersion(warehouseDao.showWarehouseWhereStatusEqualsInStockOrOnSoldRest())) {
+                WarehouseRest warehouseRest = new WarehouseRest();
+                warehouseRest.setId(Integer.parseInt(strings[0]));
+                warehouseRest.setDelivery_number(Integer.parseInt(strings[1]));
+                warehouseRest.setNameOfMedicine(strings[2]);
+                warehouseRest.setAmount(Integer.parseInt(strings[3]));
+                warehouseRestList.add(warehouseRest);
+            }
+        }
+        return warehouseRestList;
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Employee;
 import pl.zagorski.domain.PurchaseOrder;
 import pl.zagorski.domain.Warehouse;
+import pl.zagorski.domain.WarehouseRest;
 import pl.zagorski.exceptions.ExceptionSample;
 
 import java.sql.Date;
@@ -23,5 +24,7 @@ public interface WarehouseImpl {
     List<String[]> convertObjectListToStringList(List<Object[]> objects);
     List<String[]> showWarehouseWhereStatusEqualsInStockOrOnSold();
     List<String[]> showWarehouseWhereStatusEqualsInStock();
+    List<String[]> convertObjectListToStringListFirstVersion(List<Object[]> objects);
+    List<WarehouseRest> showWarehouseRestObjects();
 
 }
