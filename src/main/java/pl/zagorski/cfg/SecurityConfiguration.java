@@ -31,15 +31,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .passwordEncoder(getPasswordEncoder());
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/getEmployees").hasAnyRole("USER", "ADMIN").antMatchers("/addNewEmployee")
-                .hasAnyRole("ADMIN").anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/warehouse/getRestWarehouse").permitAll()
+                .antMatchers("/medicine/allMedicines").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/orders/allOrders").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/warehouse/allWarehouses").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/delivery/allDeliveries").hasAnyRole("ADMIN")
+                .antMatchers("/sale/allSales").hasAnyRole("ADMIN")
+                .and().exceptionHandling().accessDeniedPage("/delivery/error")
                 .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/medicine/allMedicines")
                 .failureUrl("/login-error")
-                .and().logout().permitAll();
+                .and().logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
 
         http.csrf().disable();
     }

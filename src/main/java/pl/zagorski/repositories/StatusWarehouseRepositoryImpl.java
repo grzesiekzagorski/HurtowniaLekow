@@ -57,4 +57,16 @@ public class StatusWarehouseRepositoryImpl implements StatusWarehouseDao{
         TypedQuery<StatusWarehouse> q = em.createQuery("Select c from StatusWarehouse c where c.name = :name", StatusWarehouse.class);
         return q.setParameter("name", "na magazynie").getSingleResult();
     }
+
+    @Override
+    public StatusWarehouse getOnSaleStatus() {
+        TypedQuery<StatusWarehouse> q = em.createQuery("Select c from StatusWarehouse c where c.name = :name", StatusWarehouse.class);
+        return q.setParameter("name", "w sprzedaży").getSingleResult();
+    }
+
+    @Override
+    public StatusWarehouse getSoldStatus() {
+        TypedQuery<StatusWarehouse> q = em.createQuery("Select c from StatusWarehouse c where c.name = :name", StatusWarehouse.class);
+        return q.setParameter("name", "sprzedany").getSingleResult();
+    }
 }

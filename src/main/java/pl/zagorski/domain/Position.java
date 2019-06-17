@@ -17,9 +17,6 @@ public class Position {
     @Column(columnDefinition = "VARCHAR(30) NOT NULL")
     private String name;
 
-    @ManyToMany
-    private List<Action> actions;
-
     public int getPositionId() {
         return positionId;
     }
@@ -36,13 +33,6 @@ public class Position {
         this.name = name;
     }
 
-    public List<Action> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<Action> actions) {
-        this.actions = actions;
-    }
 
 
 }

@@ -3,15 +3,16 @@ package pl.zagorski.services;
 
 import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Medicine;
+import pl.zagorski.exceptions.ExceptionSample;
 
 import java.util.List;
 
 public interface MedicineImpl {
-    void save(int idPrescription, int idCharacter, int idProducer, String name, double price, double discount,
+    void save(int idPrescription, int idCharacter, int idProducer, String name, double price, int discount,
               String portion, String wrapping);
     void edit(int idMedicineEdit,int idPrescriptionEdit,int idCharacterEdit, int idProducerEdit,
-              String nameEdit,double priceEdit,double discountEdit, String portionEdit,String wrappingEdit);
-    void delete(int idMedicineDelete);
+              String nameEdit,double priceEdit,int discountEdit, String portionEdit,String wrappingEdit);
+    void delete(int idMedicineDelete) throws ExceptionSample;
     List<Medicine> findAll();
     Medicine findOne(int id);
     List<Medicine> orderByName();
@@ -19,5 +20,6 @@ public interface MedicineImpl {
     List<String[]> convertObjectListToStringList(List<Object[]> objects);
     List<String[]> showAllMedicinesOrderByName();
     List<String[]> showAllMedicines();
+    List<String[]> showMedicinesThatAreNotOrdered();
 
 }

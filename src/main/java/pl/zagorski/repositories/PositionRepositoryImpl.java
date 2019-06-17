@@ -50,10 +50,4 @@ public class PositionRepositoryImpl implements PositionDao {
         TypedQuery<Position> q = em.createQuery("Select c from Position c where c.name = :name", Position.class);
         return q.setParameter("name", name).getSingleResult();
     }
-
-    @Override
-    public List<String> showActionsOfThisPosition(String name) {
-        TypedQuery<String> query = em.createQuery("SELECT a.name FROM Position p JOIN p.actions a WHERE p.name= :name",String.class);
-        return query.setParameter("name",name).getResultList();
-    }
 }

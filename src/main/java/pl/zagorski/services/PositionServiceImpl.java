@@ -46,9 +46,4 @@ public class PositionServiceImpl implements PositionImpl{
     public Position getPositionByName(String name) {
         return positionDao.getPositionByName(name);
     }
-
-    @Override
-    public List<String> showActionsOfThisPosition(String name) {
-        return positionDao.showActionsOfThisPosition(name);
-    }
 }

@@ -3,6 +3,7 @@ package pl.zagorski.repositories;
 
 import org.springframework.data.repository.query.Param;
 import pl.zagorski.domain.Delivery;
+import pl.zagorski.exceptions.ExceptionSample;
 
 import java.util.List;
 

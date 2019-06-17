@@ -44,9 +44,9 @@
             <div class="thumbnail">
                 <h1>Dodaj zamówienie</h1>
                 <label for="medicineList"><b>Lek</b></label><br/>
-                <input list="medicineList" class="form-control" name="idMedicine" autocomplete="off"><br/>
+                <input list="medicineList" class="form-control" name="idMedicine" autocomplete="off" required><br/>
                 <label for="supplierList"><b>Dostawca</b></label><br/>
-                <input list="supplierList"  class="form-control" name="idSupplier" autocomplete="off"><br/>
+                <input list="supplierList"  class="form-control" name="idSupplier" autocomplete="off" required><br/>
                 <label for="amount"><b>Ilość</b>(max:400)</label><br/>
                 <input type="number" max="400" id="amount" autocomplete="off" name="amount" required>
                 <button type="button" class="btn cancel" onclick="closeFormAddOrder()"><i class="fa fa-close"></i>
@@ -65,11 +65,11 @@
             <div class="thumbnail">
                 <h1>Edytuj zamówienie</h1>
                 <label for="orderEditMedicineList"><b>Zamówienie</b></label><br/>
-                <input list="orderEditMedicineList" class="form-control" name="idOrderEdit" autocomplete="off"><br/>
+                <input list="orderEditMedicineList" class="form-control" name="idOrderEdit" autocomplete="off" required><br/>
                 <label for="medicineList"><b>Lek</b></label><br/>
-                <input list="medicineList" class="form-control" name="idMedicineEdit" autocomplete="off"><br/>
+                <input list="medicineList" class="form-control" name="idMedicineEdit" autocomplete="off" required><br/>
                 <label for="supplierList"><b>Dostawca</b></label><br/>
-                <input list="supplierList"  class="form-control" name="idSupplierEdit" autocomplete="off"><br/>
+                <input list="supplierList"  class="form-control" name="idSupplierEdit" autocomplete="off" required><br/>
                 <label for="amount"><b>Ilość</b>(max:400)</label><br/>
                 <input type="number" max="400" id="amountEdit" autocomplete="off" name="amountEdit" required>
                 <button type="button" class="btn cancel" onclick="closeFormEditOrder()"><i class="fa fa-close"></i>
@@ -119,10 +119,12 @@
 <!--SideNav - Okno wyboru podstrony-->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="/medicine/allMedicines">Leki</a>
     <a href="/orders/allOrders">Zamówienia</a>
     <a href="/delivery/allDeliveries">Dostawy</a>
     <a href="/warehouse/allWarehouses">Magazyn</a>
+    <a href="/sale/allSales">Sprzedaże</a>
 </div>
 
 
@@ -131,7 +133,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- NAVBAR - górny pasek menu -->
     <div class="navbar">
-        <a class="logout" href="login.html"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+        <a class="logout" th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
         <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;"><i
                 class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
@@ -154,14 +156,13 @@
         <thead class="thead-dark">
         </thead>
         <tr style="background-color: green;">
-            <th style="width:10px;">Id</th>
+            <th>Id</th>
             <th style="padding-right:20px;padding-left:20px;">Nazwa leku</th>
             <th>Ilość</th>
-            <th>Data zamówienia</th>
-            <th>Status</th>
-            <th style="padding-right:52px;padding-left:52px;">Dostawca</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
+            <th style="padding-right:10px;padding-left:10px;">Data zamówienia</th>
+            <th style="padding-right:25px;padding-left:25px;">Status</th>
+            <th style="padding-right:35px;padding-left:35px;">Dostawca</th>
+            <th style="padding-right:35px;padding-left:35px;">Zamówił</th>
         </tr>
         <tbody class="tbody-dark">
         <tbody th:each="o : ${orders}">
@@ -172,7 +173,6 @@
         <td th:text="${o[4]}"></td>
         <td th:text="${o[5]}"></td>
         <td th:text="${o[6]}"></td>
-        <td th:text="${o[7]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->

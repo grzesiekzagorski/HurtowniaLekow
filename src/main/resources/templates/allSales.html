@@ -16,34 +16,25 @@
             background-color: #000080;
         }
     </style>
-    <title>Warehouse – magazyn</title>
+    <title>Sales – baza sprzedaży</title>
 </head>
 
 <body>
 
-<datalist id="clientList">
-    <option th:each="c : ${clients}" th:value="${c.id}"
-            th:label="${c.name}"></option>
+<datalist id="salesList">
+    <option th:each="x : ${sales}" th:value="${x[0]}"
+            th:label="${x[3]}"></option>
 </datalist>
 
-<datalist id="warehouseList">
-    <option th:each="w : ${warehouses}" th:value="${w[0]}"
-            th:label="${w[2]}"></option>
-</datalist>
-
-<!--Formularz dodania sprzedazy leku-->
-<div class="form-popup" id="myFormAddSale" style="margin-top: 100px">
-    <form th:action="@{/warehouse/allWarehouses}" method="post" class="form-container">
+<!--Formularz anulowania sprzedaży leku-->
+<div class="form-popup" id="myFormCancelOfSale" style="margin-top: 100px">
+    <form th:action="@{/sale/allSales}" method="post" class="form-container">
         <div class="col-xs-3">
             <div class="thumbnail">
-                <h1 style="padding-right: 120px;">Dodaj sprzedaż</h1>
-                <label for="warehouseList"><b>Lek</b></label><br/>
-                <input style="padding-right:10px;" list="warehouseList" class="form-control" name="idWarehouse" autocomplete="off" required><br/>
-                <label for="clientList"><b>Klient</b></label><br/>
-                <input style="padding-right:10px;" list="clientList" class="form-control" name="idClient" autocomplete="off" required><br/>
-                <label for="amount"><b>Ilość</b></label><br/>
-                <input style="padding-right:10px;" max="400" type="number" class="form-control" name="amount" id="amount" autocomplete="off" required><br/>
-                <button type="button" class="btn cancel" onclick="closeFormAddSale()"><i class="fa fa-close"></i>
+                <h1 style="padding-right:120px">Anuluj sprzedaż</h1>
+                <label for="salesList"><b>Lek</b></label><br/>
+                <input style="padding-right:10px;" list="salesList" class="form-control" name="idDeleteTransactionSale" autocomplete="off" required><br/>
+                <button type="button" class="btn cancel" onclick="closeFormCancelOfSale()"><i class="fa fa-close"></i>
                     Anuluj
                 </button>
                 <button type="submit" class="btn"><i class="fa fa-check"></i> Potwierdź</button>
@@ -51,7 +42,6 @@
         </div>
     </form>
 </div>
-
 <!--Okno z informacjami o zalogowanym uzytkowniku-->
 <div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
     <form method="post" class="form-container">
@@ -81,24 +71,23 @@
     <a href="/sale/allSales">Sprzedaże</a>
 </div>
 
-
 <div class="container" style="margin-top: 20px;">
     <!-- Load an icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- NAVBAR - górny pasek menu -->
     <div class="navbar">
         <a class="logout" th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
-        <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;">
-            <i class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
+        <a class="info" onclick="openWindowInformationUser()" style="cursor: pointer;"><i
+                class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
         <a onclick="openNav()"
            style="float:left;text-align:center;padding:15px;color:white;text-decoration:none;font-size:19px;cursor:pointer">
             <b>&#9776; Menu</b></a>
     </div>
 
-    <!-- Formularz wyszukiwania zamowienia po nazwie leku lub identyfikatorze dostawy-->
+    <!-- Formularz wyszukiwania zamowienia po nazwie leku lub identyfikatorze zamowienia-->
     <div class="container-search">
-        <form th:action="@{/warehouse/allWarehouses}" method="post" class="form-container-search">
+        <form th:action="@{/sale/allSales}" method="post" class="form-container-search">
             <input type="number" name="idSearch" id="idSearch" placeholder="Id" autocomplete="off">
             <input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa leku" autocomplete="off">
             <button type="submit" class="btn-f"><i class="fa fa-search"></i> Szukaj</button>
@@ -111,30 +100,30 @@
         </thead>
         <tr style="background-color: green;">
             <th>Id</th>
+            <th>Nr magazyn</th>
             <th>Nr dostawy</th>
-            <th style="padding-left: 15px; padding-right: 15px;">Nazwa leku</th>
+            <th style="padding-right: 20px;padding-left:20px;">Nazwa leku</th>
             <th>Ilość</th>
-            <th>Status</th>
-            <th>Data ważności</th>
-            <th style="padding-left: 30px; padding-right: 30px;">Dostawca</th>
-            <th style="padding-left: 35px; padding-right: 35px;">Przyjął</th>
+            <th style="padding-right: 10px;padding-left: 10px;">Data sprzedaży</th>
+            <th style="padding-right: 30px;padding-left:30px;">Klient</th>
+            <th style="padding-right: 35px;padding-left:35px;">Sprzedał</th>
         </tr>
         <tbody class="tbody-dark">
-        <tbody th:each="w : ${warehouses}">
-        <td th:text="${w[0]}"></td>
-        <td th:text="${w[1]}"></td>
-        <td th:text="${w[2]}"></td>
-        <td th:text="${w[3]}"></td>
-        <td th:text="${w[4]}"></td>
-        <td th:text="${w[6]}"></td>
-        <td th:text="${w[7]}"></td>
-        <td th:text="${w[8]}"></td>
+        <tbody th:each="s : ${sales}">
+        <td th:text="${s[0]}"></td>
+        <td th:text="${s[1]}"></td>
+        <td th:text="${s[2]}"></td>
+        <td th:text="${s[3]}"></td>
+        <td th:text="${s[4]}"></td>
+        <td th:text="${s[5]}"></td>
+        <td th:text="${s[6]}"></td>
+        <td th:text="${s[7]}"></td>
         </tbody>
     </table>
     <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
     <div class="container-button">
-        <button class="btn-r" style="margin-left:212px;"><i class="fa fa-refresh"></i> Odśwież</button>
-        <button class="btn-d" onclick="openFormAddSale()"><i class="fa fa-cart-arrow-down"></i> Sprzedaj</button>
+        <button class="btn-r" style="margin-left:236px;"><i class="fa fa-refresh"></i> Odśwież</button>
+		<button class="btn-d" onclick="openFormCancelOfSale()"><i class="fa fa-times"></i> Anuluj</button>
     </div>
 </div>
 <!-- Funkcje w JavaScript -->
@@ -155,13 +144,26 @@
         document.getElementById("myInformationPopupWindow").style.display = "none";
     }
 
-	function openFormAddSale() {
-        document.getElementById("myFormAddSale").style.display = "block";
+
+	function openFormCancelOfSale() {
+        document.getElementById("myFormCancelOfSale").style.display = "block";
     }
 
-    function closeFormAddSale() {
-        document.getElementById("myFormAddSale").style.display = "none";
+    function closeFormCancelOfSale() {
+        document.getElementById("myFormCancelOfSale").style.display = "none";
     }
+    var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+		if(dd<10){
+        dd='0'+dd
+		} 
+		if(mm<10){
+        mm='0'+mm
+		} 
+		today = yyyy+'-'+mm+'-'+dd;
+		document.getElementById("expirationDate").setAttribute("min", today);
 </script>
 </body>
 </html>

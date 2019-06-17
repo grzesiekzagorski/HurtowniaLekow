@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/errorView.css}" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .logout {
+            background-color: red;
+        }
+
+        .info {
+            background-color: #000080;
+        }
+    </style>
+    <title>Błąd</title>
+</head>
+
+<body>
+<!--Okno popup uruchamiane w przypadku podania błędnych danych-->
+<div class="form-popup" id="myPopupWindow" style="margin-top: 180px">
+    <form class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1 style="padding-right:150px">Błąd</h1>
+                <p style="color: red" th:if="${incorrectData}" class="error">Dostarczone dane nie mogą zostać uznane za prawidłowe.</p>
+                <p style="color: red" th:if="${accessDenied}" class="error">Brak uprawnień do tej części serwisu.</p>
+                <input style="margin-left:75px; font-weight: bold;" type="button" class="btn" value="&#10003 OK" onclick="history.back()">
+            </div>
+        </div>
+    </form>
+</div>
+<!--Okno z informacjami o zalogowanym uzytkowniku-->
+<div class="form-popup" id="myInformationPopupWindow" style="margin-top: 120px;margin-left: 310px;">
+    <form method="post" class="form-container">
+        <div class="col-xs-3">
+            <div class="thumbnail">
+                <h1>Użytkownik</h1>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Login: </b><span
+                        th:text="${user.login}"></span></label><br/>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Imię: </b><span th:text="${user.name}"></span></label><br/>
+                <label style="padding-right: 100px;padding-bottom:5px"><b>Nazwisko: </b><span
+                        th:text="${user.surname}"></span></label>
+                <button type="button" style=" background-color: red;" class="btn cancel"
+                        onclick="closeWindowInformationUser()"><i class="fa fa-close"></i> Zamknij
+                </button>
+                <br/>
+            </div>
+        </div>
+    </form>
+</div>
+<!--SideNav - Okno wyboru podstrony-->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/medicine/allMedicines">Leki</a>
+    <a href="/orders/allOrders">Zamówienia</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
+</div>
+
+
+<div class="container" style="margin-top: 20px;">
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- NAVBAR - górny pasek menu -->
+    <div class="navbar">
+        <a class="logout" style="cursor: pointer;"><i class="fa fa-fw fa-sign-out"></i><b> Wyloguj</b></a>
+        <a class="info" style="cursor: pointer;"><i
+                class="fa fa-fw fa-user"></i><b> Użytkownik</b></a>
+        <a class="active" href="#"><i class="fa fa-fw fa-home"></i><b> Home</b></a>
+        <a style="float:left;text-align:center;padding:15px;color:white;text-decoration:none;font-size:19px;cursor:pointer">
+            <b>&#9776; Menu</b></a>
+    </div>
+
+    <!-- Formularz wyszukiwania zamowienia po nazwie leku lub identyfikatorze zamowienia-->
+    <div class="container-search">
+        <div class="form-container-search">
+            <input type="number" name="idSearch" id="idSearch" placeholder="Id" autocomplete="off" disabled>
+            <input type="text" name="nameSearch" id="nameSearch" placeholder="Nazwa leku" autocomplete="off" disabled>
+            <button type="submit" class="btn-f"><i class="fa fa-search"></i> Szukaj</button>
+        </div>
+    </div>
+
+    <!-- Tabela z zawartością bazy danych -->
+    <div class="rectangle">
+        
+    </div>
+    <!-- Pzyciski działań związanych z bazą danych(DODAJ,Edytuj,Usuń itp. -->
+    <div class="container-button">
+        <button class="btn-r" style="margin-left:120px;"><i class="fa fa-refresh"></i> Odśwież</button>
+        <button class="btn-s" onclick="openFormAddDelivery()"><i class="fa fa-plus"></i> Dodaj</button>
+		<button class="btn-d" onclick="openFormDeleteDelivery()"><i class="fa fa-trash"></i> Usuń</button>
+    </div>
+</div>
+<!-- Funkcje w JavaScript -->
+<script>	
+	function popup() {
+        document.getElementById("myPopupWindow").style.display = "block";
+    }
+	
+	$(document).ready(function(){
+		setTimeout(function(){
+		popup();
+		},500); // 5000 to load it after 5 seconds from page load
+    });
+
+</script>
+</body>
+</html>

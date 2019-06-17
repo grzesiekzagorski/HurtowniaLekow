@@ -10,6 +10,7 @@ import java.util.List;
 public interface SaleDao {
     void save(Sale sale);
     void edit(Sale sale);
+    void delete(Sale sale);
     List<Sale> findAll();
     Sale findOne(int id);
     List<Object[]> showAllSales();
@@ -17,6 +18,7 @@ public interface SaleDao {
     List<Object[]> showAllSalesOrderBySaleAmount();
     List<Object[]> showSalesByMedicineName(@Param("name") String name);
     List<Object[]> showSaleById(@Param("id") int id);
+    List<Object[]> showSaleByIdAndMedicineName(@Param("id") int id,@Param("name") String name);
 
 
 }
